@@ -221,6 +221,28 @@ static long maxLength = 0;
 const float DEFAULT_PEN_WIDTH = 0.8f;
 static float penWidth = DEFAULT_PEN_WIDTH; // line width in mm
 
+/*==========================================================================
+    COMMUNICATION PROTOCOL, how to chat
+  ========================================================================*/
+
+// max length of incoming command
+const int INLENGTH = 90;
+const char INTERMINATOR = 10;
+const char SEMICOLON = 59;
+
+static char currentCommand[INLENGTH+1];
+
+
+static char inCmd[10];
+static char inParam1[20];
+static char inParam2[20];
+static char inParam3[20];
+static char inParam4[20];
+static byte inNoOfParams = 0;
+boolean paramsExtracted = false;
+boolean readyForcurrentCommand = false;
+
+static char lastParsedCommandRaw[INLENGTH+1];
 
 
 

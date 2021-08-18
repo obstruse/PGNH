@@ -12,28 +12,6 @@ Comms can mean "communications" or "commands", either will do, since
 it contains methods for reading commands from the serial port.
 
 */
-/*==========================================================================
-    COMMUNICATION PROTOCOL, how to chat
-  ========================================================================*/
-
-// max length of incoming command
-const int INLENGTH = 90;
-const char INTERMINATOR = 10;
-const char SEMICOLON = 59;
-
-static char currentCommand[INLENGTH+1];
-
-
-static char inCmd[10];
-static char inParam1[20];
-static char inParam2[20];
-static char inParam3[20];
-static char inParam4[20];
-static byte inNoOfParams = 0;
-boolean paramsExtracted = false;
-boolean readyForcurrentCommand = false;
-
-static char lastParsedCommandRaw[INLENGTH+1];
 
 boolean commandConfirmed = false;
 boolean commandBuffered = false;
@@ -270,6 +248,9 @@ void comms_unrecognisedCommand(String inCmd, String inParam1, String inParam2, S
 void comms(void * pvParameters) {
   (void) pvParameters;
 
+  Serial.print("comms task: Executing on core ");
+  Serial.println(xPortGetCoreID());
+
   for (;;) {
     if (!commandBuffered) {
       // bufferPosition = 0;
@@ -405,5 +386,7 @@ void comms(void * pvParameters) {
 TaskHandle_t commsHandle = NULL;
 int commsCore = 0;
 void commsTaskCreate() {
-  xTaskCreate( comms, "COMMS", 5000, NULL, 1, &commsHandle );
+  Serial.println("comms started...");
+
+  xTaskCreate( comms, "COMMS", 5000, NULL, 3, &commsHandle );
 }

@@ -96,6 +96,9 @@ void wifiDNS() {
 void wifi(void * pvParameters) {
   (void) pvParameters;
 
+  Serial.print("wifi task: Executing on core ");
+  Serial.println(xPortGetCoreID());
+
   for (;;) {
     //ArduinoOTA.handle();
     wifiOTA();
@@ -109,9 +112,6 @@ void wifi(void * pvParameters) {
 //--------------------------------------------
 //--------------------------------------------
 void wifiTaskCreate() {
-  Serial.println("in wifi...");
-  Serial.print("Created task: Executing on core ");
-  Serial.println(xPortGetCoreID());
 
   strncpy(IOTname, strrchr(fileName, '/') ? strrchr(fileName, '/') + 1 : fileName, sizeof(IOTname) - 1);
   IOTname[ strcspn(IOTname, ".") ] = '\0';
@@ -149,7 +149,7 @@ void wifiTaskCreate() {
     wifiAP();    
   }
 
-  Serial.print("WiFi started...");
+  Serial.println("WiFi started...");
 
   xTaskCreate( wifi, "WiFi", 5000, NULL, 0, &wifiHandle );
 }

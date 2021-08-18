@@ -115,6 +115,9 @@ void httpAP() {
 //--------------------------------------------
 void httpWifi(void * pvParameters) {
   (void) pvParameters;
+
+  Serial.print("httpWiFi task: Executing on core ");
+  Serial.println(xPortGetCoreID());
   
   for (;;) {
     server.handleClient();
@@ -126,9 +129,6 @@ void httpWifi(void * pvParameters) {
 //--------------------------------------------
 //--------------------------------------------
 void httpWifiTaskCreate() {
-  Serial.println("in http...");
-  Serial.print("Created task: Executing on core ");
-  Serial.println(xPortGetCoreID());
   
   server.on ( "/config", handleConfig );
   server.on ( "/httpReconnect", httpReconnect );
@@ -136,7 +136,7 @@ void httpWifiTaskCreate() {
   server.on ( "/httpSTA", httpSTA );
 
   server.begin();
-  Serial.println("http started");
+  Serial.println("http started...");
 
 #ifndef HTTP_TASK
 #define HTTP_TASK

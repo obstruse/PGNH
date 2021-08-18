@@ -52,5 +52,5 @@ void tasks_startBackgroundProcessesTask(unsigned int priority)
 
 void tasks_startTasks() 
 {
-  tasks_startBackgroundProcessesTask(3);
+  tasks_startBackgroundProcessesTask(1);
 }
