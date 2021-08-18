@@ -12,6 +12,29 @@ Comms can mean "communications" or "commands", either will do, since
 it contains methods for reading commands from the serial port.
 
 */
+/*==========================================================================
+    COMMUNICATION PROTOCOL, how to chat
+  ========================================================================*/
+
+// max length of incoming command
+const int INLENGTH = 90;
+const char INTERMINATOR = 10;
+const char SEMICOLON = 59;
+
+static char currentCommand[INLENGTH+1];
+
+
+static char inCmd[10];
+static char inParam1[20];
+static char inParam2[20];
+static char inParam3[20];
+static char inParam4[20];
+static byte inNoOfParams = 0;
+boolean paramsExtracted = false;
+boolean readyForcurrentCommand = false;
+
+static char lastParsedCommandRaw[INLENGTH+1];
+
 boolean commandConfirmed = false;
 boolean commandBuffered = false;
 
@@ -183,9 +206,9 @@ boolean comms_isMachineReadyForNextCommand()
   {
     broadcastStatusChrono.restart();
     return !commandBuffered && !comms_nextCommandIsBuffering();
-  }
-  else
+  }  else {
     return false;
+  }
 }
 
 
@@ -244,133 +267,136 @@ void comms_unrecognisedCommand(String inCmd, String inParam1, String inParam2, S
 /*-----------------------------------------------------------------*/
 // COMMS Task, every 20 ms...
 /*-----------------------------------------------------------------*/
-void comms() {
+void comms(void * pvParameters) {
+  (void) pvParameters;
 
-  if (!commandBuffered) {
-    // bufferPosition = 0;
-    if (Serial.available() > 0) {
-      #ifdef DEBUG_COMMS_BUFF
-            Serial.print("Bufsize: ");
-            Serial.println(Serial.available());
-            Serial.print("Pos:");
-            Serial.println(bufferPosition);
-      #endif
-      char ch = Serial.read();       // get it
-      nextCommand[bufferPosition] = ch;
-      #ifdef DEBUG_COMMS_BUFF
-            Serial.print("Just got '");
-            Serial.print(ch);
-            Serial.print("', so nextCommand is ");
-            Serial.print(strlen(nextCommand));
-            Serial.print(" chars long, and contains: ");
-            Serial.println(nextCommand);
-      #endif
-
-      if (ch == INTERMINATOR) {
+  for (;;) {
+    if (!commandBuffered) {
+      // bufferPosition = 0;
+      if (Serial.available() > 0) {
         #ifdef DEBUG_COMMS_BUFF
-        Serial.print("Buffer term'd at position ");
-        Serial.print(bufferPosition);
-        Serial.print(", command is: ");
-        Serial.println(nextCommand);
+              Serial.print("Bufsize: ");
+              Serial.println(Serial.available());
+              Serial.print("Pos:");
+              Serial.println(bufferPosition);
         #endif
-        nextCommand[bufferPosition] = 0;  // null terminate the string
+        char ch = Serial.read();       // get it
+        nextCommand[bufferPosition] = ch;
+        #ifdef DEBUG_COMMS_BUFF
+              Serial.print("Just got '");
+              Serial.print(ch);
+              Serial.print("', so nextCommand is ");
+              Serial.print(strlen(nextCommand));
+              Serial.print(" chars long, and contains: ");
+              Serial.println(nextCommand);
+        #endif
 
-        if (strlen(nextCommand) <= 0) {
-          // it's zero! empty it!
-          nextCommand[0] = 0;
-          comms_emptyCommandBuffer(nextCommand, INLENGTH);
-          commandBuffered = false;
-          comms_requestResend();
-        }
-        else {
-          // command finished!
-          #ifdef DEBUG_COMMS
-                    Serial.print("command buffered: ");
-                    Serial.println(nextCommand);
+        if (ch == INTERMINATOR) {
+          #ifdef DEBUG_COMMS_BUFF
+          Serial.print("Buffer term'd at position ");
+          Serial.print(bufferPosition);
+          Serial.print(", command is: ");
+          Serial.println(nextCommand);
           #endif
-          commandBuffered = true;
-          bufferPosition = 0;
+          nextCommand[bufferPosition] = 0;  // null terminate the string
+
+          if (strlen(nextCommand) <= 0) {
+            // it's zero! empty it!
+            nextCommand[0] = 0;
+            comms_emptyCommandBuffer(nextCommand, INLENGTH);
+            commandBuffered = false;
+            comms_requestResend();
+          }
+          else {
+            // command finished!
+            #ifdef DEBUG_COMMS
+                      Serial.print("command buffered: ");
+                      Serial.println(nextCommand);
+            #endif
+            commandBuffered = true;
+            bufferPosition = 0;
+          }
         }
-      }
-      else if (ch >= 40) {
-        bufferPosition++;
-        if (bufferPosition > INLENGTH)
-        { // if the command is too big, chuck it out!
-          currentCommand[0] = 0;
-          commandBuffered = false;
-          bufferPosition = 0;
+        else if (ch >= 40) {
+          bufferPosition++;
+          if (bufferPosition > INLENGTH)
+          { // if the command is too big, chuck it out!
+            currentCommand[0] = 0;
+            commandBuffered = false;
+            bufferPosition = 0;
+          }
         }
+        lastInteractionTime = millis();
       }
-      lastInteractionTime = millis();
+      else if ((lastInteractionTime+2000 < millis()) && (bufferPosition > 0)) {
+        // 2000 gives a manual inputter some time to fumble at the keyboard
+        // taken a long time for the next char to arrive...
+        // cancel it!
+        Serial.println("Command timed out: Cancelling");
+        bufferPosition = 0;
+        nextCommand[0] = 0;
+        comms_emptyCommandBuffer(nextCommand, INLENGTH);
+        commandBuffered = false;
+        comms_requestResend();
+        lastInteractionTime = millis();
+      }
     }
-    else if ((lastInteractionTime+2000 < millis()) && (bufferPosition > 0)) {
-      // 2000 gives a manual inputter some time to fumble at the keyboard
-      // taken a long time for the next char to arrive...
-      // cancel it!
-      Serial.println("Command timed out: Cancelling");
-      bufferPosition = 0;
+
+    // maybe promote the buffered command to the currentCommand
+    if (!currentlyExecutingACommand && commandBuffered) {
+      // not executing, but there's a command buffered
+      strcpy(currentCommand, nextCommand);
       nextCommand[0] = 0;
       comms_emptyCommandBuffer(nextCommand, INLENGTH);
+      commandConfirmed = true;
       commandBuffered = false;
-      comms_requestResend();
-      lastInteractionTime = millis();
+      comms_ready(); 
     }
-  }
+  //}
+  // combined into comms task
+  //void comms_pollForConfirmedCommand() {
 
-  // maybe promote the buffered command to the currentCommand
-  if (!currentlyExecutingACommand && commandBuffered) {
-    // not executing, but there's a command buffered
-    strcpy(currentCommand, nextCommand);
-    nextCommand[0] = 0;
-    comms_emptyCommandBuffer(nextCommand, INLENGTH);
-    commandConfirmed = true;
-    commandBuffered = false;
-    comms_ready(); 
-  }
-//}
-// combined into comms task
-//void comms_pollForConfirmedCommand() {
-
-  if (commandConfirmed && !currentlyExecutingACommand) {
-    currentlyExecutingACommand = true;
-    #ifdef DEBUG_COMMS
-    Serial.print(F("Command Confirmed: "));
-    Serial.println(currentCommand);
-    #endif
-
-    strcpy(lastParsedCommandRaw, currentCommand);
-    paramsExtracted = comms_parseCommand(currentCommand);
-    if (paramsExtracted) {
+    if (commandConfirmed && !currentlyExecutingACommand) {
+      currentlyExecutingACommand = true;
       #ifdef DEBUG_COMMS
-      Serial.println(F("Params extracted."));
+      Serial.print(F("Command Confirmed: "));
+      Serial.println(currentCommand);
       #endif
-      strcpy(currentCommand, "");
-      commandConfirmed = false;
-      comms_executeParsedCommand();
-      comms_clearParams();
-    }
-    else
-    {
-      Serial.println(F("Command not parsed."));
-      strcpy(currentCommand, "");
-      comms_clearParams();
-      commandConfirmed = false;
-    }
-    strcpy(lastParsedCommandRaw, "");
-    currentlyExecutingACommand = false;
-  }
-//}
-// combined into comms task
-//void comms_broadcastStatus(){
-  if (comms_isMachineReadyForNextCommand()) {
-    reportPosition();
-    reportStepRate();
-    comms_reportBufferState();
-    comms_ready();
-  }
 
-  // delay for 20ms
-  vTaskDelay(20 / portTICK_PERIOD_MS);
+      strcpy(lastParsedCommandRaw, currentCommand);
+      paramsExtracted = comms_parseCommand(currentCommand);
+      if (paramsExtracted) {
+        #ifdef DEBUG_COMMS
+        Serial.println(F("Params extracted."));
+        #endif
+        strcpy(currentCommand, "");
+        commandConfirmed = false;
+        comms_executeParsedCommand();
+        comms_clearParams();
+      }
+      else
+      {
+        Serial.println(F("Command not parsed."));
+        strcpy(currentCommand, "");
+        comms_clearParams();
+        commandConfirmed = false;
+      }
+      strcpy(lastParsedCommandRaw, "");
+      currentlyExecutingACommand = false;
+    }
+  //}
+  // combined into comms task
+  //void comms_broadcastStatus(){
+    if (comms_isMachineReadyForNextCommand()) {
+      reportPosition();
+      reportStepRate();
+      comms_reportBufferState();
+      comms_ready();
+    }
+
+    // delay for 20ms
+    vTaskDelay(20 / portTICK_PERIOD_MS);
+  }
 }
 
 /*-----------------------------------------------------------------*/
