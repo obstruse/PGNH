@@ -30,6 +30,18 @@ the User_Setup.h file and add the following lines.
 
 **/
 
+#ifdef CONFIG_FREERTOS_UNICORE
+#define ARDUINO_RUNNING_CORE 0
+#else
+#define ARDUINO_RUNNING_CORE 1
+#endif
+
+char fileName[] = __FILE__;
+char temp[1000];
+
+#include "wifiTask.h"
+#include "httpWifiTask.h"
+#include "commsTask.h"
 
 #include <SD.h>
 #include "FS.h"
@@ -43,7 +55,7 @@ the User_Setup.h file and add the following lines.
 #include <Encoder.h>
 
 #include <Preferences.h>
-#include <Ticker.h>
+//#include <Ticker.h>
 #include <Chrono.h>
 
 #include "firmware-build-name.h"
@@ -220,9 +232,8 @@ const char INTERMINATOR = 10;
 const char SEMICOLON = 59;
 
 static char currentCommand[INLENGTH+1];
-static char nextCommand[INLENGTH+1];
 
-volatile int bufferPosition = 0;
+
 static char inCmd[10];
 static char inParam1[20];
 static char inParam2[20];
@@ -231,20 +242,16 @@ static char inParam4[20];
 static byte inNoOfParams = 0;
 boolean paramsExtracted = false;
 boolean readyForcurrentCommand = false;
-volatile static boolean currentlyExecutingACommand = false;
 
 static char lastParsedCommandRaw[INLENGTH+1];
 
-boolean commandConfirmed = false;
-boolean commandBuffered = false;
-boolean usingCrc = false;
-boolean reportingPosition = true;
-boolean requestResend = false;
-boolean checkingForReceivedCommand = false;
 
-#define READY_STR "READY_200"
-#define RESEND_STR "RESEND"
-#define DRAWING_STR "DRAWING"
+//boolean usingCrc = false;
+
+boolean reportingPosition = true;
+//boolean requestResend = false;
+//boolean checkingForReceivedCommand = false;
+
 #define OUT_CMD_SYNC_STR "SYNC,"
 
 char MSG_ERROR_STR[] = "MSG,E,";
@@ -370,57 +377,7 @@ Ticker commsRunner;
 static TaskHandle_t backgroundProcessesTaskHandle = NULL;
 
 
-void setup()
-{
-  Serial.begin(57600);  // set up Serial library at 57600 bps
-  Serial.println(F("\nPOLARGRAPH ON!"));
-  Serial.print(F("v"));
-  Serial.println(FIRMWARE_VERSION_NO);
-  Serial.print(F("Hardware: "));
-  Serial.println(MB_NAME);
 
-  Serial.print(F("Servo pin: "));
-  Serial.println(PEN_HEIGHT_SERVO_PIN);
-
-  configuration_motorSetup();
-
-  // Load configuration
-  preferences.begin("polargraphsd", false);
-  eeprom_loadMachineSpecFromEeprom();
-  configuration_setup();
-
-  // set up the pen lift, raise it to begin with.
-  pinMode(PEN_HEIGHT_SERVO_PIN, OUTPUT);
-  delay(200);
-  penlift_penUp();
-  
-  // commsRunner sets up a regular invocation of comms_checkForCommand(), which
-  // checks for characters on the serial port and puts them into a buffer.
-  // When the buffer is terminated, nextCommand is moved into currentCommand.
-  commsRunner.attach_ms(20, comms_checkForCommand);
-
-  // xMutex = xSemaphoreCreateMutex();
-  tasks_startTasks();
-
-  sd_autorunSD();
-}
-
-
-/*
-Loop() is quite simple because reading commands from the serial port is done
-asynchronously by commsRunner.
-Motors are also stepped asynchronously, using tasks.
-*/
-void loop()
-{
-// comms_pollForConfirmedCommand checks for a completed command in
-// the command buffer, and executes it if it exists.
-  comms_pollForConfirmedCommand();
-
-// comms_broadcastStatus will broadcast the status of the machine 
-// if it's time to do so.
-  comms_broadcastStatus();
-}
 
 
 /*===========================================================
@@ -564,4 +521,73 @@ uint16_t tftButtonLabelDropShadowColour = getAsRgb565(50, 0, 0);
 
 // uint16_t tftButtonColour = TFT_ORANGE;
 // uint16_t tftButtonLabelDropShadowColour = TFT_BLACK;
+
+/*-----------------------------------------------------------------*/
+/*-----------------------------------------------------------------*/
+void setup()
+{
+  Serial.begin(57600);  // set up Serial library at 57600 bps
+  Serial.println(F("\nPOLARGRAPH ON!"));
+  Serial.print(F("v"));
+  Serial.println(FIRMWARE_VERSION_NO);
+  Serial.print(F("Hardware: "));
+  Serial.println(MB_NAME);
+
+  Serial.print(F("Servo pin: "));
+  Serial.println(PEN_HEIGHT_SERVO_PIN);
+
+/*-----------------------------------------------------------------*/
+  Serial.printf("Setup: Executing on core %d\n", xPortGetCoreID());
+
+  Serial.println("create task: wifi");
+  wifiTaskCreate();
+  delay(2000); // need to assure that wifi has initialized before http created
+  
+  Serial.println("create task: http");
+  httpWifiTaskCreate();
+/*-----------------------------------------------------------------*/
+  Serial.println("create task: comms");
+  commsTaskCreate();
+/*-----------------------------------------------------------------*/
+
+  configuration_motorSetup();
+
+  // Load configuration
+  preferences.begin("polargraphsd", false);
+  eeprom_loadMachineSpecFromEeprom();
+  configuration_setup();
+
+  // set up the pen lift, raise it to begin with.
+  pinMode(PEN_HEIGHT_SERVO_PIN, OUTPUT);
+  delay(200);
+  penlift_penUp();
+  
+  // commsRunner sets up a regular invocation of comms_checkForCommand(), which
+  // checks for characters on the serial port and puts them into a buffer.
+  // When the buffer is terminated, nextCommand is moved into currentCommand.
+  //commsRunner.attach_ms(20, comms_checkForCommand);
+
+  // xMutex = xSemaphoreCreateMutex();
+  tasks_startTasks();
+
+  sd_autorunSD();
+}
+
+/*-----------------------------------------------------------------*/
+/*-----------------------------------------------------------------*/
+/*
+Loop() is quite simple because reading commands from the serial port is done
+asynchronously by commsRunner.
+Motors are also stepped asynchronously, using tasks.
+*/
+void loop()
+{
+// comms_pollForConfirmedCommand checks for a completed command in
+// the command buffer, and executes it if it exists.
+//  comms_pollForConfirmedCommand();
+
+// comms_broadcastStatus will broadcast the status of the machine 
+// if it's time to do so.
+//  comms_broadcastStatus();
+}
 

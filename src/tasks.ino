@@ -21,15 +21,24 @@ void tasks_startBackgroundProcessesTask(unsigned int priority)
 
     // Start the task to run the background processes
   BaseType_t returned_backgroundProcessesTask;
+  /*
   returned_backgroundProcessesTask = xTaskCreatePinnedToCore(
-      tasks_backgroundProcessesTask,            /* Function to implement the task */
-      "tasks_backgroundProcessesTask",      /* Name of the task */
-      8000,                 /* Stack size in words */
-      NULL,                 /* Task input parameter */
-      priority,                    /* Priority of the task */
-      &backgroundProcessesTaskHandle,     /* Task handle. */
-      1);
-
+      tasks_backgroundProcessesTask,      // Function to implement the task
+      "tasks_backgroundProcessesTask",    // Name of the task
+      8000,                               // Stack size in words
+      NULL,                               // Task input parameter
+      priority,                           // Priority of the task
+      &backgroundProcessesTaskHandle,     // Task handle.
+      1);                                 // Core
+  */
+  returned_backgroundProcessesTask = xTaskCreate(
+      tasks_backgroundProcessesTask,      // Function to implement the task
+      "tasks_backgroundProcessesTask",    // Name of the task
+      8000,                               // Stack size in words
+      NULL,                               // Task input parameter
+      priority,                           // Priority of the task
+      &backgroundProcessesTaskHandle      // Task handle.
+  );
   if (returned_backgroundProcessesTask == pdPASS) {
     Serial.println("Created tasks_backgroundProcessesTask.");
   }
