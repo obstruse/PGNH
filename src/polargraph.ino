@@ -30,11 +30,13 @@ the User_Setup.h file and add the following lines.
 
 **/
 
+/* copied this from examples... but don't know why it's used, so taking it out
 #ifdef CONFIG_FREERTOS_UNICORE
 #define ARDUINO_RUNNING_CORE 0
 #else
 #define ARDUINO_RUNNING_CORE 1
 #endif
+*/
 
 char fileName[] = __FILE__;
 char temp[1000];
@@ -541,14 +543,17 @@ void setup()
 
   Serial.println("create task: wifi");
   wifiTaskCreate();
-  delay(2000); // need to assure that wifi has initialized before http created
+  delay(2000); // give wifi some time to initialize before http created
   
   Serial.println("create task: http");
   httpWifiTaskCreate();
 /*-----------------------------------------------------------------*/
-  Serial.println("create task: comms");
-  commsTaskCreate();
-/*-----------------------------------------------------------------*/
+  Serial.println("create task: commsRead");     // read command
+  commsReadTaskCreate();
+
+  Serial.println("create task: commsCommand");  // execute command
+  commsCommandTaskCreate();
+//*-----------------------------------------------------------------*/
 
   configuration_motorSetup();
 

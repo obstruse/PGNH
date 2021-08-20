@@ -42,6 +42,7 @@ void impl_processCommand(String inCmd, String inParam1, String inParam2, String 
   }
   else
   {
+    // execute the implementation if the command:  currentCommand -> lastParsedCommandRaw -> paramsExtracted -> inParam*
     impl_executeCommand(inCmd, inParam1, inParam2, inParam3, inParam4, inNoOfParams);
   }
 }
@@ -55,6 +56,7 @@ void impl_processCommand(String inCmd, String inParam1, String inParam2, String 
 */
 void impl_executeCommand(String inCmd, String inParam1, String inParam2, String inParam3, String inParam4, int inNoOfParams)
 {
+  // it's probably a basic command for drawaing so.  currentCommand -> lastParsedCommandRaw -> paramsExtracted -> inParam*
   if (exec_executeBasicCommand(inCmd, inParam1, inParam2, inParam3, inParam4, inNoOfParams))
   {
     // that's nice, it worked

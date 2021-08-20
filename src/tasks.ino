@@ -15,42 +15,8 @@ void tasks_backgroundProcessesTask( void *pvParameters )
 }
 
 
-void tasks_startBackgroundProcessesTask(unsigned int priority)
-{
-  // xSemaphoreTake(xMutex, portMAX_DELAY);
+void tasks_startTasks() {
+  
+  xTaskCreate(tasks_backgroundProcessesTask,"tasks_backgroundProcessesTask",8000,NULL,1,&backgroundProcessesTaskHandle);
 
-    // Start the task to run the background processes
-  BaseType_t returned_backgroundProcessesTask;
-  /*
-  returned_backgroundProcessesTask = xTaskCreatePinnedToCore(
-      tasks_backgroundProcessesTask,      // Function to implement the task
-      "tasks_backgroundProcessesTask",    // Name of the task
-      8000,                               // Stack size in words
-      NULL,                               // Task input parameter
-      priority,                           // Priority of the task
-      &backgroundProcessesTaskHandle,     // Task handle.
-      1);                                 // Core
-  */
-  returned_backgroundProcessesTask = xTaskCreate(
-      tasks_backgroundProcessesTask,      // Function to implement the task
-      "tasks_backgroundProcessesTask",    // Name of the task
-      8000,                               // Stack size in words
-      NULL,                               // Task input parameter
-      priority,                           // Priority of the task
-      &backgroundProcessesTaskHandle      // Task handle.
-  );
-  if (returned_backgroundProcessesTask == pdPASS) {
-    Serial.println("Created tasks_backgroundProcessesTask.");
-  }
-  else {
-    Serial.println("Didn't create tasks_backgroundProcessesTask!");
-  }
-  // xSemaphoreGive(xMutex);  
-
-}
-
-
-void tasks_startTasks() 
-{
-  tasks_startBackgroundProcessesTask(1);
 }

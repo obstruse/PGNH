@@ -21,6 +21,7 @@ routines are here.
 */
 boolean exec_executeBasicCommand(String inCmd, String inParam1, String inParam2, String inParam3, String inParam4, int inNoOfParams)
 {
+  // execute the execute of the implementation of the process... currentCommand -> lastParsedCommandRaw -> paramsExtracted -> inParam*
   boolean executed = true;
   if (inCmd.startsWith(CMD_CHANGELENGTH))
     exec_changeLength();
@@ -294,6 +295,7 @@ void exec_changeLength()
 }
 void exec_changeLengthDirect()
 {
+  // CMD_CHANGELENGTHDIRECT = "C17" eventually gets here
   float endA = multiplier(atof(inParam1));
   float endB = multiplier(atof(inParam2));
   int maxSegmentLength = atoi(inParam3);
@@ -317,6 +319,7 @@ the native coordinates system.
 The fidelity of the line is controlled by maxLength - this is the longest size a line segment is 
 allowed to be.  1 is finest, slowest.  Use higher values for faster, wobblier.
 */
+// CMD_CHANGELENGTHDIRECT = "C17" eventually gets here
 void exec_drawBetweenPoints(float p1a, float p1b, float p2a, float p2b, int maxSegmentLength)
 {
 //  Serial.print("From coords: ");
@@ -405,6 +408,7 @@ void exec_drawBetweenPoints(float p1a, float p1b, float p2a, float p2b, int maxS
       float pB = getMachineB(c1x, c1y);
     
       // do the move
+      // straight line composed of a bunch of linsegs. CMD_CHANGELENGTHDIRECT = "C17" eventually gets here
       runSpeed = desiredSpeed(linesegs, runSpeed, currentAcceleration*4);
       
 //      Serial.print("Setting speed:");
@@ -412,6 +416,7 @@ void exec_drawBetweenPoints(float p1a, float p1b, float p2a, float p2b, int maxS
       
       motorA.setSpeed(runSpeed);
       motorB.setSpeed(runSpeed);
+      // FINALLY! changeLength is where the motors are moved! WooHo!  CMD_CHANGELENGTHDIRECT = "C17" eventually gets here
       changeLength(pA, pB);
   
       // one line less to do!

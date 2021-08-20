@@ -76,11 +76,13 @@ void transform(long &tA, long &tB)
 }
 
 void changeLength(float tA, float tB)
+// really? two prototypes?
 {
   changeLength((long)tA, (long)tB);
 }
 
 void changeLength(long tA, long tB)
+// Here. Finally. the motor moves.  CMD_CHANGELENGTHDIRECT = "C17" eventually gets here
 {
   transform(tA,tB);
 
@@ -96,6 +98,8 @@ void changeLength(long tA, long tB)
   motorA.moveTo(tA);
   motorB.moveTo(tB);
 
+// there's just one thing though:  when does motorA.run() and motorB.run() get called?
+// ... oh, later in this routine
 
   if (!usingAcceleration)
   {
@@ -115,31 +119,31 @@ void changeLength(long tA, long tB)
   }
   
   
-  while (motorA.distanceToGo() != 0 || motorB.distanceToGo() != 0)
-  {
+  while (motorA.distanceToGo() != 0 || motorB.distanceToGo() != 0) {
+    // the motor moves here
+
 //    Serial.print("dA:");
 //    Serial.print(motorA.distanceToGo());
 //    Serial.print(", dB:");
 //    Serial.println(motorB.distanceToGo());
     // impl_runBackgroundProcesses();
-    if (currentlyRunning)
-    {
-      if (usingAcceleration)
-      {
+    if (currentlyRunning) {
+      if (usingAcceleration) {
         motorA.run();
         motorB.run();
-      }
-      else
-      {
+      } else {
 //        Serial.print("Run speed..");
 //        Serial.println(motorA.speed());
         motorA.runSpeedToPosition();
         motorB.runSpeedToPosition();
       }
+    } else {
+      impl_runBackgroundProcesses();    // looks like a good candidate for another task...
     }
-    else {
-      impl_runBackgroundProcesses();
-    }
+
+    // seemed like a good idea?  This loop will take some time to run...
+    taskYIELD();
+
   }
 
   lastOperationTime = millis();

@@ -137,6 +137,7 @@ void comms_executeParsedCommand()
 #endif
   if (paramsExtracted)
   {
+    // implement the parmsExtracted: currentCommand -> lastParsedCommandRaw -> paramsExtracted -> inParam*   following C17
     impl_processCommand(inCmd, inParam1, inParam2, inParam3, inParam4, inNoOfParams);
     paramsExtracted = false;
     inNoOfParams = 0;
@@ -243,12 +244,12 @@ void comms_unrecognisedCommand(String inCmd, String inParam1, String inParam2, S
 }
 
 /*-----------------------------------------------------------------*/
-// COMMS Task, every 20 ms...
+// COMMS Read Task, every 20 ms...
 /*-----------------------------------------------------------------*/
-void comms(void * pvParameters) {
+void commsRead(void * pvParameters) {
   (void) pvParameters;
 
-  Serial.print("comms task: Executing on core ");
+  Serial.print("commsRead task: Executing on core ");
   Serial.println(xPortGetCoreID());
 
   for (;;) {
@@ -333,9 +334,26 @@ void comms(void * pvParameters) {
       commandBuffered = false;
       comms_ready(); 
     }
-  //}
-  // combined into comms task
+
+    // delay for 20ms
+    vTaskDelay(20 / portTICK_PERIOD_MS);
+
+  }
+}
+
+/*-----------------------------------------------------------------*/
+// COMMS Command Task... execute the completed command
+/*-----------------------------------------------------------------*/
+void commsCommand(void * pvParameters) {
+  (void) pvParameters;
+
+  Serial.print("commsRead task: Executing on core ");
+  Serial.println(xPortGetCoreID());
+
+  for (;;) {
+
   //void comms_pollForConfirmedCommand() {
+  // built up currentCommand
 
     if (commandConfirmed && !currentlyExecutingACommand) {
       currentlyExecutingACommand = true;
@@ -352,6 +370,7 @@ void comms(void * pvParameters) {
         #endif
         strcpy(currentCommand, "");
         commandConfirmed = false;
+  // execute parsed command:  currentCommand -> lastParsedCommandRaw -> paramsExtracted  following C17
         comms_executeParsedCommand();
         comms_clearParams();
       }
@@ -365,7 +384,7 @@ void comms(void * pvParameters) {
       strcpy(lastParsedCommandRaw, "");
       currentlyExecutingACommand = false;
     }
-  //}
+
   // combined into comms task
   //void comms_broadcastStatus(){
     if (comms_isMachineReadyForNextCommand()) {
@@ -375,18 +394,27 @@ void comms(void * pvParameters) {
       comms_ready();
     }
 
-    // delay for 20ms
-    vTaskDelay(20 / portTICK_PERIOD_MS);
+  taskYIELD();
+
   }
 }
 
 /*-----------------------------------------------------------------*/
-// COMMS Task setup
+// COMMS Tasks setup
 /*-----------------------------------------------------------------*/
-TaskHandle_t commsHandle = NULL;
-int commsCore = 0;
-void commsTaskCreate() {
-  Serial.println("comms started...");
+TaskHandle_t commsReadHandle = NULL;
+int commsReadCore = 0;
+void commsReadTaskCreate() {
+  Serial.println("commsRead started...");
 
-  xTaskCreate( comms, "COMMS", 5000, NULL, 3, &commsHandle );
+  // commsRead seems to need elevated priority in order to work properly
+  xTaskCreate( commsRead, "COMMS Read", 5000, NULL, 3, &commsReadHandle );
+}
+
+TaskHandle_t commsCommandHandle = NULL;
+int commsCommandCore = 0;
+void commsCommandTaskCreate() {
+  Serial.println("commsCommand started...");
+
+  xTaskCreate( commsCommand, "COMMS Command", 5000, NULL, 1, &commsCommandHandle );
 }
