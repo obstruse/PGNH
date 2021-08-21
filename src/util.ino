@@ -137,11 +137,12 @@ void changeLength(long tA, long tB)
         motorA.runSpeedToPosition();
         motorB.runSpeedToPosition();
       }
-    } else {
-      impl_runBackgroundProcesses();    // looks like a good candidate for another task...
     }
+//    } else {
+//      impl_runBackgroundProcesses();    // it's already running as a task, why call it again?
+//    }
 
-    // seemed like a good idea?  This loop will take some time to run...
+    // seems like a good idea?  This loop will take some time to run...
     taskYIELD();
 
   }
@@ -175,9 +176,9 @@ void changeLengthRelative(long tA, long tB)
         motorB.runSpeedToPosition();
       }
     }
-    else {
-      impl_runBackgroundProcesses();
-    }    
+//    else {
+//      impl_runBackgroundProcesses();  // it's already running as a task, why call it again?
+//    }    
   }
   
   lastOperationTime = millis();

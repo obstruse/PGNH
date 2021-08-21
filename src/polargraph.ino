@@ -42,6 +42,7 @@ char fileName[] = __FILE__;
 char temp[1000];
 
 #include "wifiTask.h"
+//#include "httpTask.h"
 #include "httpWifiTask.h"
 //#include "commsTask.h"
 
@@ -61,6 +62,17 @@ char temp[1000];
 #include <Chrono.h>
 
 #include "firmware-build-name.h"
+
+
+/* found this on the web:
+You should not place global non-constant variables anywhere. 
+Global as in declared with extern and available to your whole project. 
+The need to do this always originates from bad program design, period. 
+This is true for C and C++ both.
+*/
+/*
+Avoid global variables whenever possible — use functions instead.
+*/
 
 
 /* Definition of a function that can be attached to a Button Specification
@@ -376,16 +388,10 @@ SemaphoreHandle_t xMutex;
 
 //Ticker commsRunner;
 
-static TaskHandle_t backgroundProcessesTaskHandle = NULL;
-
-
-
-
 
 /*===========================================================
     These variables are for the polarshield
 =========================================================== */
-
 
 const static String CMD_TESTPENWIDTHSCRIBBLE = "C12";
 const static String CMD_DRAWSAWPIXEL = "C15,";
@@ -406,6 +412,7 @@ const static String CMD_DRAW_NORWEGIAN_OUTLINE = "C44";
 const static String CMD_AUTO_CALIBRATE = "C48";
 
 /*  End stop pin definitions  */
+// there are no endstop switches, so this and the calibrate can be removed
 const int ENDSTOP_X_MAX = 17;
 const int ENDSTOP_X_MIN = 16;
 const int ENDSTOP_Y_MAX = 15;
@@ -485,19 +492,12 @@ static float scaleY = 1.0;
 static int rotateTransform = 0;
 
 
-long screenSaveIdleTime = 1200000L;
-const static byte SCREEN_STATE_NORMAL = 0;
-const static byte SCREEN_STATE_POWER_SAVE = 1;
-byte screenState = SCREEN_STATE_NORMAL;
 
 
-
+// calibrate.ino, impl_ps.ino
 boolean powerIsOn = false;
 boolean isCalibrated = false;
 boolean canCalibrate = false;
-boolean useAutoStartFromSD = true;
-String autoStartFilename = "/AUTORUN.TXT";
-boolean autoStartFileFound = false;
 
 
 // Colour scheme
@@ -506,23 +506,12 @@ uint16_t getAsRgb565(uint8_t red, uint8_t green, uint8_t blue) {
   return (((red & 0b11111000)<<8) + ((green & 0b11111100)<<3)+(blue>>3));
 }
 
+// lcd_draw.ino, touch.ino
 uint16_t tftBackgroundColour = TFT_BLACK;
 uint16_t tftLabelOnBackground = TFT_WHITE;
-
 uint16_t tftButtonLabelColour = TFT_WHITE;
-
-// uint16_t tftButtonColour = TFT_BLUE;
-// uint16_t tftButtonLabelDropShadowColour = TFT_NAVY;
-
-//getAsRgb565(166, 113, 32); // sand
-//getAsRgb565(0, 64, 64); // cool cornflower blue
-
-
 uint16_t tftButtonColour = getAsRgb565(200, 30, 0);
 uint16_t tftButtonLabelDropShadowColour = getAsRgb565(50, 0, 0);
-
-// uint16_t tftButtonColour = TFT_ORANGE;
-// uint16_t tftButtonLabelDropShadowColour = TFT_BLACK;
 
 /*-----------------------------------------------------------------*/
 /*-----------------------------------------------------------------*/
@@ -546,6 +535,7 @@ void setup()
   delay(2000); // give wifi some time to initialize before http created
   
   Serial.println("create task: http");
+  //httpTaskCreate();
   httpWifiTaskCreate();
 /*-----------------------------------------------------------------*/
   Serial.println("create task: commsRead");     // read command
@@ -553,6 +543,9 @@ void setup()
 
   Serial.println("create task: commsCommand");  // execute command
   commsCommandTaskCreate();
+
+  Serial.println("create task: implLcd");       // basically stuff to do with the screen
+  implLcdTaskCreate();
 //*-----------------------------------------------------------------*/
 
   configuration_motorSetup();
@@ -567,14 +560,6 @@ void setup()
   delay(200);
   penlift_penUp();
   
-  // commsRunner sets up a regular invocation of comms_checkForCommand(), which
-  // checks for characters on the serial port and puts them into a buffer.
-  // When the buffer is terminated, nextCommand is moved into currentCommand.
-  //commsRunner.attach_ms(20, comms_checkForCommand);
-
-  // xMutex = xSemaphoreCreateMutex();
-  tasks_startTasks();
-
   sd_autorunSD();
 }
 

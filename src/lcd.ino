@@ -16,6 +16,11 @@ input through the screen.
 There is a lot of this, but it's pretty samey.
 */
 
+long screenSaveIdleTime = 1200000L;
+const static byte SCREEN_STATE_NORMAL = 0;
+const static byte SCREEN_STATE_POWER_SAVE = 1;
+byte screenState = SCREEN_STATE_NORMAL;
+
 
 void lcd_scheduleRedraw(ButtonSpec *button, boolean syncTouchEnable)
 {

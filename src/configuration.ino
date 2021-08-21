@@ -109,18 +109,9 @@ void configuration_setup()
 {
   recalculateStepsPerMm();
 
-  sd_initSD();
-  lcd_initLCD();
-  delay(750);
-  touch_calibrateOnStart();
-  
-  // calibration pins
-  pinMode(ENDSTOP_X_MIN, INPUT_PULLUP);
-  pinMode(ENDSTOP_Y_MIN, INPUT_PULLUP);
-  pinMode(ENDSTOP_X_MAX, INPUT_PULLUP);
-  pinMode(ENDSTOP_Y_MAX, INPUT_PULLUP);
+  Serial.println("Temporary commented out sd_inidSD in configuration.ino:configuration_setup");
+  //sd_initSD();
 
-  lcd_displayFirstMenu();
   releaseMotors();
 
   motorA.setMaxSpeed(currentMaxSpeed);

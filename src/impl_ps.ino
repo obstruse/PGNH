@@ -96,29 +96,6 @@ void impl_executeCommand(String inCmd, String inParam1, String inParam2, String 
   }
 }
 
-/* Polarshield implementation of runBackgroundProcesses. 
-*  This is basically stuff to do with the screen.
-*/
-void impl_runBackgroundProcesses()
-{
-  #ifdef DEBUG_FUNCTION_BOUNDARIES
-  printf("\n\n\tEnter %s at %d\n", __FUNCTION__, millis());
-  #endif
-
-  impl_runBackgroundTouchProcesses();
-  impl_runBackgroundDrawProcesses();
-
-  long motorCutoffTime = millis() - lastOperationTime;
-  if ((automaticPowerDown) && (powerIsOn) && (motorCutoffTime > motorIdleTimeBeforePowerDown))
-  {
-    Serial.println("Powering down because of inactivity.");
-    buttons_actions_motorsOff();
-  }
- 
-  #ifdef DEBUG_FUNCTION_BOUNDARIES
-  printf("\tExit %s at %d\n", __FUNCTION__, millis());
-  #endif
-}
 
 void impl_runBackgroundTouchProcesses()
 {
@@ -214,7 +191,7 @@ void impl_exec_execFromStore(String inFilename)
           else Serial.println("Stored command WAS NOT parsed.");
 #endif
           command = "";
-          impl_runBackgroundProcesses();
+          //implLcd();  // it's already running as a task, why call it again?
         }
         else {
           command += ch;
@@ -489,4 +466,56 @@ void impl_setDebugComms() {
     case 0: debugComms = false; break;
     case 1: debugComms = true; break;
   }
+}
+
+
+/*-----------------------------------------------------------------*/
+// implLcd Task
+// Polarshield implementation of runBackgroundProcesses. 
+// This is basically stuff to do with the screen.
+/*-----------------------------------------------------------------*/
+void implLcd( void *pvParameters ) {
+  (void) pvParameters;
+
+  Serial.print("implLcd task: Executing on core ");
+  Serial.println(xPortGetCoreID());
+
+  lcd_initLCD();
+  delay(750);
+  touch_calibrateOnStart();
+  
+  lcd_displayFirstMenu();
+
+  for ( ;; ) {
+    #ifdef DEBUG_FUNCTION_BOUNDARIES
+    printf("\n\n\tEnter %s at %d\n", __FUNCTION__, millis());
+    #endif
+
+    impl_runBackgroundTouchProcesses();
+    impl_runBackgroundDrawProcesses();
+
+    long motorCutoffTime = millis() - lastOperationTime;
+    if ((automaticPowerDown) && (powerIsOn) && (motorCutoffTime > motorIdleTimeBeforePowerDown))
+    {
+      Serial.println("Powering down because of inactivity.");
+      buttons_actions_motorsOff();
+    }
+  
+    #ifdef DEBUG_FUNCTION_BOUNDARIES
+    printf("\tExit %s at %d\n", __FUNCTION__, millis());
+    #endif
+
+    taskYIELD();
+  }
+}
+
+/*-----------------------------------------------------------------*/
+// impl Lcd Task setup
+/*-----------------------------------------------------------------*/
+static TaskHandle_t implLcdHandle = NULL;
+void implLcdTaskCreate() {
+  Serial.println("implLcd started...");
+
+  xTaskCreate(implLcd,"impl LCD",8000,NULL,1,&implLcdHandle);
+
 }

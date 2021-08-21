@@ -12,6 +12,11 @@ SD.
 For initialising, reading and writing the SD card data store.
 
 */
+// sd.ino
+boolean useAutoStartFromSD = true;
+String autoStartFilename = "/AUTORUN.TXT";
+boolean autoStartFileFound = false;
+
 
 /*  ==============================================================
     Processing the SD card if there is one attached.
