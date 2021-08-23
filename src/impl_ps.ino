@@ -505,7 +505,8 @@ void implLcd( void *pvParameters ) {
     printf("\tExit %s at %d\n", __FUNCTION__, millis());
     #endif
 
-    taskYIELD();
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+
   }
 }
 

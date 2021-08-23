@@ -14,6 +14,9 @@ WebServer server ( 80 );
 //} HTTP;
 #endif
 
+extern int commsReadCore, commsCommandCore;
+extern TaskHandle_t commsReadHandle, commsCommandHandle;
+
 //--------------------------------------------
 void handleRoot() {
 
@@ -41,15 +44,23 @@ void handleRoot() {
     <p>%s %s %s</p>\
     <p>HTTP Core: %d</p>\
     <p>WIFI Core: %d</p>\
+    <p>COMMS Read Core: %d</p>\
+    <p>COMMS Command Core: %d</p>\
     <p>HTTP Stack: %d</p>\
     <p>WIFI Stack: %d</p>\
+    <p>COMMS Read Stack: %d</p>\
+    <p>COMMS Command Stack: %d</p>\
     ",
     hr, min % 60, sec % 60,
     fileName, __DATE__, __TIME__,
     httpCore,
     wifiCore, 
+    commsReadCore,
+    commsCommandCore,
     uxTaskGetStackHighWaterMark(httpHandle),
-    uxTaskGetStackHighWaterMark(wifiHandle)
+    uxTaskGetStackHighWaterMark(wifiHandle),
+    uxTaskGetStackHighWaterMark(commsReadHandle),
+    uxTaskGetStackHighWaterMark(commsCommandHandle)
   );
   server.sendContent ( temp );
 
@@ -90,7 +101,7 @@ void http(void * pvParameters) {
   for (;;) {
     server.handleClient();
     httpCore = xPortGetCoreID();
-    delay(100);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
   }
 }
 

@@ -42,7 +42,7 @@ char fileName[] = __FILE__;
 char temp[1000];
 
 #include "wifiTask.h"
-//#include "httpTask.h"
+#include "httpTask.h"
 #include "httpWifiTask.h"
 //#include "commsTask.h"
 
@@ -482,14 +482,11 @@ volatile int accelChangeIncrement = 100;
 volatile float penWidthIncrement = 0.05;
 volatile int moveIncrement = 400;
 
+// buttons_actions.ino, impl_ps.ino, sd.ino
 boolean currentlyDrawingFromFile = false;
 String currentlyDrawingFilename = "";
 
-static float translateX = 0.0;
-static float translateY = 0.0;
-static float scaleX = 1.0;
-static float scaleY = 1.0;
-static int rotateTransform = 0;
+
 
 
 
@@ -535,7 +532,7 @@ void setup()
   delay(2000); // give wifi some time to initialize before http created
   
   Serial.println("create task: http");
-  //httpTaskCreate();
+  httpTaskCreate();
   httpWifiTaskCreate();
 /*-----------------------------------------------------------------*/
   Serial.println("create task: commsRead");     // read command
@@ -579,5 +576,8 @@ void loop()
 // comms_broadcastStatus will broadcast the status of the machine 
 // if it's time to do so.
 //  comms_broadcastStatus();
+
+vTaskDelay(100 / portTICK_PERIOD_MS);
+
 }
 

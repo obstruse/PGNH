@@ -246,13 +246,14 @@ void comms_unrecognisedCommand(String inCmd, String inParam1, String inParam2, S
 /*-----------------------------------------------------------------*/
 // COMMS Read Task, every 20 ms...
 /*-----------------------------------------------------------------*/
+int commsReadCore = 0;
 void commsRead(void * pvParameters) {
-  (void) pvParameters;
 
-  Serial.print("commsRead task: Executing on core ");
-  Serial.println(xPortGetCoreID());
+  Serial.printf("commsRead task: Executing on core %d\n",xPortGetCoreID());
 
   for (;;) {
+    commsReadCore = xPortGetCoreID();
+
     if (!commandBuffered) {
       // bufferPosition = 0;
       if (Serial.available() > 0) {
@@ -344,16 +345,13 @@ void commsRead(void * pvParameters) {
 /*-----------------------------------------------------------------*/
 // COMMS Command Task... execute the completed command
 /*-----------------------------------------------------------------*/
+int commsCommandCore = 0;
 void commsCommand(void * pvParameters) {
-  (void) pvParameters;
 
-  Serial.print("commsRead task: Executing on core ");
-  Serial.println(xPortGetCoreID());
+  Serial.printf("commsCommand task: Executing on core %d\n",xPortGetCoreID());
 
   for (;;) {
-
-  //void comms_pollForConfirmedCommand() {
-  // built up currentCommand
+    commsCommandCore = xPortGetCoreID();
 
     if (commandConfirmed && !currentlyExecutingACommand) {
       currentlyExecutingACommand = true;
@@ -371,7 +369,19 @@ void commsCommand(void * pvParameters) {
         strcpy(currentCommand, "");
         commandConfirmed = false;
   // execute parsed command:  currentCommand -> lastParsedCommandRaw -> paramsExtracted  following C17
-        comms_executeParsedCommand();
+        comms_executeParsedCommand();   // beginning of a long chain of calls to actually move the motors
+        /*
+        comms_executeParsedCommand > 
+        impl_processCommand > 
+        impl_executeCommand > 
+        exec_executeBasicCommand >
+        exec_changeLengthDirect (C17) >
+        exec_drawBetweenPoints >
+        changeLength(float,float) > changeLength(long,long) >
+        motorX.moveTo...
+
+        comms_executeParsedCommand() returns when the move is complete
+        */
         comms_clearParams();
       }
       else
@@ -387,14 +397,15 @@ void commsCommand(void * pvParameters) {
 
   // combined into comms task
   //void comms_broadcastStatus(){
-    if (comms_isMachineReadyForNextCommand()) {
-      reportPosition();
-      reportStepRate();
-      comms_reportBufferState();
-      comms_ready();
+    if (comms_isMachineReadyForNextCommand()) {   // timer expired (4 seconds), and no command buffered or buffering
+      reportPosition();           // output the SYNC message
+      reportStepRate();           // null, doesn't do anything
+      comms_reportBufferState();  // null, doesn't do anything
+      comms_ready();              // output the READY_200 message
     }
 
-  taskYIELD();
+    vTaskDelay(20 / portTICK_PERIOD_MS);
+
 
   }
 }
@@ -403,16 +414,14 @@ void commsCommand(void * pvParameters) {
 // COMMS Tasks setup
 /*-----------------------------------------------------------------*/
 TaskHandle_t commsReadHandle = NULL;
-int commsReadCore = 0;
 void commsReadTaskCreate() {
   Serial.println("commsRead started...");
 
   // commsRead seems to need elevated priority in order to work properly
-  xTaskCreate( commsRead, "COMMS Read", 5000, NULL, 3, &commsReadHandle );
+  xTaskCreate( commsRead, "COMMS Read", 5000, NULL, 1, &commsReadHandle );
 }
 
 TaskHandle_t commsCommandHandle = NULL;
-int commsCommandCore = 0;
 void commsCommandTaskCreate() {
   Serial.println("commsCommand started...");
 

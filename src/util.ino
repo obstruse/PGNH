@@ -12,31 +12,32 @@ This is one of the core files for the polargraph server program.
 This has all the methods that let the rest actually work, including
 the geometry routines that convert from the different coordinates
 systems, and do transformations.
-
 */
-long multiplier(int in)
-{
+
+static float translateX = 0.0;
+static float translateY = 0.0;
+static float scaleX = 1.0;
+static float scaleY = 1.0;
+static int rotateTransform = 0;
+
+long multiplier(int in) {
   return multiplier(long(in));
 }
 
-long multiplier(long in)
-{
+long multiplier(long in) {
   return in * long(stepMultiplier);
 }
 
-float multiplier(double in)
-{
+float multiplier(double in) {
   float out = in * (float) stepMultiplier;
   return out;
 }
 
-long divider(long in)
-{
+long divider(long in) {
   return in / float(stepMultiplier);
 }
 
-void transform(long &tA, long &tB)
-{
+void transform(long &tA, long &tB) {
 
   tA = tA * scaleX;
   tB = tB * scaleY;
@@ -120,6 +121,9 @@ void changeLength(long tA, long tB)
   
   
   while (motorA.distanceToGo() != 0 || motorB.distanceToGo() != 0) {
+    // seems like a good idea?  This loop will take some time to run...
+    taskYIELD();
+
     // the motor moves here
 
 //    Serial.print("dA:");
@@ -142,8 +146,6 @@ void changeLength(long tA, long tB)
 //      impl_runBackgroundProcesses();    // it's already running as a task, why call it again?
 //    }
 
-    // seems like a good idea?  This loop will take some time to run...
-    taskYIELD();
 
   }
 
