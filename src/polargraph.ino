@@ -244,7 +244,8 @@ const int INLENGTH = 90;
 const char INTERMINATOR = 10;
 const char SEMICOLON = 59;
 
-static char currentCommand[INLENGTH+1];
+//static char currentCommand[INLENGTH+1];
+char currentCommand[INLENGTH+1];
 
 
 static char inCmd[10];

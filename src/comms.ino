@@ -18,7 +18,8 @@ boolean commandBuffered = false;
 
 volatile int bufferPosition = 0;
 
-static char nextCommand[INLENGTH+1];
+//static char nextCommand[INLENGTH+1];
+char nextCommand[INLENGTH+1];
 
 volatile static boolean currentlyExecutingACommand = false;
 
@@ -184,7 +185,8 @@ boolean comms_isMachineReadyForNextCommand()
   if (broadcastStatusChrono.hasPassed(comms_rebroadcastStatusInterval))
   {
     broadcastStatusChrono.restart();
-    return !commandBuffered && !comms_nextCommandIsBuffering();
+    //return !commandBuffered && !comms_nextCommandIsBuffering(); don't need a function call for this
+    return (!commandBuffered && !bufferPosition);  // true is not buffered or buffering
   }  else {
     return false;
   }
@@ -286,11 +288,10 @@ void commsRead(void * pvParameters) {
           if (strlen(nextCommand) <= 0) {
             // it's zero! empty it!
             nextCommand[0] = 0;
-            comms_emptyCommandBuffer(nextCommand, INLENGTH);
+            // comms_emptyCommandBuffer(nextCommand, INLENGTH); // hmm, don't need it
             commandBuffered = false;
             comms_requestResend();
-          }
-          else {
+          } else {
             // command finished!
             #ifdef DEBUG_COMMS
                       Serial.print("command buffered: ");
@@ -304,7 +305,8 @@ void commsRead(void * pvParameters) {
           bufferPosition++;
           if (bufferPosition > INLENGTH)
           { // if the command is too big, chuck it out!
-            currentCommand[0] = 0;
+            // currentCommand[0] = 0;       // seems wrong
+            nextCommand[0] = 0;
             commandBuffered = false;
             bufferPosition = 0;
           }
@@ -318,13 +320,16 @@ void commsRead(void * pvParameters) {
         Serial.println("Command timed out: Cancelling");
         bufferPosition = 0;
         nextCommand[0] = 0;
-        comms_emptyCommandBuffer(nextCommand, INLENGTH);
+        // comms_emptyCommandBuffer(nextCommand, INLENGTH); // hmm, don't need it
         commandBuffered = false;
         comms_requestResend();
         lastInteractionTime = millis();
       }
     }
 
+    /* when commsCommand is ready to process a command, it will take nextCommand,
+      clear it, set commandBuffered to false.  Nothing else needed here
+    
     // maybe promote the buffered command to the currentCommand
     if (!currentlyExecutingACommand && commandBuffered) {
       // not executing, but there's a command buffered
@@ -335,6 +340,7 @@ void commsRead(void * pvParameters) {
       commandBuffered = false;
       comms_ready(); 
     }
+    */
 
     // delay for 20ms
     vTaskDelay(20 / portTICK_PERIOD_MS);
@@ -353,22 +359,28 @@ void commsCommand(void * pvParameters) {
   for (;;) {
     commsCommandCore = xPortGetCoreID();
 
-    if (commandConfirmed && !currentlyExecutingACommand) {
-      currentlyExecutingACommand = true;
-      #ifdef DEBUG_COMMS
-      Serial.print(F("Command Confirmed: "));
-      Serial.println(currentCommand);
-      #endif
+    if (commandBuffered) {      // there's a command to process
+    //if (commandConfirmed && !currentlyExecutingACommand) {
+      //currentlyExecutingACommand = true;
+      //#ifdef DEBUG_COMMS
+      //Serial.print(F("Command Confirmed: "));
+      //Serial.println(currentCommand);
+      //#endif
 
-      strcpy(lastParsedCommandRaw, currentCommand);
+      //strcpy(lastParsedCommandRaw, currentCommand);
+      strcpy( currentCommand, nextCommand );
+      nextCommand[0] = 0;
+      commandBuffered = false;
+      comms_ready();              // output the READY_200 message so it will start buffering next command
+
       paramsExtracted = comms_parseCommand(currentCommand);
       if (paramsExtracted) {
-        #ifdef DEBUG_COMMS
-        Serial.println(F("Params extracted."));
-        #endif
-        strcpy(currentCommand, "");
-        commandConfirmed = false;
-  // execute parsed command:  currentCommand -> lastParsedCommandRaw -> paramsExtracted  following C17
+        //#ifdef DEBUG_COMMS
+        //Serial.println(F("Params extracted."));
+        //#endif
+        //strcpy(currentCommand, "");
+        //commandConfirmed = false;
+  // execute parsed command:  currentCommand -> (lastParsedCommandRaw?) -> paramsExtracted  following C17
         comms_executeParsedCommand();   // beginning of a long chain of calls to actually move the motors
         /*
         comms_executeParsedCommand > 
@@ -383,16 +395,14 @@ void commsCommand(void * pvParameters) {
         comms_executeParsedCommand() returns when the move is complete
         */
         comms_clearParams();
-      }
-      else
-      {
+      } else {
         Serial.println(F("Command not parsed."));
-        strcpy(currentCommand, "");
+        //strcpy(currentCommand, "");
         comms_clearParams();
-        commandConfirmed = false;
+        //commandConfirmed = false;
       }
-      strcpy(lastParsedCommandRaw, "");
-      currentlyExecutingACommand = false;
+      //strcpy(lastParsedCommandRaw, "");
+      //currentlyExecutingACommand = false;
     }
 
   // combined into comms task

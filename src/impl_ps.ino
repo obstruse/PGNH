@@ -61,7 +61,7 @@ void impl_executeCommand(String inCmd, String inParam1, String inParam2, String 
   {
     // that's nice, it worked
     Serial.print(MSG_COMPLETE_STR);
-    Serial.println(lastParsedCommandRaw);
+    Serial.println(currentCommand);
   }
   else if (inCmd.startsWith(CMD_DRAWCIRCLEPIXEL))
     curves_pixel_drawCircularPixel();

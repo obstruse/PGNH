@@ -17,6 +17,11 @@ WebServer server ( 80 );
 extern int commsReadCore, commsCommandCore;
 extern TaskHandle_t commsReadHandle, commsCommandHandle;
 
+extern boolean commandBuffered;
+extern volatile int bufferPosition;
+extern char nextCommand[];
+extern char currentCommand[];
+
 //--------------------------------------------
 void handleRoot() {
 
@@ -62,6 +67,23 @@ void handleRoot() {
     uxTaskGetStackHighWaterMark(commsReadHandle),
     uxTaskGetStackHighWaterMark(commsCommandHandle)
   );
+  server.sendContent ( temp );
+
+//--------------------------------------------
+  sprintf ( temp,
+"\
+<table border='1' cellpadding='5'>\
+<tr><th>commandBuffered</th><td>%s</td></tr>\
+<tr><th>nextCommand</th><td>%s</td></tr>\
+<tr><th>currentCommand</th><td>%s</td></tr>\
+<tr><th>bufferPosition</th><td>%d</td></tr>\
+</table>\
+",
+  String(commandBuffered).c_str(),
+  nextCommand, currentCommand,
+  bufferPosition
+  );
+
   server.sendContent ( temp );
 
 //--------------------------------------------
