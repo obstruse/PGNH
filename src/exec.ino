@@ -80,39 +80,39 @@ void exec_changeDrawingDirection()
 
 void exec_reportMachineSpec()
 {
-  Serial.print(F("PGSIZE,"));
-  Serial.print(machineSizeMm.x);
-  Serial.print(COMMA);
-  Serial.print(machineSizeMm.y);
-  Serial.println(CMD_END);
+  PGclient.print(F("PGSIZE,"));
+  PGclient.print(machineSizeMm.x);
+  PGclient.print(COMMA);
+  PGclient.print(machineSizeMm.y);
+  PGclient.println(CMD_END);
 
-  Serial.print(F("PGMMPERREV,"));
-  Serial.print(mmPerRev);
-  Serial.println(CMD_END);
+  PGclient.print(F("PGMMPERREV,"));
+  PGclient.print(mmPerRev);
+  PGclient.println(CMD_END);
 
-  Serial.print(F("PGSTEPSPERREV,"));
-  Serial.print(motorStepsPerRev);
-  Serial.println(CMD_END);
+  PGclient.print(F("PGSTEPSPERREV,"));
+  PGclient.print(motorStepsPerRev);
+  PGclient.println(CMD_END);
 
-  Serial.print(F("PGSTEPMULTIPLIER,"));
-  Serial.print(stepMultiplier);
-  Serial.println(CMD_END);
+  PGclient.print(F("PGSTEPMULTIPLIER,"));
+  PGclient.print(stepMultiplier);
+  PGclient.println(CMD_END);
 
-  Serial.print(F("PGLIFT,"));
-  Serial.print(downPosition);
-  Serial.print(COMMA);
-  Serial.print(upPosition);
-  Serial.println(CMD_END);
+  PGclient.print(F("PGLIFT,"));
+  PGclient.print(downPosition);
+  PGclient.print(COMMA);
+  PGclient.print(upPosition);
+  PGclient.println(CMD_END);
 
-  Serial.print(F("PGSPEED,"));
-  Serial.print(currentMaxSpeed);
-  Serial.print(COMMA);
-  Serial.print(currentAcceleration);
-  Serial.println(CMD_END);
+  PGclient.print(F("PGSPEED,"));
+  PGclient.print(currentMaxSpeed);
+  PGclient.print(COMMA);
+  PGclient.print(currentAcceleration);
+  PGclient.println(CMD_END);
 
-  Serial.print(F("PGPENWIDTH,"));
-  Serial.print(penWidth);
-  Serial.println(CMD_END);
+  PGclient.print(F("PGPENWIDTH,"));
+  PGclient.print(penWidth);
+  PGclient.println(CMD_END);
 
 }
 
@@ -253,11 +253,11 @@ void exec_setMotorAcceleration(float accel)
 void exec_changePenWidth()
 {
   penWidth = atof(inParam1);
-  Serial.print(MSG_INFO_STR);
-  Serial.print(F("Changed Pen width to "));
-  Serial.print(penWidth);
-  Serial.print(F("mm"));
-  Serial.println();
+  PGclient.print(MSG_INFO_STR);
+  PGclient.print(F("Changed Pen width to "));
+  PGclient.print(penWidth);
+  PGclient.print(F("mm"));
+  PGclient.println();
   msg_reportMinimumGridSizeForPen();
 
   if (inNoOfParams == 4 && atoi(inParam2) == 1) {

@@ -25,6 +25,10 @@ IPAddress apIP(192, 168, 4, 1);
 
 char IOTname[64];
 
+// network port for PG Server
+WiFiServer PGserver(12345);
+WiFiClient PGclient;
+
 //--------------------------------------------
 void wifiAP() {
 
@@ -138,6 +142,10 @@ void wifiTaskCreate() {
     ArduinoOTA.setHostname( IOTname );
     ArduinoOTA.begin();
     WIFI.ota = true;
+
+    // start PG Server network connection
+    PGserver.begin();
+    PGclient = PGserver.available();
 
     Serial.println(" ");
     

@@ -258,13 +258,13 @@ void reportPosition()
   {
     long p = motorA.currentPosition();
     
-    Serial.print(OUT_CMD_SYNC_STR);
-    Serial.print(p);
-    Serial.print(COMMA);
-    Serial.print(divider(p));
-    Serial.print(COMMA);
-    Serial.print(divider(motorB.currentPosition()));
-    Serial.println(CMD_END);
+    PGclient.print(OUT_CMD_SYNC_STR);
+    PGclient.print(p);
+    PGclient.print(COMMA);
+    PGclient.print(divider(p));
+    PGclient.print(COMMA);
+    PGclient.print(divider(motorB.currentPosition()));
+    PGclient.println(CMD_END);
 
   //  int cX = getCartesianX();
   //  int cY = getCartesianY(cX, motorA.currentPosition());

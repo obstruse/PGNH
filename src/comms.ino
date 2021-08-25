@@ -195,7 +195,7 @@ boolean comms_isMachineReadyForNextCommand()
 
 void comms_ready()
 {
-  Serial.println(READY_STR);
+  PGclient.println(READY_STR);
 }
 
 void comms_reportBufferState()
@@ -220,17 +220,17 @@ void comms_reportBufferState()
 
 void comms_drawing()
 {
-  Serial.println(DRAWING_STR);
+  PGclient.println(DRAWING_STR);
 }
 void comms_requestResend()
 {
-  Serial.println(RESEND_STR);
+  PGclient.println(RESEND_STR);
 }
 void comms_unrecognisedCommand(String inCmd, String inParam1, String inParam2, String inParam3, String inParam4, int inNoOfParams)
 {
-  Serial.print(MSG_ERROR_STR);
-  Serial.print(inCmd);
-  Serial.println(F(" not recognised."));
+  PGclient.print(MSG_ERROR_STR);
+  PGclient.print(inCmd);
+  PGclient.println(F(" not recognised."));
 
   Serial.print(F("Sorry, command: "));
   Serial.print(inCmd);
@@ -258,14 +258,14 @@ void commsRead(void * pvParameters) {
 
     if (!commandBuffered) {
       // bufferPosition = 0;
-      if (Serial.available() > 0) {
+      if (PGclient.available() > 0) {
         #ifdef DEBUG_COMMS_BUFF
               Serial.print("Bufsize: ");
               Serial.println(Serial.available());
               Serial.print("Pos:");
               Serial.println(bufferPosition);
         #endif
-        char ch = Serial.read();       // get it
+        char ch = PGclient.read();       // get it
         nextCommand[bufferPosition] = ch;
         #ifdef DEBUG_COMMS_BUFF
               Serial.print("Just got '");
@@ -358,6 +358,15 @@ void commsCommand(void * pvParameters) {
 
   for (;;) {
     commsCommandCore = xPortGetCoreID();
+
+    if (!PGclient) {
+      //need to connect a client
+      PGclient = PGserver.available();
+      delay(1000);
+      if (PGclient) comms_ready();
+
+      continue;
+    }
 
     if (commandBuffered) {      // there's a command to process
     //if (commandConfirmed && !currentlyExecutingACommand) {
