@@ -109,8 +109,8 @@ void configuration_setup()
 {
   recalculateStepsPerMm();
 
-  Serial.println("Temporary commented out sd_inidSD in configuration.ino:configuration_setup");
-  //sd_initSD();
+  //Serial.println("Temporary commented out sd_inidSD in configuration.ino:configuration_setup");
+  sd_initSD();
 
   releaseMotors();
 

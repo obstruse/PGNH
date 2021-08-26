@@ -245,6 +245,8 @@ void comms_unrecognisedCommand(String inCmd, String inParam1, String inParam2, S
   Serial.println(F(" isn't a command I recognise."));
 }
 
+static unsigned long slackTimeStart = 0;
+
 /*-----------------------------------------------------------------*/
 // COMMS Read Task, every 20 ms...
 /*-----------------------------------------------------------------*/
@@ -253,99 +255,42 @@ void commsRead(void * pvParameters) {
 
   Serial.printf("commsRead task: Executing on core %d\n",xPortGetCoreID());
 
+  PGclient.setTimeout(2000);
+
   for (;;) {
     commsReadCore = xPortGetCoreID();
 
     if (!commandBuffered) {
       // bufferPosition = 0;
       if (PGclient.available() > 0) {
-        #ifdef DEBUG_COMMS_BUFF
-              Serial.print("Bufsize: ");
-              Serial.println(Serial.available());
-              Serial.print("Pos:");
-              Serial.println(bufferPosition);
-        #endif
-        char ch = PGclient.read();       // get it
-        nextCommand[bufferPosition] = ch;
-        #ifdef DEBUG_COMMS_BUFF
-              Serial.print("Just got '");
-              Serial.print(ch);
-              Serial.print("', so nextCommand is ");
-              Serial.print(strlen(nextCommand));
-              Serial.print(" chars long, and contains: ");
-              Serial.println(nextCommand);
-        #endif
+        // if there's data available, read all of it, don't wait for next task increment
+        Serial.printf("callTime ms: %u\n", (uint)(millis() - slackTimeStart));
 
-        if (ch == INTERMINATOR) {
-          #ifdef DEBUG_COMMS_BUFF
-          Serial.print("Buffer term'd at position ");
-          Serial.print(bufferPosition);
-          Serial.print(", command is: ");
-          Serial.println(nextCommand);
-          #endif
-          nextCommand[bufferPosition] = 0;  // null terminate the string
+        nextCommand[PGclient.readBytesUntil('\n', nextCommand, INLENGTH)] = 0;
 
-          if (strlen(nextCommand) <= 0) {
-            // it's zero! empty it!
-            nextCommand[0] = 0;
-            // comms_emptyCommandBuffer(nextCommand, INLENGTH); // hmm, don't need it
-            commandBuffered = false;
-            comms_requestResend();
-          } else {
-            // command finished!
-            #ifdef DEBUG_COMMS
-                      Serial.print("command buffered: ");
-                      Serial.println(nextCommand);
-            #endif
-            commandBuffered = true;
-            bufferPosition = 0;
-          }
+        if (strlen(nextCommand) <= 0) {
+          // it's zero! empty it!
+          nextCommand[0] = 0;
+          commandBuffered = false;
+          comms_requestResend();
+
+        } else {
+          // got one!
+          Serial.printf("slackTime ms: %u\n", (uint)(millis() - slackTimeStart));
+          commandBuffered = true;
+          bufferPosition = 0;
         }
-        else if (ch >= 40) {
-          bufferPosition++;
-          if (bufferPosition > INLENGTH)
-          { // if the command is too big, chuck it out!
-            // currentCommand[0] = 0;       // seems wrong
-            nextCommand[0] = 0;
-            commandBuffered = false;
-            bufferPosition = 0;
-          }
-        }
-        lastInteractionTime = millis();
-      }
-      else if ((lastInteractionTime+2000 < millis()) && (bufferPosition > 0)) {
-        // 2000 gives a manual inputter some time to fumble at the keyboard
-        // taken a long time for the next char to arrive...
-        // cancel it!
-        Serial.println("Command timed out: Cancelling");
-        bufferPosition = 0;
-        nextCommand[0] = 0;
-        // comms_emptyCommandBuffer(nextCommand, INLENGTH); // hmm, don't need it
-        commandBuffered = false;
-        comms_requestResend();
-        lastInteractionTime = millis();
       }
     }
 
     /* when commsCommand is ready to process a command, it will take nextCommand,
       clear it, set commandBuffered to false.  Nothing else needed here
-    
-    // maybe promote the buffered command to the currentCommand
-    if (!currentlyExecutingACommand && commandBuffered) {
-      // not executing, but there's a command buffered
-      strcpy(currentCommand, nextCommand);
-      nextCommand[0] = 0;
-      comms_emptyCommandBuffer(nextCommand, INLENGTH);
-      commandConfirmed = true;
-      commandBuffered = false;
-      comms_ready(); 
-    }
     */
 
     // delay for 20ms
     vTaskDelay(20 / portTICK_PERIOD_MS);
 
-  }
+  }  //task loop
 }
 
 /*-----------------------------------------------------------------*/
@@ -381,7 +326,7 @@ void commsCommand(void * pvParameters) {
       nextCommand[0] = 0;
       commandBuffered = false;
       comms_ready();              // output the READY_200 message so it will start buffering next command
-
+      Serial.println("----start of command----");
       paramsExtracted = comms_parseCommand(currentCommand);
       if (paramsExtracted) {
         //#ifdef DEBUG_COMMS
@@ -404,6 +349,9 @@ void commsCommand(void * pvParameters) {
         comms_executeParsedCommand() returns when the move is complete
         */
         comms_clearParams();
+        Serial.println("----end of command----");
+        slackTimeStart = millis();  // time from end of current command process, to receipt of next command
+
       } else {
         Serial.println(F("Command not parsed."));
         //strcpy(currentCommand, "");
@@ -412,10 +360,13 @@ void commsCommand(void * pvParameters) {
       }
       //strcpy(lastParsedCommandRaw, "");
       //currentlyExecutingACommand = false;
+
+    } else {
+      // so either there's a command executed (takes a few seconds or more), or block the task until a new command shows up
+      vTaskDelay(20 / portTICK_PERIOD_MS);      
     }
 
-  // combined into comms task
-  //void comms_broadcastStatus(){
+  // remind everyone that you're ready if nothing has happened in a while...
     if (comms_isMachineReadyForNextCommand()) {   // timer expired (4 seconds), and no command buffered or buffering
       reportPosition();           // output the SYNC message
       reportStepRate();           // null, doesn't do anything
@@ -423,10 +374,9 @@ void commsCommand(void * pvParameters) {
       comms_ready();              // output the READY_200 message
     }
 
-    vTaskDelay(20 / portTICK_PERIOD_MS);
 
 
-  }
+  } //task loop
 }
 
 /*-----------------------------------------------------------------*/
@@ -437,12 +387,12 @@ void commsReadTaskCreate() {
   Serial.println("commsRead started...");
 
   // commsRead seems to need elevated priority in order to work properly
-  xTaskCreate( commsRead, "COMMS Read", 5000, NULL, 1, &commsReadHandle );
+  xTaskCreate( commsRead, "COMMS Read", 5000, NULL, 2, &commsReadHandle );
 }
 
 TaskHandle_t commsCommandHandle = NULL;
 void commsCommandTaskCreate() {
   Serial.println("commsCommand started...");
 
-  xTaskCreate( commsCommand, "COMMS Command", 5000, NULL, 1, &commsCommandHandle );
+  xTaskCreate( commsCommand, "COMMS Command", 5000, NULL, 2, &commsCommandHandle );
 }

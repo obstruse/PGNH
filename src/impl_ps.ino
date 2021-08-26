@@ -517,6 +517,6 @@ static TaskHandle_t implLcdHandle = NULL;
 void implLcdTaskCreate() {
   Serial.println("implLcd started...");
 
-  xTaskCreate(implLcd,"impl LCD",8000,NULL,1,&implLcdHandle);
+  xTaskCreate(implLcd,"impl LCD",8000,NULL,2,&implLcdHandle);
 
 }

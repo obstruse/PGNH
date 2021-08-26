@@ -121,8 +121,9 @@ void changeLength(long tA, long tB)
   
   
   while (motorA.distanceToGo() != 0 || motorB.distanceToGo() != 0) {
-    // seems like a good idea?  This loop will take some time to run...
-    taskYIELD();
+    // seemed like a good idea?  This loop will take some time to run...
+    // no, not really
+    // taskYIELD();
 
     // the motor moves here
 

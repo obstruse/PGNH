@@ -37,6 +37,7 @@ the User_Setup.h file and add the following lines.
 #define ARDUINO_RUNNING_CORE 1
 #endif
 */
+//#define DEBUG_SD
 
 char fileName[] = __FILE__;
 char temp[1000];
@@ -578,7 +579,8 @@ void loop()
 // if it's time to do so.
 //  comms_broadcastStatus();
 
-vTaskDelay(100 / portTICK_PERIOD_MS);
-
+//vTaskDelete(NULL);
+//vTaskDelay(100 / portTICK_PERIOD_MS);
+vTaskDelay(portMAX_DELAY);
 }
 
