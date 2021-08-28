@@ -411,11 +411,9 @@ void exec_drawBetweenPoints(float p1a, float p1b, float p2a, float p2b, int maxS
       // straight line composed of a bunch of linsegs. CMD_CHANGELENGTHDIRECT = "C17" eventually gets here
       runSpeed = desiredSpeed(linesegs, runSpeed, currentAcceleration*4);
       
-//      Serial.print("Setting speed:");
-//      Serial.println(runSpeed);
-      
       motorA.setSpeed(runSpeed);
       motorB.setSpeed(runSpeed);
+
       // FINALLY! changeLength is where the motors are moved! WooHo!  CMD_CHANGELENGTHDIRECT = "C17" eventually gets here
       changeLength(pA, pB);
   
@@ -425,10 +423,7 @@ void exec_drawBetweenPoints(float p1a, float p1b, float p2a, float p2b, int maxS
     // reset back to "normal" operation
     reportingPosition = true;
     usingAcceleration = true;
-    reportPosition();
-  }
-  else
-  {
+  } else {
     Serial.println("MSG,E,Line is not on the page. Skipping it.");
   }
 }

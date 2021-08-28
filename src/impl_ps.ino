@@ -116,12 +116,10 @@ void impl_exec_execFromStore()
   String fileToExec = inParam1;
   if (fileToExec != "")
   {
-    currentlyDrawingFromFile = true;
     Serial.print("Filename to read from: ");
     Serial.println(fileToExec);
     commandFilename = fileToExec;
     impl_exec_execFromStore(commandFilename);
-    currentlyDrawingFromFile = true;
   }
   else
   {
@@ -130,56 +128,49 @@ void impl_exec_execFromStore()
 
 }
 
-void impl_exec_execFromStore(String inFilename)
-{
-  if (inFilename != "")
-  {
+String taskFilename;    // you'd think this wouldn't be necessary, but it is
+void impl_exec_execFromStore(String inFilename) {
+  taskFilename = inFilename;
+  xTaskCreate(impl_execFromStoreTask,"Playback",8000,(void *)&taskFilename,1,NULL);
+}
+/*-----------------------------------------------------------------*/
+// impl Exec Frome Store Task setup
+/*-----------------------------------------------------------------*/
+// runs once and deletes itself
+void impl_execFromStoreTask(void * pvParameters) {
+
+  currentlyDrawingFromFile = true;
+
+  String inFilename = *(String *)pvParameters;
+  Serial.println("inFilename: " + inFilename);
+
+  if (inFilename != "") {
     String noBlanks = "";
     // remove blanks
-    for (int i = 0; i<inFilename.length(); i++)
-    {
-      if (inFilename[i] != ' ')
+    for (int i = 0; i<inFilename.length(); i++) {
+      if (inFilename[i] != ' ') {
         noBlanks = noBlanks + inFilename[i];
+      }
     }
-
     char filename[noBlanks.length()+1];
     noBlanks.toCharArray(filename, noBlanks.length()+1);
-#ifdef DEBUG_SD
-    Serial.print("Array to read from: ");
-    Serial.println(filename);
-#endif
+
     File readFile = SD.open(filename, FILE_READ);
-    if (readFile)
-    {
+    if (readFile) {
       Serial.print("Opened file:");
       Serial.println(noBlanks);
       String command = "";
-      while (readFile.available() && currentlyDrawingFromFile)
-      {
-#ifdef DEBUG_SD
-        Serial.println("Reading...");
-        // poll for input
-#endif
+
+      while (readFile.available() && currentlyDrawingFromFile) {
         char ch = readFile.read();
-#ifdef DEBUG_SD
-        Serial.print(".");
-        Serial.print(ch);
-        Serial.print("-");
-#endif
         if (ch == INTERMINATOR || ch == SEMICOLON)
         {
-#ifdef DEBUG_SD
-          Serial.println("New line");
-#endif
           // execute the line
           command.trim();
           command.toCharArray(currentCommand, INLENGTH+1);
           boolean commandParsed = comms_parseCommand(currentCommand);
           if (commandParsed)
           {
-#ifdef DEBUG_SD
-            Serial.println("Stored command parsed.");
-#endif
             Serial.print(F("Executing command:"));
             Serial.println(command);
             if (echoingStoredCommands) {
@@ -187,20 +178,14 @@ void impl_exec_execFromStore(String inFilename)
             }
             impl_executeCommand(inCmd, inParam1, inParam2, inParam3, inParam4, inNoOfParams);
           }
-#ifdef DEBUG_SD
-          else Serial.println("Stored command WAS NOT parsed.");
-#endif
+        
           command = "";
           //implLcd();  // it's already running as a task, why call it again?
-        }
-        else {
+        } else {
+        
           command += ch;
         }
 
-#ifdef DEBUG_SD
-        Serial.print("Command building:");
-        Serial.println(command);
-#endif
       }
       Serial.println("Finished with the file.");
       currentlyDrawingFromFile = false;
@@ -217,7 +202,8 @@ void impl_exec_execFromStore(String inFilename)
     Serial.println("No filename supplied to read from.");
     currentlyDrawingFromFile = false;
   }
-   
+
+  vTaskDelete( NULL ); 
 }
 
 void impl_exec_changeToStoreCommandMode()
@@ -517,6 +503,6 @@ static TaskHandle_t implLcdHandle = NULL;
 void implLcdTaskCreate() {
   Serial.println("implLcd started...");
 
-  xTaskCreate(implLcd,"impl LCD",8000,NULL,2,&implLcdHandle);
+  xTaskCreate(implLcd,"impl LCD",8000,NULL,1,&implLcdHandle);
 
 }

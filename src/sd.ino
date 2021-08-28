@@ -322,7 +322,6 @@ void sd_autorunSD() {
     Serial.print("Auto executing:");
     Serial.println(autoStartFilename);
     delay(4000);
-    currentlyDrawingFromFile = true;
     impl_exec_execFromStore(autoStartFilename);
   }
 }

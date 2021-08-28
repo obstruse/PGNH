@@ -187,9 +187,9 @@ int button_genericButtonAction(int buttonId)
       {
        Serial.print("Drawing this file: ");
        Serial.println(commandFilename);
-       currentlyDrawingFromFile = true;
        displayTouched = false;
        impl_exec_execFromStore(commandFilename);
+       
       }
       break;
     case BUTTON_STOP_FILE:

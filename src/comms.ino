@@ -314,14 +314,7 @@ void commsCommand(void * pvParameters) {
     }
 
     if (commandBuffered) {      // there's a command to process
-    //if (commandConfirmed && !currentlyExecutingACommand) {
-      //currentlyExecutingACommand = true;
-      //#ifdef DEBUG_COMMS
-      //Serial.print(F("Command Confirmed: "));
-      //Serial.println(currentCommand);
-      //#endif
 
-      //strcpy(lastParsedCommandRaw, currentCommand);
       strcpy( currentCommand, nextCommand );
       nextCommand[0] = 0;
       commandBuffered = false;
@@ -329,12 +322,7 @@ void commsCommand(void * pvParameters) {
       Serial.println("----start of command----");
       paramsExtracted = comms_parseCommand(currentCommand);
       if (paramsExtracted) {
-        //#ifdef DEBUG_COMMS
-        //Serial.println(F("Params extracted."));
-        //#endif
-        //strcpy(currentCommand, "");
-        //commandConfirmed = false;
-  // execute parsed command:  currentCommand -> (lastParsedCommandRaw?) -> paramsExtracted  following C17
+        // execute parsed command:  currentCommand -> (lastParsedCommandRaw?) -> paramsExtracted  following C17
         comms_executeParsedCommand();   // beginning of a long chain of calls to actually move the motors
         /*
         comms_executeParsedCommand > 
@@ -348,18 +336,14 @@ void commsCommand(void * pvParameters) {
 
         comms_executeParsedCommand() returns when the move is complete
         */
+        reportPosition(); // ony need this if command from COMMS (TCP or serial).  Not SD
+
         comms_clearParams();
-        Serial.println("----end of command----");
-        slackTimeStart = millis();  // time from end of current command process, to receipt of next command
 
       } else {
         Serial.println(F("Command not parsed."));
-        //strcpy(currentCommand, "");
         comms_clearParams();
-        //commandConfirmed = false;
       }
-      //strcpy(lastParsedCommandRaw, "");
-      //currentlyExecutingACommand = false;
 
     } else {
       // so either there's a command executed (takes a few seconds or more), or block the task until a new command shows up
@@ -387,12 +371,12 @@ void commsReadTaskCreate() {
   Serial.println("commsRead started...");
 
   // commsRead seems to need elevated priority in order to work properly
-  xTaskCreate( commsRead, "COMMS Read", 5000, NULL, 2, &commsReadHandle );
+  xTaskCreate( commsRead, "COMMS Read", 5000, NULL, 1, &commsReadHandle );
 }
 
 TaskHandle_t commsCommandHandle = NULL;
 void commsCommandTaskCreate() {
   Serial.println("commsCommand started...");
 
-  xTaskCreate( commsCommand, "COMMS Command", 5000, NULL, 2, &commsCommandHandle );
+  xTaskCreate( commsCommand, "COMMS Command", 5000, NULL, 1, &commsCommandHandle );
 }
