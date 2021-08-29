@@ -47,7 +47,8 @@ import java.io.*;
 
 import java.util.logging.*;
 import javax.swing.*;
-import processing.serial.*;
+//import processing.serial.*;
+import processing.net.*;
 import controlP5.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.*;
@@ -112,9 +113,11 @@ int bottomEdgeOfQueue = 0;
 int queueRowHeight = 15;
 
 int baudRate = 57600;
-Serial myPort;                       // The serial port
-int[] serialInArray = new int[1];    // Where we'll put what we receive
-int serialCount = 0;                 // A count of how many bytes we receive
+//Serial myPort;                       // The serial port
+Client myPort;
+
+//int[] serialInArray = new int[1];    // Where we'll put what we receive
+//int serialCount = 0;                 // A count of how many bytes we receive
 
 boolean[] keys = new boolean[526];
 
@@ -432,7 +435,8 @@ public boolean showingDialogBox = false;
 public Integer windowWidth = 650;
 public Integer windowHeight = 400;
 
-public static Integer serialPortNumber = -1;
+//public static Integer serialPortNumber = -1;
+public static String networkHost = "";
 
 public Textarea consoleArea = null;
 public Println console = null;
@@ -552,13 +556,10 @@ void setup()
   initLogging();
   parentPapplet = this;
   
-
-  try 
-  { 
+  try { 
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); 
   } 
-  catch (Exception e) 
-  { 
+  catch (Exception e) { 
     e.printStackTrace();   
   }
 
@@ -569,42 +570,37 @@ void setup()
   this.cp5 = new ControlP5(this);
   initTabs();
   
-  String[] serialPorts = Serial.list();
-  println("Serial ports available on your machine:");
-  println(serialPorts);
+  //String[] serialPorts = Serial.list();
+  //println("Serial ports available on your machine:");
+  //println(serialPorts);
 
-  if (getSerialPortNumber() >= 0)
-  {
-    println("About to connect to serial port in slot " + getSerialPortNumber());
+  if (getNetworkHost() != "" ) {
+    
+    println("About to connect to network host " + getNetworkHost());
     // Print a list of the serial ports, for debugging purposes:
-    if (serialPorts.length > 0)
-    {
-      String portName = null;
-      try 
-      {
-        println("Get serial port no: "+getSerialPortNumber());
-        portName = serialPorts[getSerialPortNumber()];
-        myPort = new Serial(this, portName, getBaudRate());
+    //if (serialPorts.length > 0)
+    //{
+    //  String portName = null;
+    try {
+        //println("Get serial port no: "+getSerialPortNumber());
+        //portName = serialPorts[getSerialPortNumber()];
+        //myPort = new Serial(this, portName, getBaudRate());
+        myPort = new Client(this, getNetworkHost(), 12345);
+
         //read bytes into a buffer until you get a linefeed (ASCII 10):
-        myPort.bufferUntil('\n');
+        //myPort.bufferUntil('\n');
+        myPort.readBytesUntil('\n');
+        
         useSerialPortConnection = true;
-        println("Successfully connected to port " + portName);
-      }
-      catch (Exception e)
-      {
-        println("Attempting to connect to serial port " 
-        + portName + " in slot " + getSerialPortNumber() 
+        println("Successfully connected to network host " + getNetworkHost());
+    }
+    catch (Exception e) {
+        println("Attempting to connect to network host " 
+        + getNetworkHost() 
         + " caused an exception: " + e.getMessage());
-      }
     }
-    else
-    {
-      println("No serial ports found.");
-      useSerialPortConnection = false;
-    }
-  }
-  else
-  {
+  } else {
+    println("No network hosts found.");
     useSerialPortConnection = false;
   }
 
@@ -2701,14 +2697,21 @@ void setHardwareVersionFromIncoming(String readyString)
   }
 }
 
-void serialEvent(Serial myPort) 
-{ 
+//void serialEvent(Serial myPort)
+void clientEvent(Client somePort)
+{
+// this event is getting triggered for each character receieved
+// didn't think it was supposed to work that way?
   // read the serial buffer:
-  String incoming = myPort.readStringUntil('\n');
-  myPort.clear();
-  // if you got any bytes other than the linefeed:
-  incoming = trim(incoming);
-  println("incoming: " + incoming);
+  String incoming = somePort.readStringUntil('\n');
+
+  if (incoming == null) {
+    incoming = "";
+  } else {
+    // if you got any bytes other than the linefeed:
+    incoming = trim(incoming);
+    println("incoming: " + incoming);
+  }
   
   if (incoming.startsWith("READY"))
   {
@@ -3052,7 +3055,8 @@ void loadFromPropertiesFile()
   this.machineStepMultiplier = getIntProperty("machine.step.multiplier", 8);
   
   // serial port
-  this.serialPortNumber = getIntProperty("controller.machine.serialport", 0);
+  //this.serialPortNumber = getIntProperty("controller.machine.serialport", 0);
+  this.networkHost = getStringProperty("controller.machine.networkhost", "");
   this.baudRate = getIntProperty("controller.machine.baudrate", 57600);
 
   // row size
@@ -3144,7 +3148,8 @@ void savePropertiesFile()
   // pen size
   props.setProperty("machine.pen.size", df.format(currentPenWidth));
   // serial port
-  props.setProperty("controller.machine.serialport", getSerialPortNumber().toString());
+  //props.setProperty("controller.machine.serialport", getSerialPortNumber().toString());
+  props.setProperty("controller.machine.networkhost", getNetworkHost());
   props.setProperty("controller.machine.baudrate", getBaudRate().toString());
 
   // row size
@@ -3295,10 +3300,14 @@ color getColourProperty(String id, color defVal)
   return col;
 }
 
-Integer getSerialPortNumber()
-{
-  return this.serialPortNumber;
+//Integer getSerialPortNumber()
+//{
+//  return this.serialPortNumber;
+//}
+String getNetworkHost() {
+  return this.networkHost;
 }
+
 String getStoreFilename()
 {
   return this.storeFilename;

@@ -975,7 +975,7 @@ Map<String, String> buildControlLabels()
   result.put(MODE_IMAGE_PIXEL_BRIGHT_THRESHOLD, "Bright pixel");
   result.put(MODE_IMAGE_PIXEL_DARK_THRESHOLD, "Dark pixel");
   
-  result.put(MODE_CHANGE_SERIAL_PORT, "Serial port...");
+  result.put(MODE_CHANGE_SERIAL_PORT, "Network host...");
 
   result.put(MODE_SEND_MACHINE_STORE_MODE, "Signal store...");
   result.put(MODE_SEND_MACHINE_LIVE_MODE, "Signal play");
