@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #################
 ## Eclipse
 #################
@@ -229,3 +230,14 @@ pip-log.txt
 _temp_by_dltool*
 
 .pio/
+=======
+
+/default.properties.txt
+/application.windows32
+/application.windows64
+/application.linux32
+/application.linux64
+/application.macosx
+Thumbs.db
+xx_default.properties.txt
+>>>>>>> 370d737b0366cd6e2594084bae610116eab42bcc
