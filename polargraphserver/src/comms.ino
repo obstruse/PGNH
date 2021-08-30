@@ -320,6 +320,7 @@ void commsCommand(void * pvParameters) {
       commandBuffered = false;
       comms_ready();              // output the READY_200 message so it will start buffering next command
       Serial.println("----start of command----");
+      strcpy( currentCommandRaw, nextCommand );  //so HTTP can display, before the parsing messes it up
       paramsExtracted = comms_parseCommand(currentCommand);
       if (paramsExtracted) {
         // execute parsed command:  currentCommand -> (lastParsedCommandRaw?) -> paramsExtracted  following C17

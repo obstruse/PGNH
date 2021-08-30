@@ -122,18 +122,14 @@ void wifiTaskCreate() {
   Serial.printf("IOTname: %s\n", IOTname);
 
   // WIFI setup
-  WiFi.persistent(false); // don't write the WIFI setting changes to EEPROM
+  WiFi.persistent(true);  // use WiFi config from storage (works a little different than ESP8266 it seems...)
   WiFi.setAutoConnect(false);   // don't connect until I tell you to!
   WiFi.setAutoReconnect(true);    
   WiFi.mode(WIFI_STA);
 
-  WiFi.persistent(true);
-  const char *ssid = "NETGEAR66";
-  const char *password = "slowbox787";
-  WiFi.begin(ssid,password);    // why is it not persisting?
-  WiFi.persistent(false);
+  WiFi.begin ();          // use ssid/password from storage. 
 
-//  WiFi.begin ();    // use last ssid/password. so, something has previously set that....
+  WiFi.persistent(false);
 
   if ( WiFi.waitForConnectResult() == WL_CONNECTED ) {
     MDNS.begin ( IOTname );
