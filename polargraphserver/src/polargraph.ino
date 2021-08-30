@@ -247,7 +247,7 @@ const char SEMICOLON = 59;
 
 //static char currentCommand[INLENGTH+1];
 char currentCommand[INLENGTH+1];
-static char currentCommandRaw[INLENGTH+1];
+char currentCommandRaw[INLENGTH+1];
 
 
 static char inCmd[10];
