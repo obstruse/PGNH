@@ -1,0 +1,8 @@
+<map id="lcd_drawButtons" name="lcd_drawButtons">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,124,57"/>
+<area shape="rect" id="node2" href="$lcd__draw_8ino.html#af1fe1b8cc4b0513b0c35b6647f3b662a" title=" " alt="" coords="172,31,284,57"/>
+<area shape="rect" id="node3" href="$lcd__draw_8ino.html#a19f390137af00b567c82e54bd59774d6" title=" " alt="" coords="337,5,519,32"/>
+<area shape="rect" id="node6" href="$lcd__draw_8ino.html#a5b85ac2b1a953d71a7e961f86d0772bd" title=" " alt="" coords="332,56,524,83"/>
+<area shape="rect" id="node4" href="$lcd__draw_8ino.html#ab98f5e223fc5d4e924d66aa3be95cd48" title=" " alt="" coords="572,31,783,57"/>
+<area shape="rect" id="node5" href="$lcd__draw_8ino.html#a038f4cd81402fd650ba44b3a5d8af06d" title=" " alt="" coords="831,23,1037,65"/>
+</map>
