@@ -241,4 +241,4 @@ _temp_by_dltool*
 Thumbs.db
 xx_default.properties.txt
 
-doxygen/latex
+*/doxygen/latex
