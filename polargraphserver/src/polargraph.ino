@@ -247,6 +247,7 @@ const char SEMICOLON = 59;
 
 //static char currentCommand[INLENGTH+1];
 char currentCommand[INLENGTH+1];
+static char currentCommandRaw[INLENGTH+1];
 
 
 static char inCmd[10];
@@ -257,10 +258,6 @@ static char inParam4[20];
 static byte inNoOfParams = 0;
 boolean paramsExtracted = false;
 boolean readyForcurrentCommand = false;
-
-static char lastParsedCommandRaw[INLENGTH+1];
-
-
 
 //boolean usingCrc = false;
 
