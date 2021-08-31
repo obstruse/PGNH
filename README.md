@@ -3,18 +3,39 @@
 
 ![Cat](/images/IMG_1561-C2r2.png)
 
+Started with a [V3 Polargraph](http://www.polargraph.co.uk/) with the current software: [server](https://github.com/euphy/polargraph_server_polarshield_esp32) / [controller](https://github.com/euphy/polargraphcontroller), running on an ESP32 (NODEMCU32S).  Modified the code to use WiFi for communication between Controller/Server.
+
 # The Software
 
 ![COMMS](/images/comms.png)
 
 ## Installation
 
+To compile and upload, use VSCode/PlatformIO.  For the first upload, use the `[env:TTY0]` Project Environment (edit platformio.ini to match your serial port).
+
+For uploads after the first, use the `[env:OTA]` Project Environment (edit platformio.ini for machine host/IP)
+
 ## Changes
 
 - Network
+    - WiFi connection between server and controller on port 12345
+    - Web server for configuration and status
+    - Firmware update via OTA
 - Multi-task
+    - WiFi Task
+    - HTTP Task
+    - Comms Read Task
+    - Comms Execute Task
+    - LCD Task
+    - SD Plot Task (created when needed)
+    - Loop Task (empty and paused)
+    - All tasks run in parallel at same priority with no conflicts.
 - Speed Improvements
-# Travelling Salesman Problem
+    - Instead of reading one character every 20msec, it reads all when available
+    - Begins buffering the next command while the current command is executing
+    - Comms plot speed equal to SD plot speed
+
+## Travelling Salesman Problem
 
 **noun**: *travelling salesman problem*
 
@@ -34,7 +55,7 @@ The following is a TSP "solution" for a 27,000 point map:
 
 ![MOM-4](/images/MOM-4.png)
 
-## Create the Vector File
+### Create the Vector File
 
 Make a Grayscale Image
 
@@ -59,7 +80,7 @@ Convert PBM to Vector
 
 Use `tspart.py` from [tsp_art_tools](https://github.com/evil-mad/EggBot/tree/master/other/TSP-stipple/tsp_art_tools)
 
-## Run polargraphcontroller
+### Run polargraphcontroller
 
 Setup machine parameters and enter Network Host:
 

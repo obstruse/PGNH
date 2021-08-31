@@ -534,7 +534,6 @@ void setup()
 /*-----------------------------------------------------------------*/
   Serial.println("create task: wifi");
   wifiTaskCreate();
-  //delay(2000); // give wifi some time to initialize before http created
   
   Serial.println("create task: http");
   httpTaskCreate();
@@ -550,9 +549,8 @@ void setup()
   Serial.println("create task: implLcd");       // basically stuff to do with the screen
   implLcdTaskCreate();
 
-//*-----------------------------------------------------------------*/
- 
-  // set up the pen lift, raise it to begin with.
+//*-----------------------------------------------------------------*/ 
+// set the pen lift, raise it to begin.
   pinMode(PEN_HEIGHT_SERVO_PIN, OUTPUT);
   delay(200);
   penlift_penUp();
@@ -562,23 +560,8 @@ void setup()
 
 /*-----------------------------------------------------------------*/
 /*-----------------------------------------------------------------*/
-/*
-Loop() is quite simple because reading commands from the serial port is done
-asynchronously by commsRunner.
-Motors are also stepped asynchronously, using tasks.
-*/
 void loop()
 {
-// comms_pollForConfirmedCommand checks for a completed command in
-// the command buffer, and executes it if it exists.
-//  comms_pollForConfirmedCommand();
-
-// comms_broadcastStatus will broadcast the status of the machine 
-// if it's time to do so.
-//  comms_broadcastStatus();
-
 //vTaskDelete(NULL);
-//vTaskDelay(100 / portTICK_PERIOD_MS);
 vTaskDelay(portMAX_DELAY);
 }
-
