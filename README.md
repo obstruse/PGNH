@@ -59,6 +59,17 @@ Convert PBM to Vector
 
 Use `tspart.py` from [tsp_art_tools](https://github.com/evil-mad/EggBot/tree/master/other/TSP-stipple/tsp_art_tools)
 
-![PeterMax](/images/PMax.png)
+## Run polargraphcontroller
+
+Setup machine parameters and enter Network Host:
+
+![Network Host](/images/controllerNH.png)
+
+Home the machine; home the controller; start the queue<br>
+Load/Resize/Move Vector; Draw Vectors
+
+![Vector Commands](/images/controllerVECTOR.png)
+
+
 
 
