@@ -524,15 +524,22 @@ void setup()
   Serial.println(PEN_HEIGHT_SERVO_PIN);
 
 /*-----------------------------------------------------------------*/
-  Serial.printf("Setup: Executing on core %d\n", xPortGetCoreID());
+  configuration_motorSetup();
 
+  // Load configuration
+  preferences.begin("polargraphsd", false);
+  eeprom_loadMachineSpecFromEeprom();
+  configuration_setup(); 
+
+/*-----------------------------------------------------------------*/
   Serial.println("create task: wifi");
   wifiTaskCreate();
-  delay(2000); // give wifi some time to initialize before http created
+  //delay(2000); // give wifi some time to initialize before http created
   
   Serial.println("create task: http");
   httpTaskCreate();
   httpWifiTaskCreate();
+
 /*-----------------------------------------------------------------*/
   Serial.println("create task: commsRead");     // read command
   commsReadTaskCreate();
@@ -542,15 +549,9 @@ void setup()
 
   Serial.println("create task: implLcd");       // basically stuff to do with the screen
   implLcdTaskCreate();
+
 //*-----------------------------------------------------------------*/
-
-  configuration_motorSetup();
-
-  // Load configuration
-  preferences.begin("polargraphsd", false);
-  eeprom_loadMachineSpecFromEeprom();
-  configuration_setup();
-
+ 
   // set up the pen lift, raise it to begin with.
   pinMode(PEN_HEIGHT_SERVO_PIN, OUTPUT);
   delay(200);

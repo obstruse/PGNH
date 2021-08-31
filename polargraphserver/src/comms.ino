@@ -245,8 +245,6 @@ void comms_unrecognisedCommand(String inCmd, String inParam1, String inParam2, S
   Serial.println(F(" isn't a command I recognise."));
 }
 
-static unsigned long slackTimeStart = 0;
-
 /*-----------------------------------------------------------------*/
 // COMMS Read Task, every 20 ms...
 /*-----------------------------------------------------------------*/
@@ -264,7 +262,6 @@ void commsRead(void * pvParameters) {
       // bufferPosition = 0;
       if (PGclient.available() > 0) {
         // if there's data available, read all of it, don't wait for next task increment
-        Serial.printf("callTime ms: %u\n", (uint)(millis() - slackTimeStart));
 
         nextCommand[PGclient.readBytesUntil('\n', nextCommand, INLENGTH)] = 0;
 
@@ -276,7 +273,6 @@ void commsRead(void * pvParameters) {
 
         } else {
           // got one!
-          Serial.printf("slackTime ms: %u\n", (uint)(millis() - slackTimeStart));
           commandBuffered = true;
           bufferPosition = 0;
         }
@@ -319,8 +315,8 @@ void commsCommand(void * pvParameters) {
       nextCommand[0] = 0;
       commandBuffered = false;
       comms_ready();              // output the READY_200 message so it will start buffering next command
-      Serial.println("----start of command----");
-      strcpy( currentCommandRaw, nextCommand );  //so HTTP can display, before the parsing messes it up
+      
+      strcpy( currentCommandRaw, currentCommand );  //so HTTP can display, before the parsing messes it up
       paramsExtracted = comms_parseCommand(currentCommand);
       if (paramsExtracted) {
         // execute parsed command:  currentCommand -> (lastParsedCommandRaw?) -> paramsExtracted  following C17
