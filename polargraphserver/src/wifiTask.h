@@ -132,6 +132,8 @@ void wifiTaskCreate() {
   WiFi.persistent(false);
 
   if ( WiFi.waitForConnectResult() == WL_CONNECTED ) {
+    WiFi.hostname( IOTname );
+  
     MDNS.begin ( IOTname );
     MDNS.addService("http", "tcp", 80);
 
