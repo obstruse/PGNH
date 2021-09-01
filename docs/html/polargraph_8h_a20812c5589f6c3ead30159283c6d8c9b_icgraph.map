@@ -1,0 +1,12 @@
+<map id="lcd_drawButtons" name="lcd_drawButtons">
+<area shape="rect" id="node1" title=" " alt="" coords="1337,56,1456,83"/>
+<area shape="rect" id="node2" href="$lcd__draw_8ino.html#a97f37b087169f346677f0158a2b48f47" title=" " alt="" coords="1140,56,1289,83"/>
+<area shape="rect" id="node3" href="$lcd__draw_8ino.html#aa6794ed39a04b646eec9987dacf5de44" title=" " alt="" coords="697,5,843,32"/>
+<area shape="rect" id="node7" href="$lcd_8ino.html#adcc6b6f28769d6a3194eafaec1d6f203" title=" " alt="" coords="954,56,1039,83"/>
+<area shape="rect" id="node10" href="$lcd_8ino.html#aa3b5290adcb64d9c500e07dd9ebcfbd0" title=" " alt="" coords="901,107,1092,133"/>
+<area shape="rect" id="node4" href="$impl__ps_8ino.html#a550ec1bfc7415adbcd0394690eb7672f" title=" " alt="" coords="291,31,357,57"/>
+<area shape="rect" id="node5" href="$impl__ps_8ino.html#a2b9a53c9593a2f116e3b0003feaf8e53" title=" " alt="" coords="108,31,243,57"/>
+<area shape="rect" id="node6" href="$polargraph_8h.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,31,60,57"/>
+<area shape="rect" id="node8" href="$lcd_8ino.html#a1df9880eb296b4f5619a94fb1cfa4952" title=" " alt="" coords="687,56,853,83"/>
+<area shape="rect" id="node9" href="$impl__ps_8ino.html#a8a3e5af0937eb4f0549556e5a5651a91" title=" " alt="" coords="405,56,639,83"/>
+</map>
