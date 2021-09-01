@@ -37,7 +37,7 @@ var searchData=
   ['pixeldebug_475',['pixelDebug',['../polargraph_8ino.html#aa7e08bd7df4e6055d1e67092f4c36e4c',1,'polargraph.ino']]],
   ['polargraph_2eh_476',['polargraph.h',['../polargraph_8h.html',1,'']]],
   ['polargraph_2eino_477',['polargraph.ino',['../polargraph_8ino.html',1,'']]],
-  ['polargraph_5fserver_5fpolarshield_5fesp32_478',['polargraph_server_polarshield_esp32',['../md__r_e_a_d_m_e.html',1,'']]],
+  ['polargraph_5fserver_5fpolarshield_5fesp32_478',['polargraph_server_polarshield_esp32',['../md__home_neisius__documents_polargraph__p_g_n_h_polargraphserver_src__r_e_a_d_m_e.html',1,'']]],
   ['polarshield_479',['POLARSHIELD',['../polargraph_8ino.html#abb1af97d2a78fe91a20821cf3cd4e1b8',1,'polargraph.ino']]],
   ['pos_480',['pos',['../struct_rectangle.html#a7d26103f5309c9c178f8afd6aa672c1c',1,'Rectangle']]],
   ['powerison_481',['powerIsOn',['../polargraph_8ino.html#ac14b30dd0c2d0bd4f39a82b25d6e988a',1,'polargraph.ino']]],

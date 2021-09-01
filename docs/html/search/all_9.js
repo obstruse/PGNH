@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['labeltext_344',['labelText',['../struct_button_spec.html#a40ca92d2f84ed64adc79fd60a60cf5cf',1,'ButtonSpec']]],
-  ['lastinteractiontime_345',['lastInteractionTime',['../polargraph_8ino.html#a7925492f4b82110a0b7c1dad53e45dc4',1,'polargraph.ino']]],
-  ['lastoperationtime_346',['lastOperationTime',['../polargraph_8ino.html#a1eab214c137856ad6c66a78532c601c3',1,'polargraph.ino']]],
-  ['lastparsedcommandraw_347',['lastParsedCommandRaw',['../polargraph_8ino.html#a30a59d99a9d597df2166b686b408ffbd',1,'polargraph.ino']]],
+  ['labeltext_345',['labelText',['../struct_button_spec.html#a40ca92d2f84ed64adc79fd60a60cf5cf',1,'ButtonSpec']]],
+  ['lastinteractiontime_346',['lastInteractionTime',['../polargraph_8ino.html#a7925492f4b82110a0b7c1dad53e45dc4',1,'polargraph.ino']]],
+  ['lastoperationtime_347',['lastOperationTime',['../polargraph_8ino.html#a1eab214c137856ad6c66a78532c601c3',1,'polargraph.ino']]],
   ['lastperiodstarttime_348',['lastPeriodStartTime',['../polargraph_8ino.html#a944eb929891d61e60e15e1c847baa85d',1,'polargraph.ino']]],
   ['lastredrawntime_349',['lastRedrawnTime',['../struct_lcd_plan.html#a28a67f92df953b8d27a945553efa82b4',1,'LcdPlan']]],
   ['lastwavewastop_350',['lastWaveWasTop',['../polargraph_8ino.html#aa4b4ecb4bd566a6008395fa07561f129',1,'polargraph.ino']]],
@@ -12,7 +11,7 @@ var searchData=
   ['lcd_5fdisplayfirstmenu_353',['lcd_displayFirstMenu',['../lcd__draw_8ino.html#aa6794ed39a04b646eec9987dacf5de44',1,'lcd_displayFirstMenu():&#160;lcd_draw.ino'],['../polargraph_8h.html#aa6794ed39a04b646eec9987dacf5de44',1,'lcd_displayFirstMenu():&#160;lcd_draw.ino']]],
   ['lcd_5fdoscheduledredraw_354',['lcd_doScheduledRedraw',['../lcd_8ino.html#a1df9880eb296b4f5619a94fb1cfa4952',1,'lcd_doScheduledRedraw():&#160;lcd.ino'],['../polargraph_8h.html#a1df9880eb296b4f5619a94fb1cfa4952',1,'lcd_doScheduledRedraw():&#160;lcd.ino']]],
   ['lcd_5fdraw_2eino_355',['lcd_draw.ino',['../lcd__draw_8ino.html',1,'']]],
-  ['lcd_5fdraw_5fbuttonhighlight_356',['lcd_draw_buttonHighlight',['../lcd__draw_8ino.html#a5263b6e0ae2bef9950939698984751d2',1,'lcd_draw_buttonHighlight(byte buttonPosition):&#160;lcd_draw.ino'],['../polargraph_8h.html#a5263b6e0ae2bef9950939698984751d2',1,'lcd_draw_buttonHighlight(byte buttonPosition):&#160;lcd_draw.ino']]],
+  ['lcd_5fdraw_5fbuttonhighlight_356',['lcd_draw_buttonHighlight',['../polargraph_8h.html#a5263b6e0ae2bef9950939698984751d2',1,'lcd_draw_buttonHighlight(byte buttonPosition):&#160;lcd_draw.ino'],['../lcd__draw_8ino.html#a5263b6e0ae2bef9950939698984751d2',1,'lcd_draw_buttonHighlight(byte buttonPosition):&#160;lcd_draw.ino']]],
   ['lcd_5fdraw_5fmenudecorations_357',['lcd_draw_menuDecorations',['../lcd__draw_8ino.html#aac23326481d50614b15a69099c108fa1',1,'lcd_draw_menuDecorations(byte menu):&#160;lcd_draw.ino'],['../polargraph_8h.html#aac23326481d50614b15a69099c108fa1',1,'lcd_draw_menuDecorations(byte menu):&#160;lcd_draw.ino']]],
   ['lcd_5fdrawbutton_358',['lcd_drawButton',['../lcd__draw_8ino.html#af1fe1b8cc4b0513b0c35b6647f3b662a',1,'lcd_drawButton(byte buttonPosition):&#160;lcd_draw.ino'],['../polargraph_8h.html#af1fe1b8cc4b0513b0c35b6647f3b662a',1,'lcd_drawButton(byte buttonPosition):&#160;lcd_draw.ino']]],
   ['lcd_5fdrawbuttonbackground_359',['lcd_drawButtonBackground',['../lcd__draw_8ino.html#a19f390137af00b567c82e54bd59774d6',1,'lcd_drawButtonBackground(byte buttonPosition):&#160;lcd_draw.ino'],['../polargraph_8h.html#a19f390137af00b567c82e54bd59774d6',1,'lcd_drawButtonBackground(byte buttonPosition):&#160;lcd_draw.ino']]],

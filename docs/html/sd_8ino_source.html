@@ -45,7 +45,6 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -60,452 +59,456 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_f94c183518104356f028f1dd2bc18996.html">polargraphserver</a></li><li class="navelem"><a class="el" href="dir_01a2950f708cc033dfeda9f59326bfa1.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">sd.ino</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="sd_8ino.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="polargraph_8h.html">polargraph.h</a>&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">// sd.ino</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="sd_8ino.html#aaa1e2182b6cf4ec8a522f0f1168dddf7">   17</a></span>&#160;<span class="keywordtype">boolean</span> <a class="code" href="sd_8ino.html#aaa1e2182b6cf4ec8a522f0f1168dddf7">useAutoStartFromSD</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">   18</a></span>&#160;String <a class="code" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a> = <span class="stringliteral">&quot;/AUTORUN.TXT&quot;</span>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="sd_8ino.html#a8fe9d7b887cfe19bc331b13bab73e41e">   19</a></span>&#160;<span class="keywordtype">boolean</span> <a class="code" href="sd_8ino.html#a8fe9d7b887cfe19bc331b13bab73e41e">autoStartFileFound</a> = <span class="keyword">false</span>;</div>
+<a href="sd_8ino.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">// sd.ino</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="sd_8ino.html#aaa1e2182b6cf4ec8a522f0f1168dddf7">   16</a></span>&#160;<span class="keywordtype">boolean</span> <a class="code" href="sd_8ino.html#aaa1e2182b6cf4ec8a522f0f1168dddf7">useAutoStartFromSD</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">   17</a></span>&#160;String <a class="code" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a> = <span class="stringliteral">&quot;/AUTORUN.TXT&quot;</span>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="sd_8ino.html#a8fe9d7b887cfe19bc331b13bab73e41e">   18</a></span>&#160;<span class="keywordtype">boolean</span> <a class="code" href="sd_8ino.html#a8fe9d7b887cfe19bc331b13bab73e41e">autoStartFileFound</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">/*  ==============================================================</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">    Processing the SD card if there is one attached.</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">=================================================================*/</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="polargraph_8h.html#ac72ebb115b2f94018d11bb4acb9070ef">   26</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#ac72ebb115b2f94018d11bb4acb9070ef">sd_initSD</a>()</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="sd_8ino.html#aaf959144ae51617400c475441163584f">sd_resetCard</a>();</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="sd_8ino.html#a3be35b4958d5f300015acc17ebb47660">sd_initAutoStartFile</a>();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="polargraph_8h.html#aaf959144ae51617400c475441163584f">   32</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#aaf959144ae51617400c475441163584f">sd_resetCard</a>()</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="polargraph_8ino.html#aa3f607f86a321f76e6086f909bea6caa">currentlyDrawingFromFile</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="polargraph_8ino.html#a965bfa641b6ee763a179fff79c497a77">currentlyDrawingFilename</a> = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="polargraph_8ino.html#af71e81430c5e9dcf74311e8a7a8e2673">cardPresent</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="polargraph_8ino.html#a94d46ccaf3e8f41bf7565d31932fed8d">cardInit</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a> = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <a class="code" href="sd_8ino.html#aa333e6c2ec4037564ff88e0c0637d24c">sd_simpleInit</a>();</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="polargraph_8h.html#aa333e6c2ec4037564ff88e0c0637d24c">   43</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#aa333e6c2ec4037564ff88e0c0637d24c">sd_simpleInit</a>() {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  pinMode(<a class="code" href="polargraph_8ino.html#aa3d6d0d9f7c5a96541112ef0cee2c7ab">sdChipSelectPin</a>, OUTPUT); <span class="comment">// necessary for SD card reading to work</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="comment">// see if the card is present and can be initialized:</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordtype">int</span> initValue = 0;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  initValue = SD.begin(<a class="code" href="polargraph_8ino.html#aa3d6d0d9f7c5a96541112ef0cee2c7ab">sdChipSelectPin</a>);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordflow">if</span> (initValue == 0) {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    Serial.println(<span class="stringliteral">&quot;Card failed, or not present&quot;</span>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    Serial.println(<span class="stringliteral">&quot;Successfully beginned.&quot;</span>);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="polargraph_8ino.html#af71e81430c5e9dcf74311e8a7a8e2673">cardPresent</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="polargraph_8ino.html#af71e81430c5e9dcf74311e8a7a8e2673">cardPresent</a>) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    uint8_t cardType = SD.cardType();</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span>(cardType == CARD_NONE){</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        Serial.println(<span class="stringliteral">&quot;No SD card attached&quot;</span>);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    Serial.print(<span class="stringliteral">&quot;SD Card Type: &quot;</span>);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">if</span>(cardType == CARD_MMC){</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        Serial.println(<span class="stringliteral">&quot;MMC&quot;</span>);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(cardType == CARD_SD){</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        Serial.println(<span class="stringliteral">&quot;SDSC&quot;</span>);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(cardType == CARD_SDHC){</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        Serial.println(<span class="stringliteral">&quot;SDHC&quot;</span>);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        Serial.println(<span class="stringliteral">&quot;UNKNOWN&quot;</span>);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    uint64_t cardSize = SD.cardSize() / (1024 * 1024);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    Serial.printf(<span class="stringliteral">&quot;SD Card Size: %lluMB\n&quot;</span>, cardSize);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    Serial.println(<span class="stringliteral">&quot;card initialized.&quot;</span>);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a> = SD.open(<span class="stringliteral">&quot;/&quot;</span>, FILE_READ);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="polargraph_8ino.html#a94d46ccaf3e8f41bf7565d31932fed8d">cardInit</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="sd_8ino.html#aaaaa9e1ca694a269261b1598a95c73bf">sd_printDirectory</a>(<a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>, 0);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    Serial.println(<span class="stringliteral">&quot;done!&quot;</span>);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">/*  ==============================================================</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">    Processing the SD card if there is one attached.</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">=================================================================*/</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="polargraph_8h.html#ac72ebb115b2f94018d11bb4acb9070ef">   25</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#ac72ebb115b2f94018d11bb4acb9070ef">sd_initSD</a>()</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <a class="code" href="sd_8ino.html#aaf959144ae51617400c475441163584f">sd_resetCard</a>();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <a class="code" href="sd_8ino.html#a3be35b4958d5f300015acc17ebb47660">sd_initAutoStartFile</a>();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="polargraph_8h.html#aaf959144ae51617400c475441163584f">   31</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#aaf959144ae51617400c475441163584f">sd_resetCard</a>()</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="polargraph_8ino.html#aa3f607f86a321f76e6086f909bea6caa">currentlyDrawingFromFile</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="polargraph_8ino.html#a965bfa641b6ee763a179fff79c497a77">currentlyDrawingFilename</a> = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <a class="code" href="polargraph_8ino.html#af71e81430c5e9dcf74311e8a7a8e2673">cardPresent</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="polargraph_8ino.html#a94d46ccaf3e8f41bf7565d31932fed8d">cardInit</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a> = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <a class="code" href="sd_8ino.html#aa333e6c2ec4037564ff88e0c0637d24c">sd_simpleInit</a>();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="polargraph_8h.html#aa333e6c2ec4037564ff88e0c0637d24c">   42</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#aa333e6c2ec4037564ff88e0c0637d24c">sd_simpleInit</a>() {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  pinMode(<a class="code" href="polargraph_8ino.html#aa3d6d0d9f7c5a96541112ef0cee2c7ab">sdChipSelectPin</a>, OUTPUT); <span class="comment">// necessary for SD card reading to work</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="comment">// see if the card is present and can be initialized:</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordtype">int</span> initValue = 0;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  initValue = SD.begin(<a class="code" href="polargraph_8ino.html#aa3d6d0d9f7c5a96541112ef0cee2c7ab">sdChipSelectPin</a>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">if</span> (initValue == 0) {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    Serial.println(<span class="stringliteral">&quot;Card failed, or not present&quot;</span>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    Serial.println(<span class="stringliteral">&quot;Successfully beginned.&quot;</span>);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="polargraph_8ino.html#af71e81430c5e9dcf74311e8a7a8e2673">cardPresent</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="polargraph_8ino.html#af71e81430c5e9dcf74311e8a7a8e2673">cardPresent</a>) {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    uint8_t cardType = SD.cardType();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">if</span>(cardType == CARD_NONE){</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        Serial.println(<span class="stringliteral">&quot;No SD card attached&quot;</span>);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    Serial.print(<span class="stringliteral">&quot;SD Card Type: &quot;</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">if</span>(cardType == CARD_MMC){</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        Serial.println(<span class="stringliteral">&quot;MMC&quot;</span>);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(cardType == CARD_SD){</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        Serial.println(<span class="stringliteral">&quot;SDSC&quot;</span>);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(cardType == CARD_SDHC){</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        Serial.println(<span class="stringliteral">&quot;SDHC&quot;</span>);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        Serial.println(<span class="stringliteral">&quot;UNKNOWN&quot;</span>);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    uint64_t cardSize = SD.cardSize() / (1024 * 1024);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    Serial.printf(<span class="stringliteral">&quot;SD Card Size: %lluMB\n&quot;</span>, cardSize);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    Serial.println(<span class="stringliteral">&quot;card initialized.&quot;</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a> = SD.open(<span class="stringliteral">&quot;/&quot;</span>, FILE_READ);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="polargraph_8ino.html#a94d46ccaf3e8f41bf7565d31932fed8d">cardInit</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="sd_8ino.html#aaaaa9e1ca694a269261b1598a95c73bf">sd_printDirectory</a>(<a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>, 0);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    Serial.println(<span class="stringliteral">&quot;done!&quot;</span>);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  }</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="polargraph_8h.html#aaaaa9e1ca694a269261b1598a95c73bf">   90</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#aaaaa9e1ca694a269261b1598a95c73bf">sd_printDirectory</a>(File dir, <span class="keywordtype">int</span> numTabs)</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;   <span class="keywordflow">while</span>(<span class="keyword">true</span>) {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;     File entry =  dir.openNextFile();</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;     <span class="keywordflow">if</span> (! entry) {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;       <span class="comment">// no more files</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;       Serial.println(<span class="stringliteral">&quot;...&quot;</span>);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;       <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;     }</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;     <span class="keywordflow">for</span> (uint8_t i=0; i&lt;numTabs; i++) {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;       Serial.print(<span class="charliteral">&#39;\t&#39;</span>);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;     }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;     Serial.print(<span class="stringliteral">&quot;File found: &quot;</span>);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;     Serial.print(entry.name());</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;     <span class="keywordflow">if</span> (entry.isDirectory()) {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;       Serial.println(<span class="stringliteral">&quot;/&quot;</span>);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;       <a class="code" href="sd_8ino.html#aaaaa9e1ca694a269261b1598a95c73bf">sd_printDirectory</a>(entry, numTabs+1);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;     } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;       <span class="comment">// files have sizes, directories do not</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;       Serial.print(<span class="stringliteral">&quot;\t\t&quot;</span>);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;       Serial.println(entry.size(), DEC);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;     }</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;     entry.close();</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   }</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="polargraph_8h.html#aa95a0ff8f15f1423edd7c3cd0a217999">  116</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#aa95a0ff8f15f1423edd7c3cd0a217999">sd_storeCommand</a>(String command)</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;{</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="comment">// delete file if it exists</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="keywordtype">char</span> filename[<a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a>.length()+1];</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a>.toCharArray(filename, <a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a>.length()+1);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  File storeFile = SD.open(filename, FILE_WRITE);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <span class="comment">// if the file opened okay, write to it:</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  <span class="keywordflow">if</span> (storeFile)</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  {</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    Serial.print(<span class="stringliteral">&quot;Writing to file &quot;</span>);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    Serial.println(<a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a>);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    storeFile.println(command);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="comment">// close the file:</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    storeFile.close();</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    Serial.println(<span class="stringliteral">&quot;done.&quot;</span>);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  }</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  {</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="comment">// if the file didn&#39;t open, print an error:</span></div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    Serial.print(<span class="stringliteral">&quot;error opening &quot;</span>);</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    Serial.println(<a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a>);</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  }</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;}</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="sd_8ino.html#aac75a6d08b4c09015e50ea90ce0b0494">  149</a></span>&#160;<span class="keywordtype">boolean</span> <a class="code" href="sd_8ino.html#aac75a6d08b4c09015e50ea90ce0b0494">sd_openPbm</a>(String pbmFilename)</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;{</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <span class="keywordtype">char</span> filename[pbmFilename.length()+1];</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  pbmFilename.toCharArray(filename, pbmFilename.length()+1);</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a> = SD.open(filename, FILE_READ);</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  <span class="keywordflow">if</span> (! <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>)</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  {</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    Serial.println(<span class="stringliteral">&quot;didnt find image&quot;</span>);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  }</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  <span class="keywordflow">if</span> (! <a class="code" href="sd_8ino.html#a236e77b88a4938d1c38fcb5deda74976">sd_pbmReadHeader</a>())</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  {</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;     Serial.println(<span class="stringliteral">&quot;bad pbm&quot;</span>);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;     <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  }</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  <a class="code" href="polargraph_8ino.html#a568817d600d6374ad747ca8ad532c8de">pbmFileLength</a> = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.size();</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;}</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno"><a class="line" href="sd_8ino.html#a8a20f299c50e0548271d6af4378f9ff2">  172</a></span>&#160;<span class="keywordtype">byte</span> <a class="code" href="sd_8ino.html#a8a20f299c50e0548271d6af4378f9ff2">sd_getBrightnessAtPixel</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y)</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;{</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  Serial.print(<span class="stringliteral">&quot;Pixel x:&quot;</span>);</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  Serial.print(x);</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  Serial.print(<span class="stringliteral">&quot;, y:&quot;</span>);</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  Serial.println(y);</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  Serial.print(<span class="stringliteral">&quot;PbmImageOffset:&quot;</span>);</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  Serial.println(<a class="code" href="polargraph_8ino.html#a6fe4e7d3a6eacdefcc9914f9d5eb7fa1">pbmImageoffset</a>);</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  Serial.print(<span class="stringliteral">&quot;pbmWidth:&quot;</span>);</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  Serial.println(<a class="code" href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a>);</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  <span class="keywordtype">long</span> addressToSeek = (<a class="code" href="polargraph_8ino.html#a6fe4e7d3a6eacdefcc9914f9d5eb7fa1">pbmImageoffset</a> + (y * <a class="code" href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a>) + x);</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  Serial.print(<span class="stringliteral">&quot;Address:&quot;</span>);</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  Serial.print(addressToSeek);</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <span class="keywordflow">if</span> (addressToSeek &gt; <a class="code" href="polargraph_8ino.html#a568817d600d6374ad747ca8ad532c8de">pbmFileLength</a>)</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  {</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  }</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  {</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.seek(addressToSeek);</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keywordtype">byte</span> pixelValue = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    Serial.print(<span class="stringliteral">&quot;, Pixel value:&quot;</span>);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    Serial.println(pixelValue);</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="keywordflow">return</span> pixelValue;</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  }</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;}</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
-<div class="line"><a name="l00201"></a><span class="lineno"><a class="line" href="sd_8ino.html#a236e77b88a4938d1c38fcb5deda74976">  201</a></span>&#160;<span class="keywordtype">boolean</span> <a class="code" href="sd_8ino.html#a236e77b88a4938d1c38fcb5deda74976">sd_pbmReadHeader</a>()</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;{</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.seek(0);</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="comment">// read header</span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="keywordtype">char</span> buf;</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  String magicNumber = <span class="stringliteral">&quot;  &quot;</span>;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  magicNumber[0] = buf;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160; </div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  magicNumber[1] = buf;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  <span class="keywordflow">if</span> (magicNumber != <span class="stringliteral">&quot;P5&quot;</span>)</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  {</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    Serial.print(<span class="stringliteral">&quot;This isn&#39;t a P5 file. It&#39;s a &quot;</span>);</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    Serial.print(magicNumber);</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    Serial.println(<span class="stringliteral">&quot; file, and that&#39;s no good.&quot;</span>);</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  }</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    Serial.println(<span class="stringliteral">&quot;This is a very good file Herr Doktor!&quot;</span>);</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read(); <span class="comment">// this is a blank</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  <span class="comment">// get image width</span></div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  String numberString = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  <span class="comment">// photoshop puts a linebreak (0A) inbetween the width &amp; height,</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  <span class="comment">// GIMP puts a space (20).</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <span class="keywordflow">while</span> (buf != 0x0A &amp;&amp; buf != 0x20)</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  {</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="comment">// check for comments, these start with a # - hex 23</span></div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordflow">if</span> (buf == 0x23)</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    {</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;      <span class="keywordflow">while</span> (buf != 0x0A)</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read(); <span class="comment">// just loop through until we get to the end of the comment</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    }</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    numberString = numberString + buf;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  }</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  Serial.print(<span class="stringliteral">&quot;PBM width:&quot;</span>);</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  Serial.println(numberString);</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  <span class="keywordtype">char</span> paramChar[numberString.length() + 1];</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  numberString.toCharArray(paramChar, numberString.length() + 1);</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  <a class="code" href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a> = atoi(paramChar);</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a> &lt; 10)</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  {</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    Serial.println(F(<span class="stringliteral">&quot;PBM image must be at least 10 pixels wide.&quot;</span>));</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  }</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  <span class="comment">// get image height</span></div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  numberString = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  <span class="keywordflow">while</span> (buf != 0x0A)</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  {</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="comment">// check for comments, these start with a # - hex 23</span></div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordflow">if</span> (buf == 0x23)</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    {</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      <span class="keywordflow">while</span> (buf != 0x0A)</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read(); <span class="comment">// just loop through until we get to the end of the comment</span></div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    }</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    numberString = numberString + buf;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  }</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160; </div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  Serial.print(<span class="stringliteral">&quot;PBM height:&quot;</span>);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  Serial.println(numberString);</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  paramChar[numberString.length() + 1];</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  numberString.toCharArray(paramChar, numberString.length() + 1);</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  <a class="code" href="polargraph_8ino.html#ad22d05f7dda3cbcf6b239a2ee0a66c7e">pbmHeight</a> = atoi(paramChar);</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  <span class="comment">// work out aspect ratio</span></div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  <a class="code" href="polargraph_8ino.html#add1d8bc9aab071b1c64e0a3c3920e282">pbmAspectRatio</a> = float(<a class="code" href="polargraph_8ino.html#ad22d05f7dda3cbcf6b239a2ee0a66c7e">pbmHeight</a>) / float(<a class="code" href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a>);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  Serial.print(<span class="stringliteral">&quot;PBM aspect ratio:&quot;</span>);</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;  Serial.println(<a class="code" href="polargraph_8ino.html#add1d8bc9aab071b1c64e0a3c3920e282">pbmAspectRatio</a>);</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  <span class="comment">// get image depth</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  numberString = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  <span class="keywordflow">while</span> (buf != 0x0A)</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  {</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    numberString = numberString + buf;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  }</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  Serial.print(<span class="stringliteral">&quot;Numberstring depth:&quot;</span>);</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  Serial.println(numberString);</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  paramChar[numberString.length() + 1];</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  numberString.toCharArray(paramChar, numberString.length() + 1);</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  <a class="code" href="polargraph_8ino.html#a48ff66a34864a15e439c6071ea1d9406">pbmDepth</a> = atoi(paramChar);</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <a class="code" href="polargraph_8ino.html#a6fe4e7d3a6eacdefcc9914f9d5eb7fa1">pbmImageoffset</a> = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.position();</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  Serial.print(<span class="stringliteral">&quot;Image offset:&quot;</span>);</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  Serial.println(<a class="code" href="polargraph_8ino.html#a6fe4e7d3a6eacdefcc9914f9d5eb7fa1">pbmImageoffset</a>);</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;}</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
-<div class="line"><a name="l00307"></a><span class="lineno"><a class="line" href="polargraph_8h.html#a3be35b4958d5f300015acc17ebb47660">  307</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#a3be35b4958d5f300015acc17ebb47660">sd_initAutoStartFile</a>() {</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="sd_8ino.html#aaa1e2182b6cf4ec8a522f0f1168dddf7">useAutoStartFromSD</a>) {</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    File readFile = SD.open(<a class="code" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a>, FILE_READ);</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <span class="keywordflow">if</span> (readFile)</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    {</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;      readFile.close();</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;      <a class="code" href="sd_8ino.html#a8fe9d7b887cfe19bc331b13bab73e41e">autoStartFileFound</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;      Serial.println(<span class="stringliteral">&quot;Autostart file couldn&#39;t be opened: &quot;</span> + <a class="code" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a>);</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    }</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  }</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;}</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
-<div class="line"><a name="l00320"></a><span class="lineno"><a class="line" href="polargraph_8h.html#a3b19449948f1f88a5129eeb235085421">  320</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#a3b19449948f1f88a5129eeb235085421">sd_autorunSD</a>() {</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="sd_8ino.html#a8fe9d7b887cfe19bc331b13bab73e41e">autoStartFileFound</a>) {</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    <span class="comment">// attempt to open the file</span></div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    Serial.print(<span class="stringliteral">&quot;Auto executing:&quot;</span>);</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    Serial.println(<a class="code" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a>);</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    delay(4000);</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <a class="code" href="impl__ps_8ino.html#a8b64fe56d1f369a88a7af752285d82e6">impl_exec_execFromStore</a>(<a class="code" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a>);</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  }</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;}</div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="polargraph_8h.html#aaaaa9e1ca694a269261b1598a95c73bf">   89</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#aaaaa9e1ca694a269261b1598a95c73bf">sd_printDirectory</a>(File dir, <span class="keywordtype">int</span> numTabs)</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;{</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;   <span class="keywordflow">while</span>(<span class="keyword">true</span>) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;     File entry =  dir.openNextFile();</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;     <span class="keywordflow">if</span> (! entry) {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;       <span class="comment">// no more files</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;       Serial.println(<span class="stringliteral">&quot;...&quot;</span>);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;       <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;     }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;     <span class="keywordflow">for</span> (uint8_t i=0; i&lt;numTabs; i++) {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;       Serial.print(<span class="charliteral">&#39;\t&#39;</span>);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;     }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;     Serial.print(<span class="stringliteral">&quot;File found: &quot;</span>);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;     Serial.print(entry.name());</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;     <span class="keywordflow">if</span> (entry.isDirectory()) {</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;       Serial.println(<span class="stringliteral">&quot;/&quot;</span>);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;       <a class="code" href="sd_8ino.html#aaaaa9e1ca694a269261b1598a95c73bf">sd_printDirectory</a>(entry, numTabs+1);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;     } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;       <span class="comment">// files have sizes, directories do not</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;       Serial.print(<span class="stringliteral">&quot;\t\t&quot;</span>);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;       Serial.println(entry.size(), DEC);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;     }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;     entry.close();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;   }</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="polargraph_8h.html#aa95a0ff8f15f1423edd7c3cd0a217999">  115</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#aa95a0ff8f15f1423edd7c3cd0a217999">sd_storeCommand</a>(String command)</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;{</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <span class="comment">// delete file if it exists</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordtype">char</span> filename[<a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a>.length()+1];</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a>.toCharArray(filename, <a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a>.length()+1);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  File storeFile = SD.open(filename, FILE_WRITE);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <span class="comment">// if the file opened okay, write to it:</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <span class="keywordflow">if</span> (storeFile)</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  {</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    Serial.print(<span class="stringliteral">&quot;Writing to file &quot;</span>);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    Serial.println(<a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a>);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    storeFile.println(command);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="comment">// close the file:</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    storeFile.close();</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    Serial.println(<span class="stringliteral">&quot;done.&quot;</span>);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  }</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  {</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="comment">// if the file didn&#39;t open, print an error:</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    Serial.print(<span class="stringliteral">&quot;error opening &quot;</span>);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    Serial.println(<a class="code" href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a>);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  }</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;}</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno"><a class="line" href="sd_8ino.html#aac75a6d08b4c09015e50ea90ce0b0494">  148</a></span>&#160;<span class="keywordtype">boolean</span> <a class="code" href="sd_8ino.html#aac75a6d08b4c09015e50ea90ce0b0494">sd_openPbm</a>(String pbmFilename)</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;{</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <span class="keywordtype">char</span> filename[pbmFilename.length()+1];</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  pbmFilename.toCharArray(filename, pbmFilename.length()+1);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a> = SD.open(filename, FILE_READ);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  <span class="keywordflow">if</span> (! <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>)</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  {</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    Serial.println(<span class="stringliteral">&quot;didnt find image&quot;</span>);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="keywordflow">if</span> (! <a class="code" href="sd_8ino.html#a236e77b88a4938d1c38fcb5deda74976">sd_pbmReadHeader</a>())</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  {</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;     Serial.println(<span class="stringliteral">&quot;bad pbm&quot;</span>);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;     <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  }</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <a class="code" href="polargraph_8ino.html#a568817d600d6374ad747ca8ad532c8de">pbmFileLength</a> = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.size();</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;}</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="sd_8ino.html#a8a20f299c50e0548271d6af4378f9ff2">  171</a></span>&#160;<span class="keywordtype">byte</span> <a class="code" href="sd_8ino.html#a8a20f299c50e0548271d6af4378f9ff2">sd_getBrightnessAtPixel</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y)</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;{</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  Serial.print(<span class="stringliteral">&quot;Pixel x:&quot;</span>);</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  Serial.print(x);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  Serial.print(<span class="stringliteral">&quot;, y:&quot;</span>);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  Serial.println(y);</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  Serial.print(<span class="stringliteral">&quot;PbmImageOffset:&quot;</span>);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  Serial.println(<a class="code" href="polargraph_8ino.html#a6fe4e7d3a6eacdefcc9914f9d5eb7fa1">pbmImageoffset</a>);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  Serial.print(<span class="stringliteral">&quot;pbmWidth:&quot;</span>);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  Serial.println(<a class="code" href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a>);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160; </div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <span class="keywordtype">long</span> addressToSeek = (<a class="code" href="polargraph_8ino.html#a6fe4e7d3a6eacdefcc9914f9d5eb7fa1">pbmImageoffset</a> + (y * <a class="code" href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a>) + x);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  Serial.print(<span class="stringliteral">&quot;Address:&quot;</span>);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  Serial.print(addressToSeek);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  <span class="keywordflow">if</span> (addressToSeek &gt; <a class="code" href="polargraph_8ino.html#a568817d600d6374ad747ca8ad532c8de">pbmFileLength</a>)</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  {</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  }</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  {</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.seek(addressToSeek);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordtype">byte</span> pixelValue = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    Serial.print(<span class="stringliteral">&quot;, Pixel value:&quot;</span>);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    Serial.println(pixelValue);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="keywordflow">return</span> pixelValue;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  }</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;}</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
+<div class="line"><a name="l00200"></a><span class="lineno"><a class="line" href="sd_8ino.html#a236e77b88a4938d1c38fcb5deda74976">  200</a></span>&#160;<span class="keywordtype">boolean</span> <a class="code" href="sd_8ino.html#a236e77b88a4938d1c38fcb5deda74976">sd_pbmReadHeader</a>()</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;{</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.seek(0);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  <span class="comment">// read header</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="keywordtype">char</span> buf;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  String magicNumber = <span class="stringliteral">&quot;  &quot;</span>;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  magicNumber[0] = buf;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  magicNumber[1] = buf;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  <span class="keywordflow">if</span> (magicNumber != <span class="stringliteral">&quot;P5&quot;</span>)</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  {</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    Serial.print(<span class="stringliteral">&quot;This isn&#39;t a P5 file. It&#39;s a &quot;</span>);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    Serial.print(magicNumber);</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    Serial.println(<span class="stringliteral">&quot; file, and that&#39;s no good.&quot;</span>);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  }</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    Serial.println(<span class="stringliteral">&quot;This is a very good file Herr Doktor!&quot;</span>);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read(); <span class="comment">// this is a blank</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  <span class="comment">// get image width</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  String numberString = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  <span class="comment">// photoshop puts a linebreak (0A) inbetween the width &amp; height,</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  <span class="comment">// GIMP puts a space (20).</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  <span class="keywordflow">while</span> (buf != 0x0A &amp;&amp; buf != 0x20)</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  {</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="comment">// check for comments, these start with a # - hex 23</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordflow">if</span> (buf == 0x23)</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    {</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;      <span class="keywordflow">while</span> (buf != 0x0A)</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read(); <span class="comment">// just loop through until we get to the end of the comment</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    }</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    numberString = numberString + buf;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  }</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;  Serial.print(<span class="stringliteral">&quot;PBM width:&quot;</span>);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  Serial.println(numberString);</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  <span class="keywordtype">char</span> paramChar[numberString.length() + 1];</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  numberString.toCharArray(paramChar, numberString.length() + 1);</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  <a class="code" href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a> = atoi(paramChar);</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a> &lt; 10)</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  {</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    Serial.println(F(<span class="stringliteral">&quot;PBM image must be at least 10 pixels wide.&quot;</span>));</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  }</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160; </div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  <span class="comment">// get image height</span></div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  numberString = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  <span class="keywordflow">while</span> (buf != 0x0A)</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  {</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="comment">// check for comments, these start with a # - hex 23</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="keywordflow">if</span> (buf == 0x23)</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    {</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;      <span class="keywordflow">while</span> (buf != 0x0A)</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read(); <span class="comment">// just loop through until we get to the end of the comment</span></div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    }</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    numberString = numberString + buf;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  }</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  Serial.print(<span class="stringliteral">&quot;PBM height:&quot;</span>);</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  Serial.println(numberString);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160; </div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  paramChar[numberString.length() + 1];</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  numberString.toCharArray(paramChar, numberString.length() + 1);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  <a class="code" href="polargraph_8ino.html#ad22d05f7dda3cbcf6b239a2ee0a66c7e">pbmHeight</a> = atoi(paramChar);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160; </div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  <span class="comment">// work out aspect ratio</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  <a class="code" href="polargraph_8ino.html#add1d8bc9aab071b1c64e0a3c3920e282">pbmAspectRatio</a> = float(<a class="code" href="polargraph_8ino.html#ad22d05f7dda3cbcf6b239a2ee0a66c7e">pbmHeight</a>) / float(<a class="code" href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a>);</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  Serial.print(<span class="stringliteral">&quot;PBM aspect ratio:&quot;</span>);</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  Serial.println(<a class="code" href="polargraph_8ino.html#add1d8bc9aab071b1c64e0a3c3920e282">pbmAspectRatio</a>);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  <span class="comment">// get image depth</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  numberString = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  <span class="keywordflow">while</span> (buf != 0x0A)</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  {</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    numberString = numberString + buf;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    buf = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.read();</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  }</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  Serial.print(<span class="stringliteral">&quot;Numberstring depth:&quot;</span>);</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  Serial.println(numberString);</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  paramChar[numberString.length() + 1];</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  numberString.toCharArray(paramChar, numberString.length() + 1);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  <a class="code" href="polargraph_8ino.html#a48ff66a34864a15e439c6071ea1d9406">pbmDepth</a> = atoi(paramChar);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <a class="code" href="polargraph_8ino.html#a6fe4e7d3a6eacdefcc9914f9d5eb7fa1">pbmImageoffset</a> = <a class="code" href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a>.position();</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  Serial.print(<span class="stringliteral">&quot;Image offset:&quot;</span>);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  Serial.println(<a class="code" href="polargraph_8ino.html#a6fe4e7d3a6eacdefcc9914f9d5eb7fa1">pbmImageoffset</a>);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;}</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
+<div class="line"><a name="l00306"></a><span class="lineno"><a class="line" href="polargraph_8h.html#a3be35b4958d5f300015acc17ebb47660">  306</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#a3be35b4958d5f300015acc17ebb47660">sd_initAutoStartFile</a>() {</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="sd_8ino.html#aaa1e2182b6cf4ec8a522f0f1168dddf7">useAutoStartFromSD</a>) {</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    File readFile = SD.open(<a class="code" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a>, FILE_READ);</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="keywordflow">if</span> (readFile)</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    {</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;      readFile.close();</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;      <a class="code" href="sd_8ino.html#a8fe9d7b887cfe19bc331b13bab73e41e">autoStartFileFound</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;      Serial.println(<span class="stringliteral">&quot;Autostart file couldn&#39;t be opened: &quot;</span> + <a class="code" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a>);</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    }</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;  }</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;}</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
+<div class="line"><a name="l00319"></a><span class="lineno"><a class="line" href="polargraph_8h.html#a3b19449948f1f88a5129eeb235085421">  319</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sd_8ino.html#a3b19449948f1f88a5129eeb235085421">sd_autorunSD</a>() {</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="sd_8ino.html#a8fe9d7b887cfe19bc331b13bab73e41e">autoStartFileFound</a>) {</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <span class="comment">// attempt to open the file</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    Serial.print(<span class="stringliteral">&quot;Auto executing:&quot;</span>);</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    Serial.println(<a class="code" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a>);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    delay(4000);</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <a class="code" href="impl__ps_8ino.html#a8b64fe56d1f369a88a7af752285d82e6">impl_exec_execFromStore</a>(<a class="code" href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a>);</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  }</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;}</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
-<div class="line"><a name="l00332"></a><span class="lineno"><a class="line" href="sd_8ino.html#a581aee3628bc9920894f423089f6e078">  332</a></span>&#160;String <a class="code" href="sd_8ino.html#a581aee3628bc9920894f423089f6e078">sd_loadFilename</a>(String selectedFilename, <span class="keywordtype">int</span> direction)</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;{</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  Serial.print(<span class="stringliteral">&quot;Current command filename: &quot;</span>);</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  Serial.println(selectedFilename);</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  Serial.println(<span class="stringliteral">&quot;Loading filename.&quot;</span>);</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="comment">// start from the beginning</span></div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="comment">//  root = SD.open(&quot;/&quot;);</span></div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.rewindDirectory();</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  <span class="comment">// deal with first showing</span></div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  <span class="keywordflow">if</span> (selectedFilename == <span class="stringliteral">&quot;&quot;</span>) {</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    File entry =  <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.openNextFile();</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <span class="keywordflow">if</span> (entry)</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;      selectedFilename = entry.name();</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    entry.close();</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  }</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keywordflow">if</span> (direction &gt; 0) {</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;      selectedFilename = <a class="code" href="sd_8ino.html#a65e9cb33edc7ff357afc2ed503a4ed52">sd_getNextFile</a>(selectedFilename);</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    }</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (direction &lt; 0) {</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;      selectedFilename = <a class="code" href="sd_8ino.html#a66e4a9e52cb276160277730f8441f386">sd_getPreviousFile</a>(selectedFilename);</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    }</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  }</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160; </div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  Serial.print(<span class="stringliteral">&quot;Now command filename: &quot;</span>);</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  Serial.println(selectedFilename);</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160; </div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  <span class="keywordflow">return</span> selectedFilename;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;}</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160; </div>
-<div class="line"><a name="l00364"></a><span class="lineno"><a class="line" href="sd_8ino.html#a65e9cb33edc7ff357afc2ed503a4ed52">  364</a></span>&#160;String <a class="code" href="sd_8ino.html#a65e9cb33edc7ff357afc2ed503a4ed52">sd_getNextFile</a>(String selectedFilename) {</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  <span class="keywordtype">boolean</span> found = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  <span class="keywordflow">while</span>(!found) {</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    File entry = <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.openNextFile();</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;<span class="comment">//    Serial.println(entry.name());</span></div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="keywordflow">if</span> (entry) {</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;      <span class="keywordflow">if</span> (selectedFilename.equals(entry.name())) {</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;        Serial.println(<span class="stringliteral">&quot;Found file!&quot;</span>);</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        found = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;        entry.close();</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        <span class="comment">// looking for next file</span></div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        entry = <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.openNextFile();</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;        <span class="keywordflow">if</span> (entry) {</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;          selectedFilename = entry.name();</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        }</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;        entry.close();</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;      }</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    }</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;      found = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    }</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160; </div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    entry.close();</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;  }</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;  <span class="keywordflow">return</span> selectedFilename;</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;}</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160; </div>
-<div class="line"><a name="l00392"></a><span class="lineno"><a class="line" href="sd_8ino.html#a66e4a9e52cb276160277730f8441f386">  392</a></span>&#160;String <a class="code" href="sd_8ino.html#a66e4a9e52cb276160277730f8441f386">sd_getPreviousFile</a>(String selectedFilename) {</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;  <span class="comment">// boolean fileIncremented = false;</span></div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;  String prevFilename = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160; </div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;  <span class="comment">// see if it is the first one, and just return straight away if so</span></div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;  File entry =  <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.openNextFile();</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;  <span class="keywordflow">if</span> (entry) {</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;    <span class="keywordflow">if</span> (selectedFilename.equals(entry.name())) {</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;      Serial.println(<span class="stringliteral">&quot;ent2&quot;</span>);</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;      entry.close();</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;      <span class="keywordflow">return</span> selectedFilename;</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    }</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;  }</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160; </div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;  <span class="comment">// else go through and find the currently selected file, and keep track of the previous filename</span></div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;  prevFilename = entry.name();</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;  Serial.print(<span class="stringliteral">&quot;Prev file: &quot;</span>);</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;  Serial.println(prevFilename);</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160; </div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;  <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;      entry.close();</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;      entry =  <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.openNextFile();</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;      <span class="keywordflow">if</span> (entry) {</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;<span class="comment">//        Serial.print(&quot;next file: &quot;);</span></div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;<span class="comment">//        Serial.println(entry.name());</span></div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        <span class="keywordflow">if</span> (selectedFilename.equals(entry.name())) {</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;          selectedFilename = prevFilename;</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;          <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;        }</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;        <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;          prevFilename = entry.name();</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;        }</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;      }</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;  }</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;  entry.close();</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;  <span class="keywordflow">return</span> selectedFilename;</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;}</div>
-<div class="ttc" id="aimpl__ps_8ino_html_a8b64fe56d1f369a88a7af752285d82e6"><div class="ttname"><a href="impl__ps_8ino.html#a8b64fe56d1f369a88a7af752285d82e6">impl_exec_execFromStore</a></div><div class="ttdeci">void impl_exec_execFromStore()</div><div class="ttdef"><b>Definition:</b> <a href="impl__ps_8ino_source.html#l00116">impl_ps.ino:116</a></div></div>
-<div class="ttc" id="apolargraph_8h_html"><div class="ttname"><a href="polargraph_8h.html">polargraph.h</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_a0ea69180c0ea0aa47f9faa9cca8c3e68"><div class="ttname"><a href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a></div><div class="ttdeci">File pbmFile</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00473">polargraph.ino:473</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_a1859aa3abeb9f54662bf4e5963224ee7"><div class="ttname"><a href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a></div><div class="ttdeci">File root</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00467">polargraph.ino:467</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_a239e839276b09a1995faa6674677bc5b"><div class="ttname"><a href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a></div><div class="ttdeci">long pbmWidth</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00476">polargraph.ino:476</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_a48ff66a34864a15e439c6071ea1d9406"><div class="ttname"><a href="polargraph_8ino.html#a48ff66a34864a15e439c6071ea1d9406">pbmDepth</a></div><div class="ttdeci">int pbmDepth</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00478">polargraph.ino:478</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_a568817d600d6374ad747ca8ad532c8de"><div class="ttname"><a href="polargraph_8ino.html#a568817d600d6374ad747ca8ad532c8de">pbmFileLength</a></div><div class="ttdeci">long pbmFileLength</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00479">polargraph.ino:479</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_a6fe4e7d3a6eacdefcc9914f9d5eb7fa1"><div class="ttname"><a href="polargraph_8ino.html#a6fe4e7d3a6eacdefcc9914f9d5eb7fa1">pbmImageoffset</a></div><div class="ttdeci">int pbmImageoffset</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00478">polargraph.ino:478</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_a94d46ccaf3e8f41bf7565d31932fed8d"><div class="ttname"><a href="polargraph_8ino.html#a94d46ccaf3e8f41bf7565d31932fed8d">cardInit</a></div><div class="ttdeci">boolean cardInit</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00469">polargraph.ino:469</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_a9562e10779e45b673844312a7fd23aec"><div class="ttname"><a href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a></div><div class="ttdeci">String commandFilename</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00460">polargraph.ino:460</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_a965bfa641b6ee763a179fff79c497a77"><div class="ttname"><a href="polargraph_8ino.html#a965bfa641b6ee763a179fff79c497a77">currentlyDrawingFilename</a></div><div class="ttdeci">String currentlyDrawingFilename</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00489">polargraph.ino:489</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_aa3d6d0d9f7c5a96541112ef0cee2c7ab"><div class="ttname"><a href="polargraph_8ino.html#aa3d6d0d9f7c5a96541112ef0cee2c7ab">sdChipSelectPin</a></div><div class="ttdeci">const int sdChipSelectPin</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00463">polargraph.ino:463</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_aa3f607f86a321f76e6086f909bea6caa"><div class="ttname"><a href="polargraph_8ino.html#aa3f607f86a321f76e6086f909bea6caa">currentlyDrawingFromFile</a></div><div class="ttdeci">boolean currentlyDrawingFromFile</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00488">polargraph.ino:488</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_ad22d05f7dda3cbcf6b239a2ee0a66c7e"><div class="ttname"><a href="polargraph_8ino.html#ad22d05f7dda3cbcf6b239a2ee0a66c7e">pbmHeight</a></div><div class="ttdeci">long pbmHeight</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00476">polargraph.ino:476</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_add1d8bc9aab071b1c64e0a3c3920e282"><div class="ttname"><a href="polargraph_8ino.html#add1d8bc9aab071b1c64e0a3c3920e282">pbmAspectRatio</a></div><div class="ttdeci">float pbmAspectRatio</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00480">polargraph.ino:480</a></div></div>
-<div class="ttc" id="apolargraph_8ino_html_af71e81430c5e9dcf74311e8a7a8e2673"><div class="ttname"><a href="polargraph_8ino.html#af71e81430c5e9dcf74311e8a7a8e2673">cardPresent</a></div><div class="ttdeci">boolean cardPresent</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00468">polargraph.ino:468</a></div></div>
-<div class="ttc" id="asd_8ino_html_a0ee0421c25b13097112077e786b56e7d"><div class="ttname"><a href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a></div><div class="ttdeci">String autoStartFilename</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00018">sd.ino:18</a></div></div>
-<div class="ttc" id="asd_8ino_html_a236e77b88a4938d1c38fcb5deda74976"><div class="ttname"><a href="sd_8ino.html#a236e77b88a4938d1c38fcb5deda74976">sd_pbmReadHeader</a></div><div class="ttdeci">boolean sd_pbmReadHeader()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00201">sd.ino:201</a></div></div>
-<div class="ttc" id="asd_8ino_html_a3b19449948f1f88a5129eeb235085421"><div class="ttname"><a href="sd_8ino.html#a3b19449948f1f88a5129eeb235085421">sd_autorunSD</a></div><div class="ttdeci">void sd_autorunSD()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00320">sd.ino:320</a></div></div>
-<div class="ttc" id="asd_8ino_html_a3be35b4958d5f300015acc17ebb47660"><div class="ttname"><a href="sd_8ino.html#a3be35b4958d5f300015acc17ebb47660">sd_initAutoStartFile</a></div><div class="ttdeci">void sd_initAutoStartFile()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00307">sd.ino:307</a></div></div>
-<div class="ttc" id="asd_8ino_html_a581aee3628bc9920894f423089f6e078"><div class="ttname"><a href="sd_8ino.html#a581aee3628bc9920894f423089f6e078">sd_loadFilename</a></div><div class="ttdeci">String sd_loadFilename(String selectedFilename, int direction)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00332">sd.ino:332</a></div></div>
-<div class="ttc" id="asd_8ino_html_a65e9cb33edc7ff357afc2ed503a4ed52"><div class="ttname"><a href="sd_8ino.html#a65e9cb33edc7ff357afc2ed503a4ed52">sd_getNextFile</a></div><div class="ttdeci">String sd_getNextFile(String selectedFilename)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00364">sd.ino:364</a></div></div>
-<div class="ttc" id="asd_8ino_html_a66e4a9e52cb276160277730f8441f386"><div class="ttname"><a href="sd_8ino.html#a66e4a9e52cb276160277730f8441f386">sd_getPreviousFile</a></div><div class="ttdeci">String sd_getPreviousFile(String selectedFilename)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00392">sd.ino:392</a></div></div>
-<div class="ttc" id="asd_8ino_html_a8a20f299c50e0548271d6af4378f9ff2"><div class="ttname"><a href="sd_8ino.html#a8a20f299c50e0548271d6af4378f9ff2">sd_getBrightnessAtPixel</a></div><div class="ttdeci">byte sd_getBrightnessAtPixel(int x, int y)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00172">sd.ino:172</a></div></div>
-<div class="ttc" id="asd_8ino_html_a8fe9d7b887cfe19bc331b13bab73e41e"><div class="ttname"><a href="sd_8ino.html#a8fe9d7b887cfe19bc331b13bab73e41e">autoStartFileFound</a></div><div class="ttdeci">boolean autoStartFileFound</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00019">sd.ino:19</a></div></div>
-<div class="ttc" id="asd_8ino_html_aa333e6c2ec4037564ff88e0c0637d24c"><div class="ttname"><a href="sd_8ino.html#aa333e6c2ec4037564ff88e0c0637d24c">sd_simpleInit</a></div><div class="ttdeci">void sd_simpleInit()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00043">sd.ino:43</a></div></div>
-<div class="ttc" id="asd_8ino_html_aa95a0ff8f15f1423edd7c3cd0a217999"><div class="ttname"><a href="sd_8ino.html#aa95a0ff8f15f1423edd7c3cd0a217999">sd_storeCommand</a></div><div class="ttdeci">void sd_storeCommand(String command)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00116">sd.ino:116</a></div></div>
-<div class="ttc" id="asd_8ino_html_aaa1e2182b6cf4ec8a522f0f1168dddf7"><div class="ttname"><a href="sd_8ino.html#aaa1e2182b6cf4ec8a522f0f1168dddf7">useAutoStartFromSD</a></div><div class="ttdeci">boolean useAutoStartFromSD</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00017">sd.ino:17</a></div></div>
-<div class="ttc" id="asd_8ino_html_aaaaa9e1ca694a269261b1598a95c73bf"><div class="ttname"><a href="sd_8ino.html#aaaaa9e1ca694a269261b1598a95c73bf">sd_printDirectory</a></div><div class="ttdeci">void sd_printDirectory(File dir, int numTabs)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00090">sd.ino:90</a></div></div>
-<div class="ttc" id="asd_8ino_html_aac75a6d08b4c09015e50ea90ce0b0494"><div class="ttname"><a href="sd_8ino.html#aac75a6d08b4c09015e50ea90ce0b0494">sd_openPbm</a></div><div class="ttdeci">boolean sd_openPbm(String pbmFilename)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00149">sd.ino:149</a></div></div>
-<div class="ttc" id="asd_8ino_html_aaf959144ae51617400c475441163584f"><div class="ttname"><a href="sd_8ino.html#aaf959144ae51617400c475441163584f">sd_resetCard</a></div><div class="ttdeci">void sd_resetCard()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00032">sd.ino:32</a></div></div>
-<div class="ttc" id="asd_8ino_html_ac72ebb115b2f94018d11bb4acb9070ef"><div class="ttname"><a href="sd_8ino.html#ac72ebb115b2f94018d11bb4acb9070ef">sd_initSD</a></div><div class="ttdeci">void sd_initSD()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00026">sd.ino:26</a></div></div>
+<div class="line"><a name="l00331"></a><span class="lineno"><a class="line" href="sd_8ino.html#a581aee3628bc9920894f423089f6e078">  331</a></span>&#160;String <a class="code" href="sd_8ino.html#a581aee3628bc9920894f423089f6e078">sd_loadFilename</a>(String selectedFilename, <span class="keywordtype">int</span> direction)</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;{</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  Serial.print(<span class="stringliteral">&quot;Current command filename: &quot;</span>);</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  Serial.println(selectedFilename);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  Serial.println(<span class="stringliteral">&quot;Loading filename.&quot;</span>);</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  <span class="comment">// start from the beginning</span></div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="comment">//  root = SD.open(&quot;/&quot;);</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.rewindDirectory();</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160; </div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  <span class="comment">// deal with first showing</span></div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  <span class="keywordflow">if</span> (selectedFilename == <span class="stringliteral">&quot;&quot;</span>) {</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    File entry =  <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.openNextFile();</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordflow">if</span> (entry)</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;      selectedFilename = entry.name();</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    entry.close();</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  }</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="keywordflow">if</span> (direction &gt; 0) {</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;      selectedFilename = <a class="code" href="sd_8ino.html#a65e9cb33edc7ff357afc2ed503a4ed52">sd_getNextFile</a>(selectedFilename);</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    }</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (direction &lt; 0) {</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;      selectedFilename = <a class="code" href="sd_8ino.html#a66e4a9e52cb276160277730f8441f386">sd_getPreviousFile</a>(selectedFilename);</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    }</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  }</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  Serial.print(<span class="stringliteral">&quot;Now command filename: &quot;</span>);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  Serial.println(selectedFilename);</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160; </div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  <span class="keywordflow">return</span> selectedFilename;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;}</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160; </div>
+<div class="line"><a name="l00363"></a><span class="lineno"><a class="line" href="sd_8ino.html#a65e9cb33edc7ff357afc2ed503a4ed52">  363</a></span>&#160;String <a class="code" href="sd_8ino.html#a65e9cb33edc7ff357afc2ed503a4ed52">sd_getNextFile</a>(String selectedFilename) {</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  <span class="keywordtype">boolean</span> found = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  <span class="keywordflow">while</span>(!found) {</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    File entry = <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.openNextFile();</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="comment">//    Serial.println(entry.name());</span></div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keywordflow">if</span> (entry) {</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;      <span class="keywordflow">if</span> (selectedFilename.equals(entry.name())) {</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;        Serial.println(<span class="stringliteral">&quot;Found file!&quot;</span>);</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;        found = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        entry.close();</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160; </div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        <span class="comment">// looking for next file</span></div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        entry = <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.openNextFile();</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        <span class="keywordflow">if</span> (entry) {</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;          selectedFilename = entry.name();</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;        }</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        entry.close();</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;      }</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    }</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;      found = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    }</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160; </div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    entry.close();</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;  }</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;  <span class="keywordflow">return</span> selectedFilename;</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;}</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160; </div>
+<div class="line"><a name="l00391"></a><span class="lineno"><a class="line" href="sd_8ino.html#a66e4a9e52cb276160277730f8441f386">  391</a></span>&#160;String <a class="code" href="sd_8ino.html#a66e4a9e52cb276160277730f8441f386">sd_getPreviousFile</a>(String selectedFilename) {</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;  <span class="comment">// boolean fileIncremented = false;</span></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;  String prevFilename = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160; </div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;  <span class="comment">// see if it is the first one, and just return straight away if so</span></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;  File entry =  <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.openNextFile();</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;  <span class="keywordflow">if</span> (entry) {</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;    <span class="keywordflow">if</span> (selectedFilename.equals(entry.name())) {</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;      Serial.println(<span class="stringliteral">&quot;ent2&quot;</span>);</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;      entry.close();</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;      <span class="keywordflow">return</span> selectedFilename;</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;    }</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;  }</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160; </div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;  <span class="comment">// else go through and find the currently selected file, and keep track of the previous filename</span></div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;  prevFilename = entry.name();</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;  Serial.print(<span class="stringliteral">&quot;Prev file: &quot;</span>);</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;  Serial.println(prevFilename);</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160; </div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;  <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;      entry.close();</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;      entry =  <a class="code" href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a>.openNextFile();</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;      <span class="keywordflow">if</span> (entry) {</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="comment">//        Serial.print(&quot;next file: &quot;);</span></div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;<span class="comment">//        Serial.println(entry.name());</span></div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        <span class="keywordflow">if</span> (selectedFilename.equals(entry.name())) {</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;          selectedFilename = prevFilename;</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;          <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;        }</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;        <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;          prevFilename = entry.name();</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;        }</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;      }</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;  }</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;  entry.close();</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;  <span class="keywordflow">return</span> selectedFilename;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;}</div>
+<div class="ttc" id="aimpl__ps_8ino_html_a8b64fe56d1f369a88a7af752285d82e6"><div class="ttname"><a href="impl__ps_8ino.html#a8b64fe56d1f369a88a7af752285d82e6">impl_exec_execFromStore</a></div><div class="ttdeci">void impl_exec_execFromStore()</div><div class="ttdef"><b>Definition:</b> <a href="impl__ps_8ino_source.html#l00114">impl_ps.ino:114</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_a0ea69180c0ea0aa47f9faa9cca8c3e68"><div class="ttname"><a href="polargraph_8ino.html#a0ea69180c0ea0aa47f9faa9cca8c3e68">pbmFile</a></div><div class="ttdeci">File pbmFile</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00470">polargraph.ino:470</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_a1859aa3abeb9f54662bf4e5963224ee7"><div class="ttname"><a href="polargraph_8ino.html#a1859aa3abeb9f54662bf4e5963224ee7">root</a></div><div class="ttdeci">File root</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00464">polargraph.ino:464</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_a239e839276b09a1995faa6674677bc5b"><div class="ttname"><a href="polargraph_8ino.html#a239e839276b09a1995faa6674677bc5b">pbmWidth</a></div><div class="ttdeci">long pbmWidth</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00473">polargraph.ino:473</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_a48ff66a34864a15e439c6071ea1d9406"><div class="ttname"><a href="polargraph_8ino.html#a48ff66a34864a15e439c6071ea1d9406">pbmDepth</a></div><div class="ttdeci">int pbmDepth</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00475">polargraph.ino:475</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_a568817d600d6374ad747ca8ad532c8de"><div class="ttname"><a href="polargraph_8ino.html#a568817d600d6374ad747ca8ad532c8de">pbmFileLength</a></div><div class="ttdeci">long pbmFileLength</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00476">polargraph.ino:476</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_a6fe4e7d3a6eacdefcc9914f9d5eb7fa1"><div class="ttname"><a href="polargraph_8ino.html#a6fe4e7d3a6eacdefcc9914f9d5eb7fa1">pbmImageoffset</a></div><div class="ttdeci">int pbmImageoffset</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00475">polargraph.ino:475</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_a94d46ccaf3e8f41bf7565d31932fed8d"><div class="ttname"><a href="polargraph_8ino.html#a94d46ccaf3e8f41bf7565d31932fed8d">cardInit</a></div><div class="ttdeci">boolean cardInit</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00466">polargraph.ino:466</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_a9562e10779e45b673844312a7fd23aec"><div class="ttname"><a href="polargraph_8ino.html#a9562e10779e45b673844312a7fd23aec">commandFilename</a></div><div class="ttdeci">String commandFilename</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00457">polargraph.ino:457</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_a965bfa641b6ee763a179fff79c497a77"><div class="ttname"><a href="polargraph_8ino.html#a965bfa641b6ee763a179fff79c497a77">currentlyDrawingFilename</a></div><div class="ttdeci">String currentlyDrawingFilename</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00486">polargraph.ino:486</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_aa3d6d0d9f7c5a96541112ef0cee2c7ab"><div class="ttname"><a href="polargraph_8ino.html#aa3d6d0d9f7c5a96541112ef0cee2c7ab">sdChipSelectPin</a></div><div class="ttdeci">const int sdChipSelectPin</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00460">polargraph.ino:460</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_aa3f607f86a321f76e6086f909bea6caa"><div class="ttname"><a href="polargraph_8ino.html#aa3f607f86a321f76e6086f909bea6caa">currentlyDrawingFromFile</a></div><div class="ttdeci">boolean currentlyDrawingFromFile</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00485">polargraph.ino:485</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_ad22d05f7dda3cbcf6b239a2ee0a66c7e"><div class="ttname"><a href="polargraph_8ino.html#ad22d05f7dda3cbcf6b239a2ee0a66c7e">pbmHeight</a></div><div class="ttdeci">long pbmHeight</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00473">polargraph.ino:473</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_add1d8bc9aab071b1c64e0a3c3920e282"><div class="ttname"><a href="polargraph_8ino.html#add1d8bc9aab071b1c64e0a3c3920e282">pbmAspectRatio</a></div><div class="ttdeci">float pbmAspectRatio</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00477">polargraph.ino:477</a></div></div>
+<div class="ttc" id="apolargraph_8ino_html_af71e81430c5e9dcf74311e8a7a8e2673"><div class="ttname"><a href="polargraph_8ino.html#af71e81430c5e9dcf74311e8a7a8e2673">cardPresent</a></div><div class="ttdeci">boolean cardPresent</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00465">polargraph.ino:465</a></div></div>
+<div class="ttc" id="asd_8ino_html_a0ee0421c25b13097112077e786b56e7d"><div class="ttname"><a href="sd_8ino.html#a0ee0421c25b13097112077e786b56e7d">autoStartFilename</a></div><div class="ttdeci">String autoStartFilename</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00017">sd.ino:17</a></div></div>
+<div class="ttc" id="asd_8ino_html_a236e77b88a4938d1c38fcb5deda74976"><div class="ttname"><a href="sd_8ino.html#a236e77b88a4938d1c38fcb5deda74976">sd_pbmReadHeader</a></div><div class="ttdeci">boolean sd_pbmReadHeader()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00200">sd.ino:200</a></div></div>
+<div class="ttc" id="asd_8ino_html_a3b19449948f1f88a5129eeb235085421"><div class="ttname"><a href="sd_8ino.html#a3b19449948f1f88a5129eeb235085421">sd_autorunSD</a></div><div class="ttdeci">void sd_autorunSD()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00319">sd.ino:319</a></div></div>
+<div class="ttc" id="asd_8ino_html_a3be35b4958d5f300015acc17ebb47660"><div class="ttname"><a href="sd_8ino.html#a3be35b4958d5f300015acc17ebb47660">sd_initAutoStartFile</a></div><div class="ttdeci">void sd_initAutoStartFile()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00306">sd.ino:306</a></div></div>
+<div class="ttc" id="asd_8ino_html_a581aee3628bc9920894f423089f6e078"><div class="ttname"><a href="sd_8ino.html#a581aee3628bc9920894f423089f6e078">sd_loadFilename</a></div><div class="ttdeci">String sd_loadFilename(String selectedFilename, int direction)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00331">sd.ino:331</a></div></div>
+<div class="ttc" id="asd_8ino_html_a65e9cb33edc7ff357afc2ed503a4ed52"><div class="ttname"><a href="sd_8ino.html#a65e9cb33edc7ff357afc2ed503a4ed52">sd_getNextFile</a></div><div class="ttdeci">String sd_getNextFile(String selectedFilename)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00363">sd.ino:363</a></div></div>
+<div class="ttc" id="asd_8ino_html_a66e4a9e52cb276160277730f8441f386"><div class="ttname"><a href="sd_8ino.html#a66e4a9e52cb276160277730f8441f386">sd_getPreviousFile</a></div><div class="ttdeci">String sd_getPreviousFile(String selectedFilename)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00391">sd.ino:391</a></div></div>
+<div class="ttc" id="asd_8ino_html_a8a20f299c50e0548271d6af4378f9ff2"><div class="ttname"><a href="sd_8ino.html#a8a20f299c50e0548271d6af4378f9ff2">sd_getBrightnessAtPixel</a></div><div class="ttdeci">byte sd_getBrightnessAtPixel(int x, int y)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00171">sd.ino:171</a></div></div>
+<div class="ttc" id="asd_8ino_html_a8fe9d7b887cfe19bc331b13bab73e41e"><div class="ttname"><a href="sd_8ino.html#a8fe9d7b887cfe19bc331b13bab73e41e">autoStartFileFound</a></div><div class="ttdeci">boolean autoStartFileFound</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00018">sd.ino:18</a></div></div>
+<div class="ttc" id="asd_8ino_html_aa333e6c2ec4037564ff88e0c0637d24c"><div class="ttname"><a href="sd_8ino.html#aa333e6c2ec4037564ff88e0c0637d24c">sd_simpleInit</a></div><div class="ttdeci">void sd_simpleInit()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00042">sd.ino:42</a></div></div>
+<div class="ttc" id="asd_8ino_html_aa95a0ff8f15f1423edd7c3cd0a217999"><div class="ttname"><a href="sd_8ino.html#aa95a0ff8f15f1423edd7c3cd0a217999">sd_storeCommand</a></div><div class="ttdeci">void sd_storeCommand(String command)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00115">sd.ino:115</a></div></div>
+<div class="ttc" id="asd_8ino_html_aaa1e2182b6cf4ec8a522f0f1168dddf7"><div class="ttname"><a href="sd_8ino.html#aaa1e2182b6cf4ec8a522f0f1168dddf7">useAutoStartFromSD</a></div><div class="ttdeci">boolean useAutoStartFromSD</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00016">sd.ino:16</a></div></div>
+<div class="ttc" id="asd_8ino_html_aaaaa9e1ca694a269261b1598a95c73bf"><div class="ttname"><a href="sd_8ino.html#aaaaa9e1ca694a269261b1598a95c73bf">sd_printDirectory</a></div><div class="ttdeci">void sd_printDirectory(File dir, int numTabs)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00089">sd.ino:89</a></div></div>
+<div class="ttc" id="asd_8ino_html_aac75a6d08b4c09015e50ea90ce0b0494"><div class="ttname"><a href="sd_8ino.html#aac75a6d08b4c09015e50ea90ce0b0494">sd_openPbm</a></div><div class="ttdeci">boolean sd_openPbm(String pbmFilename)</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00148">sd.ino:148</a></div></div>
+<div class="ttc" id="asd_8ino_html_aaf959144ae51617400c475441163584f"><div class="ttname"><a href="sd_8ino.html#aaf959144ae51617400c475441163584f">sd_resetCard</a></div><div class="ttdeci">void sd_resetCard()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00031">sd.ino:31</a></div></div>
+<div class="ttc" id="asd_8ino_html_ac72ebb115b2f94018d11bb4acb9070ef"><div class="ttname"><a href="sd_8ino.html#ac72ebb115b2f94018d11bb4acb9070ef">sd_initSD</a></div><div class="ttdeci">void sd_initSD()</div><div class="ttdef"><b>Definition:</b> <a href="sd_8ino_source.html#l00025">sd.ino:25</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

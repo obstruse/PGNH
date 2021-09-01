@@ -45,7 +45,6 @@ $(function() {
 });
 /* @license-end */</script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -60,6 +59,11 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_f94c183518104356f028f1dd2bc18996.html">polargraphserver</a></li><li class="navelem"><a class="el" href="dir_01a2950f708cc033dfeda9f59326bfa1.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">httpTask.h</div>  </div>
@@ -87,7 +91,7 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">boolean</span> <a class="code" href="http_task_8h.html#a9f48434d998e5a2526d1db031ff25de4">commandBuffered</a>;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">int</span> <a class="code" href="http_task_8h.html#a20cb96e94eeaba3074ac9c9bdcc6cde6">bufferPosition</a>;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">char</span> <a class="code" href="http_task_8h.html#a09ab225e5a676989c22941537800f103">nextCommand</a>[];</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">char</span> <a class="code" href="http_task_8h.html#a11921ceed1e286b53e8484ed4bc062df">currentCommand</a>[];</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">char</span> <a class="code" href="http_task_8h.html#a82351bca0713afbfe04cd1396b5180d3">currentCommandRaw</a>[];</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//--------------------------------------------</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="http_task_8h.html#a8427468f39342a1990703e9f5ce7fd29">   26</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="http_task_8h.html#a8427468f39342a1990703e9f5ce7fd29">handleRoot</a>() {</div>
@@ -141,14 +145,14 @@ $(function() {
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="stringliteral">&quot;\</span></div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="stringliteral">&lt;table border=&#39;1&#39; cellpadding=&#39;5&#39;&gt;\</span></div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="stringliteral">&lt;tr&gt;&lt;th&gt;commandBuffered&lt;/th&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;\</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="stringliteral">&lt;tr&gt;&lt;th&gt;nextCommand&lt;/th&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;\</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="stringliteral">&lt;tr&gt;&lt;th&gt;currentCommand&lt;/th&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;\</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="stringliteral">&lt;tr&gt;&lt;th&gt;bufferPosition&lt;/th&gt;&lt;td&gt;%d&lt;/td&gt;&lt;/tr&gt;\</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="stringliteral">&lt;tr&gt;&lt;th&gt;bufferPosition&lt;/th&gt;&lt;td&gt;%d&lt;/td&gt;&lt;/tr&gt;\</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="stringliteral">&lt;tr&gt;&lt;th&gt;nextCommand&lt;/th&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;\</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="stringliteral">&lt;tr&gt;&lt;th&gt;currentCommand&lt;/th&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;\</span></div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="stringliteral">&lt;/table&gt;\</span></div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="stringliteral">&quot;</span>,</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  String(<a class="code" href="http_task_8h.html#a9f48434d998e5a2526d1db031ff25de4">commandBuffered</a>).c_str(),</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <a class="code" href="http_task_8h.html#a09ab225e5a676989c22941537800f103">nextCommand</a>, <a class="code" href="http_task_8h.html#a11921ceed1e286b53e8484ed4bc062df">currentCommand</a>,</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <a class="code" href="http_task_8h.html#a20cb96e94eeaba3074ac9c9bdcc6cde6">bufferPosition</a></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <a class="code" href="http_task_8h.html#a20cb96e94eeaba3074ac9c9bdcc6cde6">bufferPosition</a>,</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <a class="code" href="http_task_8h.html#a09ab225e5a676989c22941537800f103">nextCommand</a>, <a class="code" href="http_task_8h.html#a82351bca0713afbfe04cd1396b5180d3">currentCommandRaw</a></div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  );</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <a class="code" href="http_task_8h.html#a48f3f185be3ea2d153c347a157b38d42">server</a>.sendContent ( <a class="code" href="polargraph_8ino.html#a3f9ce1a50e8287e2cfe2702b4525c866">temp</a> );</div>
@@ -211,17 +215,17 @@ $(function() {
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  xTaskCreate( <a class="code" href="http_task_8h.html#ab646e40167f289b5a32ac9e4717cb913">http</a>, <span class="stringliteral">&quot;HTTP&quot;</span>, 5000, NULL, 1, &amp;<a class="code" href="http_task_8h.html#abb3ecabffc894f834bad59d10205bb25">httpHandle</a> );</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;}</div>
-<div class="ttc" id="ahttp_task_8h_html_a09ab225e5a676989c22941537800f103"><div class="ttname"><a href="http_task_8h.html#a09ab225e5a676989c22941537800f103">nextCommand</a></div><div class="ttdeci">char nextCommand[]</div><div class="ttdef"><b>Definition:</b> <a href="comms_8ino_source.html#l00023">comms.ino:23</a></div></div>
-<div class="ttc" id="ahttp_task_8h_html_a11921ceed1e286b53e8484ed4bc062df"><div class="ttname"><a href="http_task_8h.html#a11921ceed1e286b53e8484ed4bc062df">currentCommand</a></div><div class="ttdeci">char currentCommand[]</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00249">polargraph.ino:249</a></div></div>
-<div class="ttc" id="ahttp_task_8h_html_a20cb96e94eeaba3074ac9c9bdcc6cde6"><div class="ttname"><a href="http_task_8h.html#a20cb96e94eeaba3074ac9c9bdcc6cde6">bufferPosition</a></div><div class="ttdeci">volatile int bufferPosition</div><div class="ttdef"><b>Definition:</b> <a href="comms_8ino_source.html#l00020">comms.ino:20</a></div></div>
-<div class="ttc" id="ahttp_task_8h_html_a3fd122b94458372948d5014e49911685"><div class="ttname"><a href="http_task_8h.html#a3fd122b94458372948d5014e49911685">commsReadCore</a></div><div class="ttdeci">int commsReadCore</div><div class="ttdef"><b>Definition:</b> <a href="comms_8ino_source.html#l00254">comms.ino:254</a></div></div>
+<div class="ttc" id="ahttp_task_8h_html_a09ab225e5a676989c22941537800f103"><div class="ttname"><a href="http_task_8h.html#a09ab225e5a676989c22941537800f103">nextCommand</a></div><div class="ttdeci">char nextCommand[]</div><div class="ttdef"><b>Definition:</b> <a href="comms_8ino_source.html#l00022">comms.ino:22</a></div></div>
+<div class="ttc" id="ahttp_task_8h_html_a20cb96e94eeaba3074ac9c9bdcc6cde6"><div class="ttname"><a href="http_task_8h.html#a20cb96e94eeaba3074ac9c9bdcc6cde6">bufferPosition</a></div><div class="ttdeci">volatile int bufferPosition</div><div class="ttdef"><b>Definition:</b> <a href="comms_8ino_source.html#l00019">comms.ino:19</a></div></div>
+<div class="ttc" id="ahttp_task_8h_html_a3fd122b94458372948d5014e49911685"><div class="ttname"><a href="http_task_8h.html#a3fd122b94458372948d5014e49911685">commsReadCore</a></div><div class="ttdeci">int commsReadCore</div><div class="ttdef"><b>Definition:</b> <a href="comms_8ino_source.html#l00251">comms.ino:251</a></div></div>
 <div class="ttc" id="ahttp_task_8h_html_a426151929d18f6ba6e5a7056aba785d7"><div class="ttname"><a href="http_task_8h.html#a426151929d18f6ba6e5a7056aba785d7">commsCommandHandle</a></div><div class="ttdeci">TaskHandle_t commsCommandHandle</div><div class="ttdef"><b>Definition:</b> <a href="http_task_8h_source.html#l00018">httpTask.h:18</a></div></div>
 <div class="ttc" id="ahttp_task_8h_html_a48f3f185be3ea2d153c347a157b38d42"><div class="ttname"><a href="http_task_8h.html#a48f3f185be3ea2d153c347a157b38d42">server</a></div><div class="ttdeci">WebServer server(80)</div></div>
 <div class="ttc" id="ahttp_task_8h_html_a54f2b176a577c7a89bb94da4f12cd06b"><div class="ttname"><a href="http_task_8h.html#a54f2b176a577c7a89bb94da4f12cd06b">handleNotFound</a></div><div class="ttdeci">void handleNotFound()</div><div class="ttdef"><b>Definition:</b> <a href="http_task_8h_source.html#l00100">httpTask.h:100</a></div></div>
+<div class="ttc" id="ahttp_task_8h_html_a82351bca0713afbfe04cd1396b5180d3"><div class="ttname"><a href="http_task_8h.html#a82351bca0713afbfe04cd1396b5180d3">currentCommandRaw</a></div><div class="ttdeci">char currentCommandRaw[]</div><div class="ttdef"><b>Definition:</b> <a href="polargraph_8ino_source.html#l00250">polargraph.ino:250</a></div></div>
 <div class="ttc" id="ahttp_task_8h_html_a8427468f39342a1990703e9f5ce7fd29"><div class="ttname"><a href="http_task_8h.html#a8427468f39342a1990703e9f5ce7fd29">handleRoot</a></div><div class="ttdeci">void handleRoot()</div><div class="ttdef"><b>Definition:</b> <a href="http_task_8h_source.html#l00026">httpTask.h:26</a></div></div>
 <div class="ttc" id="ahttp_task_8h_html_a9644fe12bdb5e35d23ffb5e33fab1e95"><div class="ttname"><a href="http_task_8h.html#a9644fe12bdb5e35d23ffb5e33fab1e95">httpTaskCreate</a></div><div class="ttdeci">void httpTaskCreate()</div><div class="ttdef"><b>Definition:</b> <a href="http_task_8h_source.html#l00132">httpTask.h:132</a></div></div>
-<div class="ttc" id="ahttp_task_8h_html_a9f48434d998e5a2526d1db031ff25de4"><div class="ttname"><a href="http_task_8h.html#a9f48434d998e5a2526d1db031ff25de4">commandBuffered</a></div><div class="ttdeci">boolean commandBuffered</div><div class="ttdef"><b>Definition:</b> <a href="comms_8ino_source.html#l00018">comms.ino:18</a></div></div>
-<div class="ttc" id="ahttp_task_8h_html_aa86b117794084f532744e609adc770b5"><div class="ttname"><a href="http_task_8h.html#aa86b117794084f532744e609adc770b5">commsReadHandle</a></div><div class="ttdeci">TaskHandle_t commsReadHandle</div><div class="ttdef"><b>Definition:</b> <a href="comms_8ino_source.html#l00370">comms.ino:370</a></div></div>
+<div class="ttc" id="ahttp_task_8h_html_a9f48434d998e5a2526d1db031ff25de4"><div class="ttname"><a href="http_task_8h.html#a9f48434d998e5a2526d1db031ff25de4">commandBuffered</a></div><div class="ttdeci">boolean commandBuffered</div><div class="ttdef"><b>Definition:</b> <a href="comms_8ino_source.html#l00017">comms.ino:17</a></div></div>
+<div class="ttc" id="ahttp_task_8h_html_aa86b117794084f532744e609adc770b5"><div class="ttname"><a href="http_task_8h.html#aa86b117794084f532744e609adc770b5">commsReadHandle</a></div><div class="ttdeci">TaskHandle_t commsReadHandle</div><div class="ttdef"><b>Definition:</b> <a href="comms_8ino_source.html#l00366">comms.ino:366</a></div></div>
 <div class="ttc" id="ahttp_task_8h_html_ab646e40167f289b5a32ac9e4717cb913"><div class="ttname"><a href="http_task_8h.html#ab646e40167f289b5a32ac9e4717cb913">http</a></div><div class="ttdeci">void http(void *pvParameters)</div><div class="ttdef"><b>Definition:</b> <a href="http_task_8h_source.html#l00120">httpTask.h:120</a></div></div>
 <div class="ttc" id="ahttp_task_8h_html_abb3ecabffc894f834bad59d10205bb25"><div class="ttname"><a href="http_task_8h.html#abb3ecabffc894f834bad59d10205bb25">httpHandle</a></div><div class="ttdeci">TaskHandle_t httpHandle</div><div class="ttdef"><b>Definition:</b> <a href="http_task_8h_source.html#l00001">httpTask.h:1</a></div></div>
 <div class="ttc" id="ahttp_task_8h_html_adbcc656d1d303d67ca03f5fa7ad54045"><div class="ttname"><a href="http_task_8h.html#adbcc656d1d303d67ca03f5fa7ad54045">httpCore</a></div><div class="ttdeci">int httpCore</div><div class="ttdef"><b>Definition:</b> <a href="http_task_8h_source.html#l00002">httpTask.h:2</a></div></div>
