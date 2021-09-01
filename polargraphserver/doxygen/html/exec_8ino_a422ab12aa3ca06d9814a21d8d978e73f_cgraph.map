@@ -1,6 +1,0 @@
-<map id="exec_setPenLiftRange" name="exec_setPenLiftRange">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,160,57"/>
-<area shape="rect" id="node2" href="$eeprom_8ino.html#a4e134f6df46baa827065826414fcebd3" title=" " alt="" coords="208,5,383,32"/>
-<area shape="rect" id="node3" href="$penlift_8ino.html#a9f021908449bff8969a3267b40ef285b" title=" " alt="" coords="233,56,357,83"/>
-<area shape="rect" id="node4" href="$penlift_8ino.html#af2da2dd0fbf1430a111bc6a46ec8410b" title=" " alt="" coords="431,56,549,83"/>
-</map>

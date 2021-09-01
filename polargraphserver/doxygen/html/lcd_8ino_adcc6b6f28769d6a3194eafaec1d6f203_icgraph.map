@@ -1,8 +1,0 @@
-<map id="lcd_redraw" name="lcd_redraw">
-<area shape="rect" id="node1" title=" " alt="" coords="901,5,987,32"/>
-<area shape="rect" id="node2" href="$lcd_8ino.html#a1df9880eb296b4f5619a94fb1cfa4952" title=" " alt="" coords="687,5,853,32"/>
-<area shape="rect" id="node3" href="$impl__ps_8ino.html#a8a3e5af0937eb4f0549556e5a5651a91" title=" " alt="" coords="405,5,639,32"/>
-<area shape="rect" id="node4" href="$impl__ps_8ino.html#a550ec1bfc7415adbcd0394690eb7672f" title=" " alt="" coords="291,5,357,32"/>
-<area shape="rect" id="node5" href="$impl__ps_8ino.html#a2b9a53c9593a2f116e3b0003feaf8e53" title=" " alt="" coords="108,5,243,32"/>
-<area shape="rect" id="node6" href="$polargraph_8h.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,5,60,32"/>
-</map>
