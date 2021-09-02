@@ -1,17 +1,24 @@
 
 # PolarGraph Network Hack
 
+**Polargraph**: ___An open source art project <http://www.polargraph.co.uk/>___
+
 ![Cat](/images/IMG_1561-C2r2.png)
 
-Started with a [V3 Polargraph](http://www.polargraph.co.uk/) with the current software: [server](https://github.com/euphy/polargraph_server_polarshield_esp32) / [controller](https://github.com/euphy/polargraphcontroller), running on an ESP32 (NODEMCU32S).  Modified the code to use WiFi for communication between Controller/Server.
+The [PolarshieldSD V3 ESP32](http://www.polargraph.co.uk/), running [polargraphserver](https://github.com/euphy/polargraph_server_polarshield_esp32) and [polargraphcontroller](https://github.com/euphy/polargraphcontroller), modified to use WiFi network for communication between Controller and Server.
 
-# The Software
+# The Polargraph Software
 
 ![COMMS](/images/comms.png)
+
+The Doxygen documentation for the polargraphserver can be found here: <https://obstruse.github.io/PGNH>
 
 ## Installation
 
 To compile and upload, use VSCode/PlatformIO.  For the first upload, use the `[env:TTY0]` Project Environment (edit platformio.ini to match your serial port).
+
+The first time it boots it will create a Soft Access Point with **SSID**: `polargraph` and **PSK**: `carbondioxide`. <br>
+Open <http://polargraph.local/config> to configure the WiFi
 
 For uploads after the first, use the `[env:OTA]` Project Environment (edit platformio.ini for machine host/IP)
 
@@ -51,7 +58,7 @@ For uploads after the first, use the `[env:OTA]` Project Environment (edit platf
     With 10 destinations, there can be more than 300,000 roundtrip permutations and combinations. 
     With 15 destinations, the number of possible routes could exceed 87 billion.
 
-The following is a TSP "solution" for a 27,000 point map:
+A TSP "solution" for a 15,000 point map:
 
 ![MOM-4](/images/MOM-4.png)
 
