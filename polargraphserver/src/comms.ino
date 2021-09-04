@@ -313,8 +313,8 @@ void commsCommand(void * pvParameters) {
 
       strcpy( currentCommand, nextCommand );
       nextCommand[0] = 0;
-      commandBuffered = false;
       comms_ready();              // output the READY_200 message so it will start buffering next command
+      commandBuffered = false;
       
       strcpy( currentCommandRaw, currentCommand );  //so HTTP can display, before the parsing messes it up
       paramsExtracted = comms_parseCommand(currentCommand);
@@ -349,7 +349,7 @@ void commsCommand(void * pvParameters) {
 
   // remind everyone that you're ready if nothing has happened in a while...
     if (comms_isMachineReadyForNextCommand()) {   // timer expired (4 seconds), and no command buffered or buffering
-      reportPosition();           // output the SYNC message
+      //reportPosition();           // output the SYNC message
       reportStepRate();           // null, doesn't do anything
       comms_reportBufferState();  // null, doesn't do anything
       comms_ready();              // output the READY_200 message

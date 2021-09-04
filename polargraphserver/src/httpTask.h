@@ -16,6 +16,7 @@ WebServer server ( 80 );
 
 extern int commsReadCore, commsCommandCore;
 extern TaskHandle_t commsReadHandle, commsCommandHandle;
+extern TaskHandle_t implLcdHandle;
 
 extern boolean commandBuffered;
 extern volatile int bufferPosition;
@@ -55,6 +56,7 @@ void handleRoot() {
     <p>WIFI Stack: %d</p>\
     <p>COMMS Read Stack: %d</p>\
     <p>COMMS Command Stack: %d</p>\
+    <p>IMPL Command Stack: %d</p>\
     ",
     hr, min % 60, sec % 60,
     fileName, __DATE__, __TIME__,
@@ -65,7 +67,8 @@ void handleRoot() {
     uxTaskGetStackHighWaterMark(httpHandle),
     uxTaskGetStackHighWaterMark(wifiHandle),
     uxTaskGetStackHighWaterMark(commsReadHandle),
-    uxTaskGetStackHighWaterMark(commsCommandHandle)
+    uxTaskGetStackHighWaterMark(commsCommandHandle),
+    uxTaskGetStackHighWaterMark(implLcdHandle)
   );
   server.sendContent ( temp );
 
