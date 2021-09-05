@@ -1,6 +1,7 @@
 
 # PolarGraph Network Hack
 
+_A modified version of:_<br>
 **Polargraph**: ___An open source art project <http://www.polargraph.co.uk/>___
 
 ![Cat](/images/IMG_1561-C2r2.png)
