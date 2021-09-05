@@ -53,12 +53,9 @@ void wifiSTA() {
 
   Serial.printf(" SSID: %s PSK: %s\n", WIFI.ssid, WIFI.psk);
 
-  WiFi.persistent(true);
   WiFi.begin( WIFI.ssid, WIFI.psk );
 
   WiFi.waitForConnectResult();
-
-  WiFi.persistent(false);
 
   Serial.printf(" SSID: %s PSK: %s\n", WIFI.ssid, WIFI.psk);
   Serial.printf(" WiFi STA error: %d\n", WiFi.status());
@@ -122,17 +119,15 @@ void wifiTaskCreate() {
   Serial.printf("IOTname: %s\n", IOTname);
 
   // WIFI setup
-  WiFi.persistent(true);  // use WiFi config from storage (works a little different than ESP8266 it seems...)
+  WiFi.persistent(true);   // ESP32 onlyreads persistent at initialization !? (unlike ESP8266)
   WiFi.setAutoConnect(false);   // don't connect until I tell you to!
   WiFi.setAutoReconnect(true);    
   WiFi.mode(WIFI_STA);
+  WiFi.hostname( IOTname );
 
   WiFi.begin ();          // use ssid/password from storage. 
 
-  WiFi.persistent(false);
-
   if ( WiFi.waitForConnectResult() == WL_CONNECTED ) {
-    WiFi.hostname( IOTname );
   
     MDNS.begin ( IOTname );
     MDNS.addService("http", "tcp", 80);
@@ -157,5 +152,5 @@ void wifiTaskCreate() {
 
   Serial.println("WiFi started...");
 
-  xTaskCreate( wifi, "WiFi", 5000, NULL, 1, &wifiHandle );
+  xTaskCreate( wifi, "WiFi", 8000, NULL, 1, &wifiHandle );
 }

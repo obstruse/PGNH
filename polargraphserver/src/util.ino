@@ -77,7 +77,6 @@ void transform(long &tA, long &tB) {
 }
 
 void changeLength(float tA, float tB)
-// really? two prototypes?
 {
   changeLength((long)tA, (long)tB);
 }
@@ -98,9 +97,6 @@ void changeLength(long tA, long tB)
   motorB.setSpeed(0.0);
   motorA.moveTo(tA);
   motorB.moveTo(tB);
-
-// there's just one thing though:  when does motorA.run() and motorB.run() get called?
-// ... oh, later in this routine
 
   if (!usingAcceleration)
   {

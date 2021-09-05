@@ -15,6 +15,7 @@ WebServer server ( 80 );
 #endif
 
 extern int commsReadCore, commsCommandCore;
+extern int implLcdCore;
 extern TaskHandle_t commsReadHandle, commsCommandHandle;
 extern TaskHandle_t implLcdHandle;
 
@@ -47,23 +48,43 @@ void handleRoot() {
   <body>\
     <h1>PolarGraph</h1>\
     <p>Uptime: %02d:%02d:%02d</p>\
-    <p>%s %s %s</p>\
-    <p>HTTP Core: %d</p>\
-    <p>WIFI Core: %d</p>\
-    <p>COMMS Read Core: %d</p>\
-    <p>COMMS Command Core: %d</p>\
-    <p>HTTP Stack: %d</p>\
-    <p>WIFI Stack: %d</p>\
-    <p>COMMS Read Stack: %d</p>\
-    <p>COMMS Command Stack: %d</p>\
-    <p>IMPL Command Stack: %d</p>\
     ",
-    hr, min % 60, sec % 60,
-    fileName, __DATE__, __TIME__,
-    httpCore,
-    wifiCore, 
-    commsReadCore,
-    commsCommandCore,
+    hr, min % 60, sec % 60
+  );
+  server.sendContent ( temp );
+
+//--------------------------------------------
+  sprintf ( temp,
+"\
+<table border='1' cellpadding='5'>\
+<tr><th colspan=2>Core</th><tr>\
+<tr><th>HTTP</th><td>%d</td></tr>\
+<tr><th>WIFI</th><td>%d</td></tr>\
+<tr><th>COMMS Read</th><td>%d</td></tr>\
+<tr><th>COMMS Command</th><td>%d</td></tr>\
+<tr><th>IMPL LCD</th><td>%d</td></tr>\
+</table>\
+<br>",
+   httpCore,
+   wifiCore, 
+   commsReadCore,
+   commsCommandCore,
+   implLcdCore
+  );
+  server.sendContent ( temp );
+
+//--------------------------------------------
+  sprintf ( temp,
+"\
+<table border='1' cellpadding='5'>\
+<tr><th colspan=2>Stack</th><tr>\
+<tr><th>HTTP</th><td>%d</td></tr>\
+<tr><th>WIFI</th><td>%d</td></tr>\
+<tr><th>COMMS Read</th><td>%d</td></tr>\
+<tr><th>COMMS Command</th><td>%d</td></tr>\
+<tr><th>IMPL LCD</th><td>%d</td></tr>\
+</table>\
+<br>",
     uxTaskGetStackHighWaterMark(httpHandle),
     uxTaskGetStackHighWaterMark(wifiHandle),
     uxTaskGetStackHighWaterMark(commsReadHandle),
@@ -76,12 +97,13 @@ void handleRoot() {
   sprintf ( temp,
 "\
 <table border='1' cellpadding='5'>\
+<tr><th colspan=2>Command</th><tr>\
 <tr><th>commandBuffered</th><td>%s</td></tr>\
 <tr><th>bufferPosition</th><td>%d</td></tr>\
 <tr><th>nextCommand</th><td>%s</td></tr>\
 <tr><th>currentCommand</th><td>%s</td></tr>\
 </table>\
-",
+<br>",
   String(commandBuffered).c_str(),
   bufferPosition,
   nextCommand, currentCommandRaw
@@ -90,7 +112,11 @@ void handleRoot() {
   server.sendContent ( temp );
 
 //--------------------------------------------
-  sprintf ( temp,"  </body></html>" );
+  sprintf ( temp,
+"<p>%s %s %s</p>\
+</body></html>",
+  fileName, __DATE__, __TIME__
+  );
   server.sendContent ( temp );
 
   server.sendContent (" ");

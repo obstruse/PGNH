@@ -460,6 +460,7 @@ void impl_setDebugComms() {
 // Polarshield implementation of runBackgroundProcesses. 
 // This is basically stuff to do with the screen.
 /*-----------------------------------------------------------------*/
+int implLcdCore = 0;
 void implLcd( void *pvParameters ) {
   (void) pvParameters;
 
@@ -476,6 +477,8 @@ void implLcd( void *pvParameters ) {
     #ifdef DEBUG_FUNCTION_BOUNDARIES
     printf("\n\n\tEnter %s at %d\n", __FUNCTION__, millis());
     #endif
+
+    implLcdCore = xPortGetCoreID();
 
     impl_runBackgroundTouchProcesses();
     impl_runBackgroundDrawProcesses();

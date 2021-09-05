@@ -314,7 +314,7 @@ void commsCommand(void * pvParameters) {
       strcpy( currentCommand, nextCommand );
       nextCommand[0] = 0;
       comms_ready();              // output the READY_200 message so it will start buffering next command
-      commandBuffered = false;
+      commandBuffered = false;    // set commandBuffered AFTER comms_ready, otherwise read/write conflict on PGclient. 
       
       strcpy( currentCommandRaw, currentCommand );  //so HTTP can display, before the parsing messes it up
       paramsExtracted = comms_parseCommand(currentCommand);

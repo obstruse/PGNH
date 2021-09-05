@@ -64,17 +64,9 @@ char temp[1000];
 
 #include "firmware-build-name.h"
 
-
-/* found this on the web:
-You should not place global non-constant variables anywhere. 
-Global as in declared with extern and available to your whole project. 
-The need to do this always originates from bad program design, period. 
-This is true for C and C++ both.
-*/
 /*
-Avoid global variables whenever possible — use functions instead.
+Avoid global variables whenever possible...
 */
-
 
 /* Definition of a function that can be attached to a Button Specification
 and will get executed when the button is pushed..
