@@ -22,6 +22,9 @@ Open <http://polargraph.local/config> to configure the WiFi
 
 For uploads after the first, use the `[env:OTA]` Project Environment (edit platformio.ini for machine host/IP)
 
+PolargraphController requires Processing-2.2.1.  Use _File -> Export Application_ from the IDE to create the application, or from the command line: `$ processing-java --export --output=build --sketch=polargraphcontroller`
+
+
 ## Changes
 
 - Network
