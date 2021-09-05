@@ -6,7 +6,7 @@ _A modified version of:_<br>
 
 ![Cat](/images/IMG_1561-C2r2.png)
 
-The [PolarshieldSD V3 ESP32](http://www.polargraph.co.uk/), running [polargraphserver](https://github.com/euphy/polargraph_server_polarshield_esp32) and [polargraphcontroller](https://github.com/euphy/polargraphcontroller), modified to use WiFi network for communication between Controller and Server.
+A [PolarshieldSD V3 ESP32](http://www.polargraph.co.uk/), with [polargraphserver](https://github.com/euphy/polargraph_server_polarshield_esp32) and [polargraphcontroller](https://github.com/euphy/polargraphcontroller), modified to use WiFi network for communication between Controller and Server.
 
 # The Polargraph Software
 
