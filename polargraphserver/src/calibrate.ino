@@ -116,7 +116,7 @@ void calibrate_doCalibration()
   motorBRestPoint = abs(motorB.currentPosition()) + (ENDSTOP_Y_MIN_POSITION * stepsPerMm);
   motorB.setCurrentPosition(ENDSTOP_Y_MIN_POSITION * stepsPerMm);
 
-  reportPosition();
+  //reportPosition();
   
   // now return to the place where you started.
   
@@ -134,7 +134,7 @@ void calibrate_doCalibration()
     motorB.run();
   }
 
-  reportPosition();
+  //reportPosition();
   powerIsOn = true;
   isCalibrated = true;
   

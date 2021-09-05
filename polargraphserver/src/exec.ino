@@ -275,7 +275,7 @@ void exec_setPosition()
 
   engageMotors();
 
-  reportPosition();
+  //reportPosition();
 }
 
 void exec_changeLengthRelative()

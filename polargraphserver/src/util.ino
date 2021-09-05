@@ -151,7 +151,7 @@ void changeLength(long tA, long tB)
   }
 
   lastOperationTime = millis();
-  reportPosition();
+  //reportPosition();
 }
 
 void changeLengthRelative(float tA, float tB)
@@ -185,7 +185,7 @@ void changeLengthRelative(long tA, long tB)
   }
   
   lastOperationTime = millis();
-  reportPosition();
+  //reportPosition();
 }
 
 void recalculateMachineSizeInSteps()

@@ -355,7 +355,7 @@ void drawRandom()
       Serial.println(r);
     }
 
-    reportPosition();
+    //reportPosition();
   }
 }
 
@@ -499,7 +499,7 @@ void implLcd( void *pvParameters ) {
 /*-----------------------------------------------------------------*/
 // impl Lcd Task setup
 /*-----------------------------------------------------------------*/
-static TaskHandle_t implLcdHandle = NULL;
+TaskHandle_t implLcdHandle = NULL;
 void implLcdTaskCreate() {
   Serial.println("implLcd started...");
 

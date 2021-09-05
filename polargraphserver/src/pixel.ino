@@ -358,7 +358,7 @@ void pixel_drawWavePixel(int length, int width, int density, byte drawDirection,
         pixel_drawWaveAlongAxis(width, segmentLength, density, i, ALONG_B_AXIS, shape);
       }
       lengthSoFar += segmentLength;
-      reportPosition();
+      //reportPosition();
     } // end of loop
   }
 }
@@ -460,7 +460,7 @@ void pixel_drawSquarePixel(int length, int width, int density, byte drawDirectio
         pixel_drawWaveAlongAxis(width, segmentLength, density, i, ALONG_B_AXIS, SQUARE_SHAPE);
       }
       lengthSoFar += segmentLength;
-      reportPosition();
+      //reportPosition();
     } // end of loop
   }
 }
