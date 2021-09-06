@@ -24,6 +24,8 @@ extern volatile int bufferPosition;
 extern char nextCommand[];
 extern char currentCommandRaw[];
 
+extern int commsWhere;
+
 //--------------------------------------------
 void handleRoot() {
 
@@ -114,8 +116,10 @@ void handleRoot() {
 //--------------------------------------------
   sprintf ( temp,
 "<p>%s %s %s</p>\
+<p>commsWhere: %d</p>\
 </body></html>",
-  fileName, __DATE__, __TIME__
+  fileName, __DATE__, __TIME__,
+  commsWhere
   );
   server.sendContent ( temp );
 

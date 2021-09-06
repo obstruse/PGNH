@@ -249,6 +249,7 @@ void comms_unrecognisedCommand(String inCmd, String inParam1, String inParam2, S
 // COMMS Read Task, every 20 ms...
 /*-----------------------------------------------------------------*/
 int commsReadCore = 0;
+int commsNullCount = 0;
 void commsRead(void * pvParameters) {
 
   Serial.printf("commsRead task: Executing on core %d\n",xPortGetCoreID());
@@ -261,7 +262,9 @@ void commsRead(void * pvParameters) {
     if (!commandBuffered) {
       // bufferPosition = 0;
       if (PGclient.available() > 0) {
-        // if there's data available, read all of it, don't wait for next task increment
+        commsNullCount = 0;   // something happened on comms...
+
+        // There's data available, read all of it, don't wait for next task increment
 
         nextCommand[PGclient.readBytesUntil('\n', nextCommand, INLENGTH)] = 0;
 
@@ -292,32 +295,53 @@ void commsRead(void * pvParameters) {
 /*-----------------------------------------------------------------*/
 // COMMS Command Task... execute the completed command
 /*-----------------------------------------------------------------*/
+int commsWhere = -1;
 int commsCommandCore = 0;
 void commsCommand(void * pvParameters) {
 
   Serial.printf("commsCommand task: Executing on core %d\n",xPortGetCoreID());
 
   for (;;) {
+    commsWhere = 0;
     commsCommandCore = xPortGetCoreID();
 
-    if (!PGclient) {
+    if (!PGclient.connected()) {
+      commsWhere--;
       //need to connect a client
+      PGclient.stop();
       PGclient = PGserver.available();
       delay(1000);
-      if (PGclient) comms_ready();
+      if (PGclient.connected()) comms_ready();
 
       continue;
+    } else {
+      commsWhere = 1000;
     }
 
-    if (commandBuffered) {      // there's a command to process
 
+    if (commandBuffered) {      // there's a command to process
+      // --- start, safe for PGclient.print()
+      commsWhere++;
+      commsNullCount = 0;
+      commsWhere++;
       strcpy( currentCommand, nextCommand );
+      commsWhere++;
       nextCommand[0] = 0;
+      commsWhere++;
+      //reportPosition();           // putting it here so that PGclient.print() doesn't conflict with commsRead PGclient.read()
+      commsWhere++;
       comms_ready();              // output the READY_200 message so it will start buffering next command
-      commandBuffered = false;    // set commandBuffered AFTER comms_ready, otherwise read/write conflict on PGclient. 
+      commsWhere++;
+
+      commsWhere++;
+      //commandBuffered = false;    // set commandBuffered AFTER comms_ready, otherwise read/write conflict on PGclient. 
+      commsWhere++;
+      // --- end
       
       strcpy( currentCommandRaw, currentCommand );  //so HTTP can display, before the parsing messes it up
+      commsWhere++;
       paramsExtracted = comms_parseCommand(currentCommand);
+      commsWhere++;
       if (paramsExtracted) {
         // execute parsed command:  currentCommand -> (lastParsedCommandRaw?) -> paramsExtracted  following C17
         comms_executeParsedCommand();   // beginning of a long chain of calls to actually move the motors
@@ -333,7 +357,6 @@ void commsCommand(void * pvParameters) {
 
         comms_executeParsedCommand() returns when the move is complete
         */
-        reportPosition(); // ony need this if command from COMMS (TCP or serial).  Not SD
 
         comms_clearParams();
 
@@ -341,21 +364,21 @@ void commsCommand(void * pvParameters) {
         Serial.println(F("Command not parsed."));
         comms_clearParams();
       }
+      commsWhere++;
+      commandBuffered = false;    // set commandBuffered AFTER comms_ready, otherwise read/write conflict on PGclient. 
 
     } else {
-      // so either there's a command executed (takes a few seconds or more), or block the task until a new command shows up
+      // ...nothing happened...
+      commsNullCount++;
+      
+      if (commsNullCount > 100) {   // if nothing has happened in a while...  
+        commsNullCount = 0;         // ... do something.
+        reportPosition();           // output the SYNC message
+        comms_ready();              // output the READY_200 message
+      }
+
       vTaskDelay(20 / portTICK_PERIOD_MS);      
     }
-
-  // remind everyone that you're ready if nothing has happened in a while...
-    if (comms_isMachineReadyForNextCommand()) {   // timer expired (4 seconds), and no command buffered or buffering
-      //reportPosition();           // output the SYNC message
-      reportStepRate();           // null, doesn't do anything
-      comms_reportBufferState();  // null, doesn't do anything
-      comms_ready();              // output the READY_200 message
-    }
-
-
 
   } //task loop
 }

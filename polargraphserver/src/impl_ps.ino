@@ -60,8 +60,9 @@ void impl_executeCommand(String inCmd, String inParam1, String inParam2, String 
   if (exec_executeBasicCommand(inCmd, inParam1, inParam2, inParam3, inParam4, inNoOfParams))
   {
     // that's nice, it worked
-    PGclient.print(MSG_COMPLETE_STR);
-    PGclient.println(currentCommand);
+    //... the messages end up in the right-hand column of the controller... all it shows is the time and command, not the params.  eh.
+    //PGclient.print(MSG_COMPLETE_STR);
+    //PGclient.println(currentCommand);
   }
   else if (inCmd.startsWith(CMD_DRAWCIRCLEPIXEL))
     curves_pixel_drawCircularPixel();

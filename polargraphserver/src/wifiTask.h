@@ -152,5 +152,5 @@ void wifiTaskCreate() {
 
   Serial.println("WiFi started...");
 
-  xTaskCreate( wifi, "WiFi", 8000, NULL, 1, &wifiHandle );
+  xTaskCreate( wifi, "WiFi", 5000, NULL, 1, &wifiHandle );
 }
