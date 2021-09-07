@@ -30,13 +30,6 @@ the User_Setup.h file and add the following lines.
 
 **/
 
-/* copied this from examples... but don't know why it's used, so taking it out
-#ifdef CONFIG_FREERTOS_UNICORE
-#define ARDUINO_RUNNING_CORE 0
-#else
-#define ARDUINO_RUNNING_CORE 1
-#endif
-*/
 //#define DEBUG_SD
 
 char fileName[] = __FILE__;
