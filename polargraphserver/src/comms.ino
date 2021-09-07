@@ -357,8 +357,6 @@ void commsCommand(void * pvParameters) {
         comms_clearParams();
       }
 
-      commandBuffered = false;    // set commandBuffered AFTER comms_ready, otherwise read/write conflict on PGclient. 
-
     } 
 
     vTaskDelay(20 / portTICK_PERIOD_MS);      
